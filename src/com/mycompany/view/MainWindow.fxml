@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.MainWindowController">
+   <children>
+      <Label text="欢迎使用图书管理系统">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="600.0" spacing="15.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="请选择">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="userTypeComboBox" onAction="#comboChanged" prefHeight="23.0" prefWidth="152.0" promptText="用户类型" />
+         </children>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="600.0" spacing="15.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" minWidth="40.0" text="用户名">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <TextField>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="600.0" spacing="15.0">
+         <children>
+            <Label alignment="CENTER" minWidth="40.0" prefHeight="15.0" prefWidth="30.0" text="密码" />
+            <TextField>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="42.0" prefWidth="600.0" spacing="15.0">
+         <children>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="23.0" prefWidth="77.0" text="登录">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="23.0" prefWidth="77.0" text="注册">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="wrongPwd" textFill="#f00707">
+         <VBox.margin>
+            <Insets top="25.0" />
+         </VBox.margin></Label>
+   </children>
+</VBox>

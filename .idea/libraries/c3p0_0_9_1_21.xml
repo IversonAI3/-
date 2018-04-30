@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="c3p0-0.9.1.21">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/libraries/c3p0-0.9.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libraries/mysql-connector-java-5.1.40-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libraries/dom4j-1.6.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
