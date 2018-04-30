@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="322.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RegisterWindowController">
+   <children>
+      <VBox layoutX="101.0" layoutY="42.0" prefHeight="322.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="475.0" text="请输入用户名和密码" textFill="#360f0f">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="account" prefHeight="83.0" prefWidth="475.0" promptText="用户名">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="password" prefHeight="87.0" prefWidth="475.0" promptText="密码">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </TextField>
+            <HBox prefHeight="88.0" prefWidth="455.0">
+               <children>
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefHeight="68.0" prefWidth="246.0" stylesheets="@RegisterWindow.css" text="注册">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToMainWindow" prefHeight="68.0" prefWidth="246.0" stylesheets="@RegisterWindow.css" text="返回">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

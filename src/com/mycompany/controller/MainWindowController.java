@@ -1,7 +1,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.controller.services.impl.UserServiceImpl;
-import javafx.application.Application;
+import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,24 +14,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /* MainController 对应 Main：程序的入口和主窗口 */
-public class MainWindowController extends Application implements Initializable{
-
-    /**
-     * 不同的View的路径
-     * MAIN_WINDOW：主窗口
-     * USER_HOME_WINDOW_XML：普通用户登录后的主界面
-     * MANAGER_HOME_WINDOW_XML：管理员用户登陆后的主界面
-     * */
-    private static final String MAIN_WINDOW = "../view/MainWindow.fxml";
-    private static final String USER_HOME_WINDOW_XML = "../view/UserHomeWindow.fxml";
-    private static final String MANAGER_HOME_WINDOW_XML= "../view/ManagerHomeWindow.fxml";
+public class MainWindowController implements Initializable{
 
     /**
      * 主窗体中的4个组件。变量名必须和fxml文件中对应元素的id属性一致。
@@ -40,10 +32,12 @@ public class MainWindowController extends Application implements Initializable{
      * userTypeComboBox：用户类型下拉列表
      * errorMessage：错误提示文本
      * */
-    @FXML private Button loginButton;
-    @FXML private Button registerButton;
+    @FXML private Button loginButton = new Button();
+    @FXML private Button registerButton = new Button();
     @FXML private ComboBox<String> userTypeComboBox = new ComboBox<>();
     @FXML private Label errorMessage = new Label();
+    @FXML private TextField accountText = new TextField();
+    @FXML private TextField pwdText = new TextField();
 
     /**
      * 用这个来初始化用户类型下拉列表
@@ -71,21 +65,6 @@ public class MainWindowController extends Application implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         userTypeComboBox.setItems(list);
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        errorMessage.setVisible(false);
-        System.out.println("加载成功->显示主窗口...");
-        Parent root = FXMLLoader.load(getClass().getResource(MAIN_WINDOW));
-        primaryStage.setTitle("在线图书管理系统");
-        primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.show();
-    }
-
     /**
      * 主窗体中的组件的监听器方法，当监听到事件时调用这些方法
      * */
@@ -104,13 +83,13 @@ public class MainWindowController extends Application implements Initializable{
         // 获得窗体视图fxml文件
         // 判断用户选择的是普通用户还是管理员用户
         try {
-            if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("普通用户"))
-                jumpToUserHomePage(event);
-            else if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("管理员用户"))
-                jumpToManagerHomePage(event);
-            else {
-                errorMessage.setText("请选择用户类型");
-                errorMessage.setVisible(true);
+            if(isVerified()){
+                if(isUser())
+                    jumpToUserHomePage(event);
+                else if (isAdmin() )
+                    jumpToManagerHomePage(event);
+                else
+                    errorMessage.setText("请选择用户类型");
             }
         }catch (NullPointerException e){
             errorMessage.setText("请选择用户类型");
@@ -121,9 +100,8 @@ public class MainWindowController extends Application implements Initializable{
     /**
      * 这是当用户点击注册按钮时监听器调用的方法
      * */
-    public void registerButtonClicked(ActionEvent event){
-        // 调用UserServiceImpl的注册功能
-
+    public void registerButtonClicked(ActionEvent event) throws IOException {
+        jumpToRegisterPage(event);
     }
 
     /**
@@ -140,7 +118,7 @@ public class MainWindowController extends Application implements Initializable{
      * jumpToManagerHomePage：调到管理员主界面
      * */
     private void jumpToUserHomePage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(USER_HOME_WINDOW_XML));
+        Parent root = FXMLLoader.load(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
@@ -151,7 +129,7 @@ public class MainWindowController extends Application implements Initializable{
     }
 
     private void jumpToManagerHomePage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(MANAGER_HOME_WINDOW_XML));
+        Parent root = FXMLLoader.load(getClass().getResource(Windows.MANAGER_HOME_WINDOW.getValue()));
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
@@ -159,6 +137,53 @@ public class MainWindowController extends Application implements Initializable{
         main_window.setScene(home_page_scene);
         main_window.setTitle("欢迎管理员");
         main_window.show();
+    }
+
+    private void jumpToRegisterPage(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
+        // 根据窗体视图fxml文件创建一个场景
+        Scene home_page_scene = new Scene(root);
+        // 通过事件来源event source得到来源所在的窗体
+        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        main_window.setScene(home_page_scene);
+        main_window.setTitle("注册");
+        main_window.show();
+    }
+
+    /**
+     * 一些辅助方法
+     * */
+    private boolean isUser(){
+        if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("普通用户"))
+            return true;
+        else
+            return false;
+    }
+
+    private boolean isAdmin(){
+        if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("管理员用户"))
+            return true;
+        else
+            return false;
+    }
+
+    private boolean isVerified() {
+        String account = accountText.getText();
+        String password = pwdText.getText();
+        if (account.isEmpty() || password.isEmpty()) {
+            System.out.println("请输入正确的账号密码");
+            errorMessage.setVisible(true);
+            return false;
+        }else {
+            try {
+                userService.login(new User());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println(account+" "+ password);
+            errorMessage.setVisible(false);
+            return true;
+        }
     }
 
 }
