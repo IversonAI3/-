@@ -1,6 +1,8 @@
 package com.mycompany.controller;
 
 import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.bean.AbstractUser;
+import com.mycompany.model.bean.Admin;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -70,8 +69,10 @@ public class MainWindowController implements Initializable{
      * */
     /**
      * 这是当用户点击登录按钮时监听器调用的方法
+     * 执行两个操作：1.检查是用户还是管理员。 3.检查账户是否存在并验证密码
      * */
-    public void loginButtonClicked(ActionEvent event) throws IOException {
+    @FXML
+    private void loginButtonClicked(ActionEvent event) throws IOException {
         // 调用UserServiceImple的登录方法
         System.out.println("登录");
 //        userService.login();
@@ -86,7 +87,7 @@ public class MainWindowController implements Initializable{
             if(isVerified()){
                 if(isUser())
                     jumpToUserHomePage(event);
-                else if (isAdmin() )
+                else if (isAdmin())
                     jumpToManagerHomePage(event);
                 else
                     errorMessage.setText("请选择用户类型");
@@ -100,14 +101,16 @@ public class MainWindowController implements Initializable{
     /**
      * 这是当用户点击注册按钮时监听器调用的方法
      * */
-    public void registerButtonClicked(ActionEvent event) throws IOException {
+    @FXML
+    private void registerButtonClicked(ActionEvent event) throws IOException {
         jumpToRegisterPage(event);
     }
 
     /**
      * 这是当用户选择下拉列表中某一个选项时调用的方法
      * */
-    public String comboChanged(){
+    @FXML
+    private String comboChanged(){
         System.out.println(userTypeComboBox.getSelectionModel().getSelectedItem());
         return userTypeComboBox.getSelectionModel().getSelectedItem();
     }
@@ -170,20 +173,70 @@ public class MainWindowController implements Initializable{
     private boolean isVerified() {
         String account = accountText.getText();
         String password = pwdText.getText();
-        if (account.isEmpty() || password.isEmpty()) {
-            System.out.println("请输入正确的账号密码");
-            errorMessage.setVisible(true);
+        if (account.isEmpty() || password.isEmpty()) { // 如果没有输入密码或者账号
+            showAlert(Alert.AlertType.INFORMATION, "请输入账号密码");
             return false;
         }else {
-            try {
-                userService.login(new User());
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if(isUser() && ){
+
+            }else if(isAdmin()){
+
+            }else {
+
+            }
+            if(login(User.class, account,password)!=null){
+
             }
             System.out.println(account+" "+ password);
             errorMessage.setVisible(false);
             return true;
         }
+    }
+
+    /**
+     * 登录操作
+     * @param account 账号
+     * @param password 密码
+     * @return 返回true或false表示登录成功与否
+     * */
+    private AbstractUser login(Class c,String account, String password){
+        try {
+            AbstractUser obj =  c.newInstance();
+            obj.setAccount(account);
+            obj.setPassword(password);
+            if(obj instanceof User){
+                obj = (User) obj;
+            }else if(obj instanceof Admin){
+                obj = (Admin) obj;
+            }else {
+                return null;
+            }
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+             u = userService.login(u);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "登录错误");
+            return null;
+        }
+        return u;
+    }
+    /**
+     * 弹窗提示
+     * @param alertType 警告类型
+     * @param message 提示消息
+     * */
+    private void showAlert(Alert.AlertType alertType, String message){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setResizable(false);
+        alert.getDialogPane().setPrefSize(300,100);
+        alert.showAndWait();
     }
 
 }

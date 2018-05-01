@@ -1,9 +1,9 @@
 package com.mycompany.model.bean;
 
 public class Admin extends AbstractUser{
-    private int admin_id;
+    private Integer admin_id;
 
-    public Admin(String account, String name, String password, int admin_id) {
+    public Admin(String account, String name, String password, Integer admin_id) {
         super(account, name, password);
         this.admin_id = admin_id;
     }
@@ -11,11 +11,11 @@ public class Admin extends AbstractUser{
     public Admin() {
     }
 
-    public int getAdmin_id() {
+    public Integer getAdmin_id() {
         return admin_id;
     }
 
-    public void setAdmin_id(int admin_id) {
+    public void setAdmin_id(Integer admin_id) {
         this.admin_id = admin_id;
     }
 

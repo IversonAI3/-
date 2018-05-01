@@ -1,7 +1,7 @@
 package com.mycompany.model.bean;
 
 public class Card {
-    private int card_id;
+    private Integer card_id;
     private Double balance;
     private Short amount;
     private Short quota;
@@ -9,18 +9,18 @@ public class Card {
     public Card() {
     }
 
-    public Card(int card_id, Double balance, Short amount, Short quota) {
+    public Card(Integer card_id, Double balance, Short amount, Short quota) {
         this.card_id = card_id;
         this.balance = balance;
         this.amount = amount;
         this.quota = quota;
     }
 
-    public int getCard_id() {
+    public Integer getCard_id() {
         return card_id;
     }
 
-    public void setCard_id(int card_id) {
+    public void setCard_id(Integer card_id) {
         this.card_id = card_id;
     }
 

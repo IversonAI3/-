@@ -1,13 +1,13 @@
 package com.mycompany.model.bean;
 
 public class Book {
-    private int book_id;
+    private Integer book_id;
     private String title;
     private String author;
     private Double price;
     private Integer quantity;
 
-    public Book(int book_id, String title, String author, Double price, Integer quantity) {
+    public Book(Integer book_id, String title, String author, Double price, Integer quantity) {
         this.book_id = book_id;
         this.title = title;
         this.author = author;
@@ -17,12 +17,11 @@ public class Book {
 
     public Book() {}
 
-
-    public int getBook_id() {
+    public Integer getBook_id() {
         return book_id;
     }
 
-    public void setBook_id(int book_id) {
+    public void setBook_id(Integer book_id) {
         this.book_id = book_id;
     }
 

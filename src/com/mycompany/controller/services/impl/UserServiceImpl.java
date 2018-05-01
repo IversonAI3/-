@@ -1,6 +1,7 @@
 package com.mycompany.controller.services.impl;
 
-import com.mycompany.controller.services.UserService;
+import com.mycompany.controller.services.AbstractUserService;
+import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
@@ -11,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements AbstractUserService<User> {
     private Connection conn = JdbcUtils.getConnection();
     private UserDao userDao = new UserDaoImpl(); // 用户数据访问对象
 
@@ -30,23 +31,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean login(User u) throws SQLException {
-        User user = userDao.selectByAccount(conn,u.getAccount());
-        if(user!=null){
-            return true;
-        }
+    public User login(User user) throws SQLException {
+        User u = userDao.selectByAccount(conn,user.getAccount());
+        return u;
+    }
+
+    @Override
+    public boolean rename(User user) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean rename(User u) throws SQLException {
+    public boolean changePwd(User user) throws SQLException {
         return false;
     }
 
-    @Override
-    public boolean changePwd(User u) throws SQLException {
-        return false;
-    }
 
     @Override
     public List<Book> showAllBooks() throws SQLException {

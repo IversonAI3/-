@@ -1,15 +1,15 @@
 package com.mycompany.model.bean;
 
 public class Penalty {
-    private int penalty_id;
-    private int card_id;
-    private int record_id;
-    private int admin_id;
+    private Integer penalty_id;
+    private Integer card_id;
+    private Integer record_id;
+    private Integer admin_id;
     private Double amound;
 
     public Penalty() {}
 
-    public Penalty(int penalty_id, int card_id, int record_id, int admin_id, Double amound) {
+    public Penalty(Integer penalty_id, Integer card_id, Integer record_id, Integer admin_id, Double amound) {
         this.penalty_id = penalty_id;
         this.card_id = card_id;
         this.record_id = record_id;
@@ -17,35 +17,35 @@ public class Penalty {
         this.amound = amound;
     }
 
-    public int getPenalty_id() {
+    public Integer getPenalty_id() {
         return penalty_id;
     }
 
-    public void setPenalty_id(int penalty_id) {
+    public void setPenalty_id(Integer penalty_id) {
         this.penalty_id = penalty_id;
     }
 
-    public int getCard_id() {
+    public Integer getCard_id() {
         return card_id;
     }
 
-    public void setCard_id(int card_id) {
+    public void setCard_id(Integer card_id) {
         this.card_id = card_id;
     }
 
-    public int getRecord_id() {
+    public Integer getRecord_id() {
         return record_id;
     }
 
-    public void setRecord_id(int record_id) {
+    public void setRecord_id(Integer record_id) {
         this.record_id = record_id;
     }
 
-    public int getAdmin_id() {
+    public Integer getAdmin_id() {
         return admin_id;
     }
 
-    public void setAdmin_id(int admin_id) {
+    public void setAdmin_id(Integer admin_id) {
         this.admin_id = admin_id;
     }
 
