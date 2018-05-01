@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,14 +35,14 @@ public class MainWindowController implements Initializable{
     @FXML private Button loginButton = new Button();
     @FXML private Button registerButton = new Button();
     @FXML private ComboBox<String> userTypeComboBox = new ComboBox<>();
-    @FXML private Label errorMessage = new Label();
     @FXML private TextField accountText = new TextField();
     @FXML private TextField pwdText = new TextField();
 
     /**
      * 用这个来初始化用户类型下拉列表
      * */
-    private ObservableList<String> list = FXCollections.observableArrayList("普通用户","管理员用户");
+    private ObservableList<String> list
+            = FXCollections.observableArrayList(UserTypes.USER.getValue(), UserTypes.ADMIN.getValue());
 
     /**
      * 需要初始化一个UserServiceImpl来执行用户的操作
@@ -75,26 +76,20 @@ public class MainWindowController implements Initializable{
     private void loginButtonClicked(ActionEvent event) throws IOException {
         // 调用UserServiceImple的登录方法
         System.out.println("登录");
-//        userService.login();
-//        if(!verifyed) {
-//            errorMessage.setVisible(true);
-//            return;
-//
-//        }
-        // 获得窗体视图fxml文件
-        // 判断用户选择的是普通用户还是管理员用户
-        try {
-            if(isVerified()){
-                if(isUser())
-                    jumpToUserHomePage(event);
-                else if (isAdmin())
-                    jumpToManagerHomePage(event);
-                else
-                    errorMessage.setText("请选择用户类型");
-            }
-        }catch (NullPointerException e){
-            errorMessage.setText("请选择用户类型");
-            errorMessage.setVisible(true);
+        String account = accountText.getText();
+        String password = pwdText.getText();
+        String userType = userTypeComboBox.getSelectionModel().getSelectedItem();
+        if(userType==null){
+            showAlert(Alert.AlertType.WARNING,"请选择用户类型");
+            return;
+        }else if(account.isEmpty() || password.isEmpty()) { // 如果没有输入密码或者账号
+            showAlert(Alert.AlertType.WARNING, "请输入账号密码");
+            return;
+        }
+        if(userType.equals(UserTypes.USER.getValue())){
+            jumpToUserHomePage(event);
+        }else{
+            jumpToManagerHomePage(event);
         }
     }
 
@@ -103,7 +98,8 @@ public class MainWindowController implements Initializable{
      * */
     @FXML
     private void registerButtonClicked(ActionEvent event) throws IOException {
-        jumpToRegisterPage(event);
+//        jumpToRegisterPage(event);
+        handleRegisterButton(event);
     }
 
     /**
@@ -113,6 +109,15 @@ public class MainWindowController implements Initializable{
     private String comboChanged(){
         System.out.println(userTypeComboBox.getSelectionModel().getSelectedItem());
         return userTypeComboBox.getSelectionModel().getSelectedItem();
+    }
+
+    private void handleRegisterButton(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     /**
@@ -170,61 +175,6 @@ public class MainWindowController implements Initializable{
             return false;
     }
 
-    private boolean isVerified() {
-        String account = accountText.getText();
-        String password = pwdText.getText();
-        if (account.isEmpty() || password.isEmpty()) { // 如果没有输入密码或者账号
-            showAlert(Alert.AlertType.INFORMATION, "请输入账号密码");
-            return false;
-        }else {
-            if(isUser() && ){
-
-            }else if(isAdmin()){
-
-            }else {
-
-            }
-            if(login(User.class, account,password)!=null){
-
-            }
-            System.out.println(account+" "+ password);
-            errorMessage.setVisible(false);
-            return true;
-        }
-    }
-
-    /**
-     * 登录操作
-     * @param account 账号
-     * @param password 密码
-     * @return 返回true或false表示登录成功与否
-     * */
-    private AbstractUser login(Class c,String account, String password){
-        try {
-            AbstractUser obj =  c.newInstance();
-            obj.setAccount(account);
-            obj.setPassword(password);
-            if(obj instanceof User){
-                obj = (User) obj;
-            }else if(obj instanceof Admin){
-                obj = (Admin) obj;
-            }else {
-                return null;
-            }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        try {
-             u = userService.login(u);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "登录错误");
-            return null;
-        }
-        return u;
-    }
     /**
      * 弹窗提示
      * @param alertType 警告类型

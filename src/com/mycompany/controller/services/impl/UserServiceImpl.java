@@ -26,8 +26,8 @@ public class UserServiceImpl implements AbstractUserService<User> {
     }
 
     @Override
-    public boolean register() throws SQLException {
-        return false;
+    public User register(User user) throws SQLException {
+        return null;
     }
 
     @Override
@@ -37,15 +37,14 @@ public class UserServiceImpl implements AbstractUserService<User> {
     }
 
     @Override
-    public boolean rename(User user) throws SQLException {
-        return false;
+    public User rename(User user) throws SQLException {
+        return null;
     }
 
     @Override
-    public boolean changePwd(User user) throws SQLException {
-        return false;
+    public User changePwd(User user) throws SQLException {
+        return null;
     }
-
 
     @Override
     public List<Book> showAllBooks() throws SQLException {

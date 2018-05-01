@@ -11,25 +11,24 @@ import java.util.List;
 
 public class AdminServiceImpl implements AbstractUserService<Admin>{
 
-
     @Override
-    public boolean register() throws SQLException {
-        return false;
-    }
-
-    @Override
-    public User login(Admin admin) throws SQLException {
+    public Admin register(Admin admin) throws SQLException {
         return null;
     }
 
     @Override
-    public boolean rename(Admin admin) throws SQLException {
-        return false;
+    public Admin login(Admin admin) throws SQLException {
+        return null;
     }
 
     @Override
-    public boolean changePwd(Admin admin) throws SQLException {
-        return false;
+    public Admin rename(Admin admin) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Admin changePwd(Admin admin) throws SQLException {
+        return null;
     }
 
     @Override

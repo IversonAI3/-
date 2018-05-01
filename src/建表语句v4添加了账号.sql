@@ -66,7 +66,7 @@ CREATE TABLE `Penalty`(
 	amount NUMERIC(5,2) NOT NULL,
 	FOREIGN KEY (card_id) REFERENCES Card(card_id),
 	FOREIGN KEY (record_id) REFERENCES Record(record_id),
-	FOREIGN KEY (admin_id) REFERENCES Admin(admin_id)
+	FOREIGN KEY (admin_id) REFERENCES `Admin`(admin_id)
 ) AUTO_INCREMENT 1;
 
 
@@ -99,9 +99,9 @@ INSERT INTO book VALUES(NULL, 'JVM详解','未知',75.5, DEFAULT);
 INSERT INTO book VALUES(NULL, '十万个为什么',NULL,77.5, DEFAULT);
 
 -- 编号， 用户名， 密码
-INSERT INTO admin VALUES(NULL, 'admin1','陶怡', 'abcd');
-INSERT INTO admin VALUES(NULL, 'admin2','金新', '4321');
-INSERT INTO admin VALUES(NULL, 'admin3','赵飞', '1234');
+INSERT INTO `Admin` VALUES(NULL, 'admin1','陶怡', 'abcd');
+INSERT INTO `Admin` VALUES(NULL, 'admin2','金新', '4321');
+INSERT INTO `Admin` VALUES(NULL, 'admin3','赵飞', '1234');
 
 
 -- 借阅记录 			 记录号 卡号  书号  借时间 还时间
