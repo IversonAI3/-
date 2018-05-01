@@ -2,17 +2,13 @@ package com.mycompany.controller;
 
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.impl.UserServiceImpl;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.mycompany.model.bean.AbstractUser;
+import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -44,17 +40,21 @@ public class RegisterWindowController implements Initializable{
     }
 
     public void register(ActionEvent event) throws SQLException {
-//        userService.register();
+       userService = new UserServiceImpl();
+       AbstractUser u = new User();
+       u.setAccount(account.getText());
+       u.setPassword(password.getText());
+       userService.register(u);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        account = new TextField();
+        password = new TextField();
         try {
             userService = new UserServiceImpl();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
 }

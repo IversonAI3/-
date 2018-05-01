@@ -27,6 +27,11 @@ public class UserServiceImpl implements AbstractUserService<User> {
 
     @Override
     public User register(User user) throws SQLException {
+        String account = user.getAccount();
+        User u = userDao.selectByAccount(conn, account);
+        if(u!=null){
+            return u;
+        }
         return null;
     }
 
