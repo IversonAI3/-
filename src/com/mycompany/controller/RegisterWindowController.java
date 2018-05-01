@@ -26,11 +26,7 @@ public class RegisterWindowController implements Initializable{
     @FXML private TextField password;
     @FXML private Button registerButton;
     @FXML private Button backButton;
-    @FXML private ComboBox<String> registerComboBox = new ComboBox<>();
 
-
-    private ObservableList<String> list
-            = FXCollections.observableArrayList(UserTypes.USER.getValue(),UserTypes.ADMIN.getValue());
 
     private AbstractUserService userService;
 
@@ -53,7 +49,6 @@ public class RegisterWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        registerComboBox.setItems(list);
         try {
             userService = new UserServiceImpl();
         } catch (SQLException e) {
@@ -62,9 +57,4 @@ public class RegisterWindowController implements Initializable{
 
     }
 
-    @FXML
-    private void comboBoxOnChange(){
-        String type = registerComboBox.getSelectionModel().getSelectedItem();
-        System.out.println(type);
-    }
 }
