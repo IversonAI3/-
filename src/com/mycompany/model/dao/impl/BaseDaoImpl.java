@@ -36,9 +36,9 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
     }
     @Override
     public int update(Connection conn, T t) throws SQLException {
-
         return 0;
     }
+
     @Override
     public int deleteById(Connection conn, int id) throws SQLException {
         Class c = this.getClassType();

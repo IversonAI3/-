@@ -32,11 +32,10 @@ public class UserServiceImpl implements AbstractUserService<User> {
         User u = findByAccount(user);
         if(u!=null){
             System.out.println("用户已经存在"+u.getAccount()+"，不允许注册");
-            return u;
+            return null;
         }
         System.out.println("用户不存在，可以注册");
-        createRecord(user);
-        return user;
+        return createRecord(user);
     }
 
     @Override
@@ -86,15 +85,43 @@ public class UserServiceImpl implements AbstractUserService<User> {
         return null;
     }
 
+    @Override
+    public User findByAccountAndPassword(AbstractUser user) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        String account = user.getAccount();
+        String password = user.getPassword();
+        sb.append("SELECT * FROM `user` WHERE `account` = '")
+                .append(account)
+                .append("' AND `password` = '").append(password).append("';");
+        System.out.println(sb.toString());
+        try {
+            ResultSet resultSet = conn.createStatement().executeQuery(sb.toString());
+            if(!resultSet.next()){
+                user = null;
+            }else{
+                user = new User();
+                user.setAccount(resultSet.getString(2));
+                user.setPassword(resultSet.getString(4));
+                ((User)user).setType_id(resultSet.getInt(6));
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return (User) user;
+    }
+
 
     /**
      * 登录：至少需要三个参数: 账号,密码,账户类型
      * */
     private User createRecord(User u) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO `user` VALUEs(DEFAULT ")
-                .append(u.getAccount()).append(" DEFAULT ")
-                .append(u.getPassword()).append(" NULL NULLL);");
+        sb.append("INSERT INTO `user` VALUEs(DEFAULT, '")
+                .append(u.getAccount()).append("', DEFAULT, '")
+                .append(u.getPassword()).append("', NULL, 1);");
+        System.out.println(sb);
         conn.createStatement().executeUpdate(sb.toString());
         return u;
     }

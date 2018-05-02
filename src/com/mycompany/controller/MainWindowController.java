@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import com.mycompany.controller.services.impl.AdminServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Admin;
@@ -24,7 +25,6 @@ import java.util.ResourceBundle;
 
 /* MainController 对应 Main：程序的入口和主窗口 */
 public class MainWindowController implements Initializable{
-
     /**
      * 主窗体中的4个组件。变量名必须和fxml文件中对应元素的id属性一致。
      * loginButton：登录按钮
@@ -48,11 +48,12 @@ public class MainWindowController implements Initializable{
      * 需要初始化一个UserServiceImpl来执行用户的操作
      * */
     private static UserServiceImpl userService;
-
+    private static AdminServiceImpl adminService;
     static {
         System.out.println("程序开始加载...");
         try {
             userService = new UserServiceImpl();
+            adminService = new AdminServiceImpl();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,7 +74,7 @@ public class MainWindowController implements Initializable{
      * 执行两个操作：1.检查是用户还是管理员。 3.检查账户是否存在并验证密码
      * */
     @FXML
-    private void loginButtonClicked(ActionEvent event) throws IOException {
+    private void loginButtonClicked(ActionEvent event) throws IOException, SQLException {
         // 调用UserServiceImple的登录方法
         System.out.println("登录");
         String account = accountText.getText();
@@ -87,11 +88,58 @@ public class MainWindowController implements Initializable{
             return;
         }
         if(userType.equals(UserTypes.USER.getValue())){
-            jumpToUserHomePage(event);
+            if(verifyAccount(UserTypes.USER,account,password)!=null)
+                jumpToUserHomePage(event);
+            else
+                showAlert(Alert.AlertType.WARNING,"账号或密码错误");
         }else{
-            jumpToManagerHomePage(event);
+            if(verifyAccount(UserTypes.ADMIN,account,password)!=null)
+                jumpToManagerHomePage(event);
+            else
+                showAlert(Alert.AlertType.WARNING,"账号或密码错误");
+        }
+        /*
+        * userService = new UserServiceImpl();
+       String account_input = account.getText();
+       String pwd_input = password.getText();
+       if(account_input.isEmpty() || pwd_input.isEmpty()){
+           showAlert(Alert.AlertType.ERROR, "请输入账户和密码");
+           return;
+       }
+       User u = new User();
+       u.setAccount(account_input);
+       u.setPassword(pwd_input);
+
+       if(userService.register(u)!=null){
+           showAlert(Alert.AlertType.INFORMATION, "注册成功");
+       }else {
+           showAlert(Alert.AlertType.WARNING, "该用户名已经存在");
+       }*/
+    }
+
+    private AbstractUser verifyAccount(UserTypes ut,String account, String pwd) throws SQLException {
+        AbstractUser user;
+        if(ut.getValue().equals("普通用户")){
+            user = new User();
+            user.setAccount(account);
+            user.setPassword(pwd);
+            if(userService.findByAccountAndPassword(user)==null){
+                System.out.println("账户或密码不正确");
+                return null;
+            }
+            return user;
+        }else{
+            user = new Admin();
+            user.setAccount(account);
+            user.setPassword(pwd);
+            if(adminService.findByAccountAndPassword(user)==null){
+                System.out.println("账户或密码不正确");
+                return null;
+            }
+            return user;
         }
     }
+
 
     /**
      * 这是当用户点击注册按钮时监听器调用的方法

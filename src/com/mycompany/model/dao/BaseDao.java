@@ -8,7 +8,6 @@ import java.util.List;
 * Base Data Access Object是一个父类接口，规定了所有的Service都必须要使用的基本操作
 * */
 public interface BaseDao<T> {
-
     /**
      * 在数据库中插入一行数据
      * @param conn 连接对象， t 要插入的对象

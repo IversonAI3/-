@@ -10,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class RegisterWindowController implements Initializable{
@@ -39,7 +41,7 @@ public class RegisterWindowController implements Initializable{
 //        main_window.show();
     }
 
-    public void register(ActionEvent event) throws SQLException {
+    public void register(ActionEvent event) throws SQLException, IOException {
        userService = new UserServiceImpl();
        String account_input = account.getText();
        String pwd_input = password.getText();
@@ -50,8 +52,7 @@ public class RegisterWindowController implements Initializable{
        User u = new User();
        u.setAccount(account_input);
        u.setPassword(pwd_input);
-
-       if(userService.register(u)==null){ // 如果是null代表数据库中没有找到此用户，允许注册
+       if(userService.register(u)!=null){
            showAlert(Alert.AlertType.INFORMATION, "注册成功");
        }else {
            showAlert(Alert.AlertType.WARNING, "该用户名已经存在");
@@ -78,6 +79,11 @@ public class RegisterWindowController implements Initializable{
         alert.setContentText(message);
         alert.setResizable(false);
         alert.getDialogPane().setPrefSize(300,100);
-        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                alert.close();
+            }
+        });
     }
 }
