@@ -35,7 +35,8 @@ public class UserServiceImpl implements AbstractUserService<User> {
             return u;
         }
         System.out.println("用户不存在，可以注册");
-        return null;
+        createRecord(user);
+        return user;
     }
 
     @Override
@@ -89,5 +90,12 @@ public class UserServiceImpl implements AbstractUserService<User> {
     /**
      * 登录：至少需要三个参数: 账号,密码,账户类型
      * */
-
+    private User createRecord(User u) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO `user` VALUEs(DEFAULT ")
+                .append(u.getAccount()).append(" DEFAULT ")
+                .append(u.getPassword()).append(" NULL NULLL);");
+        conn.createStatement().executeUpdate(sb.toString());
+        return u;
+    }
 }
