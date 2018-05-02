@@ -33,7 +33,8 @@ public class RegisterWindowController implements Initializable{
         window.close();
     }
 
-    public void register(ActionEvent event) throws SQLException, IOException {
+    @FXML
+    private void register(ActionEvent event) throws SQLException, IOException {
        userService = new UserServiceImpl();
        String account_input = account.getText();
        String pwd_input = password.getText();
@@ -46,6 +47,7 @@ public class RegisterWindowController implements Initializable{
        u.setPassword(pwd_input);
        if(userService.register(u)!=null){
            showAlert(Alert.AlertType.INFORMATION, "注册成功");
+           backToMainWindow(event);
        }else {
            showAlert(Alert.AlertType.WARNING, "该用户名已经存在");
        }
@@ -71,11 +73,11 @@ public class RegisterWindowController implements Initializable{
         alert.setContentText(message);
         alert.setResizable(false);
         alert.getDialogPane().setPrefSize(300,100);
-        Optional<ButtonType> result = alert.showAndWait();
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 alert.close();
             }
         });
     }
+
 }

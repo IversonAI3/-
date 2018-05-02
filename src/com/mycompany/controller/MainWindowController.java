@@ -87,13 +87,14 @@ public class MainWindowController implements Initializable{
             showAlert(Alert.AlertType.WARNING, "请输入账号密码");
             return;
         }
+        AbstractUser user;
         if(userType.equals(UserTypes.USER.getValue())){
-            if(verifyAccount(UserTypes.USER,account,password)!=null)
-                jumpToUserHomePage(event);
+            if((user = verifyAccount(UserTypes.USER,account,password))!=null)
+                jumpToUserHomePage(event, (User) user);
             else
                 showAlert(Alert.AlertType.WARNING,"账号或密码错误");
         }else{
-            if(verifyAccount(UserTypes.ADMIN,account,password)!=null)
+            if((user = verifyAccount(UserTypes.ADMIN,account,password))!=null)
                 jumpToManagerHomePage(event);
             else
                 showAlert(Alert.AlertType.WARNING,"账号或密码错误");
@@ -169,21 +170,26 @@ public class MainWindowController implements Initializable{
     }
 
     /**
-     * 下面两个方法用来打开新的场景
-     * jumpToUserHomePage：调到用户主界面
-     * jumpToManagerHomePage：调到管理员主界面
+     * 跳到用户主界面
      * */
-    private void jumpToUserHomePage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
+    private void jumpToUserHomePage(ActionEvent event, User u) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
+        Parent root = loader.load();
+        UserHomeWindowController uc = loader.getController();
+        uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
         Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         main_window.setScene(home_page_scene);
-        main_window.setTitle("欢迎用户: ");
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
         main_window.show();
     }
 
+    /**
+     * 跳到管理员主界面
+     * */
     private void jumpToManagerHomePage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(Windows.MANAGER_HOME_WINDOW.getValue()));
         // 根据窗体视图fxml文件创建一个场景
@@ -195,6 +201,9 @@ public class MainWindowController implements Initializable{
         main_window.show();
     }
 
+    /**
+     * 跳到注册界面
+     * */
     private void jumpToRegisterPage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
         // 根据窗体视图fxml文件创建一个场景

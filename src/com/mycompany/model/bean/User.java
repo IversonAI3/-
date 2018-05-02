@@ -43,6 +43,9 @@ public class User extends AbstractUser{
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("userId=").append(userId);
+        sb.append(", account='").append(this.getAccount()).append('\'');
+        sb.append(", name='").append(this.getName()).append('\'');
+        sb.append(", password='").append(this.getPassword()).append('\'');
         sb.append(", card_id=").append(card_id);
         sb.append(", type_id=").append(type_id);
         sb.append('}');

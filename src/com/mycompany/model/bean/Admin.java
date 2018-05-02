@@ -23,6 +23,9 @@ public class Admin extends AbstractUser{
     public String toString() {
         final StringBuilder sb = new StringBuilder("Admin{");
         sb.append("admin_id=").append(admin_id);
+        sb.append(", account='").append(this.getAccount()).append('\'');
+        sb.append(", name='").append(this.getName()).append('\'');
+        sb.append(", password='").append(this.getPassword()).append('\'');
         sb.append('}');
         return sb.toString();
     }
