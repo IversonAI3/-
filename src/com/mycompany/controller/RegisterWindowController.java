@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -22,7 +23,6 @@ public class RegisterWindowController implements Initializable{
     @FXML private TextField password;
     @FXML private Button registerButton;
     @FXML private Button backButton;
-
 
     private AbstractUserService userService;
 
@@ -41,20 +41,45 @@ public class RegisterWindowController implements Initializable{
 
     public void register(ActionEvent event) throws SQLException {
        userService = new UserServiceImpl();
-       AbstractUser u = new User();
-       u.setAccount(account.getText());
-       u.setPassword(password.getText());
-       userService.register(u);
+       String account_input = account.getText();
+       String pwd_input = password.getText();
+       if(account_input.isEmpty() || pwd_input.isEmpty()){
+           showAlert(Alert.AlertType.ERROR, "请输入账户和密码");
+           return;
+       }
+       User u = new User();
+       u.setAccount(account_input);
+       u.setPassword(pwd_input);
+
+       if(userService.register(u)==null){ // 如果是null代表数据库中没有找到此用户，允许注册
+           showAlert(Alert.AlertType.INFORMATION, "注册成功");
+       }else {
+           showAlert(Alert.AlertType.WARNING, "该用户名已经存在");
+       }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        account = new TextField();
-        password = new TextField();
+//        account = new TextField();
+//        password = new TextField();
         try {
             userService = new UserServiceImpl();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 弹窗提示
+     * @param alertType 警告类型
+     * @param message 提示消息
+     * */
+    private void showAlert(Alert.AlertType alertType, String message){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setResizable(false);
+        alert.getDialogPane().setPrefSize(300,100);
+        alert.showAndWait();
     }
 }

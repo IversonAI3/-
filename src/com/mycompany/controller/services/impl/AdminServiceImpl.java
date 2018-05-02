@@ -17,6 +17,11 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     }
 
     @Override
+    public Admin findByAccount(Admin admin) {
+        return null;
+    }
+
+    @Override
     public Admin login(Admin admin) throws SQLException {
         return null;
     }

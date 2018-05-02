@@ -11,6 +11,7 @@ import java.util.List;
 public interface AbstractUserService<T extends AbstractUser> {
     /* 用户的注册行为 */
     T register(T t) throws SQLException;
+    T findByAccount(T t);
     /**
      * 用户的登录行为
      * 如果登录成功：返回登录的那个User对象，如果失败返回null

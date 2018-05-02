@@ -9,6 +9,7 @@ import com.mycompany.model.dao.impl.UserDaoImpl;
 import com.mycompany.model.jdbc.JdbcUtils;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -28,11 +29,39 @@ public class UserServiceImpl implements AbstractUserService<User> {
     @Override
     public User register(User user) throws SQLException {
         String account = user.getAccount();
-        User u = userDao.selectByAccount(conn, account);
+        User u = findByAccount(user);
         if(u!=null){
+            System.out.println("用户已经存在"+u.getAccount()+"，不允许注册");
             return u;
         }
+        System.out.println("用户不存在，可以注册");
         return null;
+    }
+
+    @Override
+    public User findByAccount(User user) {
+        StringBuilder sb = new StringBuilder();
+        String account = user.getAccount();
+        sb.append("SELECT * FROM `user` WHERE `account` = '")
+                .append(account)
+                .append("';");
+        System.out.println(sb.toString());
+        try {
+            ResultSet resultSet = conn.createStatement().executeQuery(sb.toString());
+            if(!resultSet.next()){
+                user = null;
+            }else{
+                user = new User();
+                user.setAccount(resultSet.getString(2));
+                user.setPassword(resultSet.getString(4));
+                user.setType_id(resultSet.getInt(6));
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return user;
     }
 
     @Override
