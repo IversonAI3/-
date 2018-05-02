@@ -60,8 +60,6 @@ public class RegisterWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        account = new TextField();
-//        password = new TextField();
         try {
             userService = new UserServiceImpl();
         } catch (SQLException e) {
