@@ -68,8 +68,8 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
                 user = null;
             }else{
                 user = new Admin();
-                user.setAccount(resultSet.getString(1));
-                user.setPassword(resultSet.getString(4));
+                user.setAccount(resultSet.getString("account"));
+                user.setPassword(resultSet.getString("password"));
                 System.out.println(user);
             }
         } catch (SQLException e) {

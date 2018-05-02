@@ -100,9 +100,9 @@ public class UserServiceImpl implements AbstractUserService<User> {
                 user = null;
             }else{
                 user = new User();
-                user.setAccount(resultSet.getString(2));
-                user.setPassword(resultSet.getString(4));
-                ((User)user).setType_id(resultSet.getInt(6));
+                user.setAccount(resultSet.getString("account"));
+                user.setPassword(resultSet.getString("password"));
+                ((User)user).setType_id(resultSet.getInt("type_id"));
                 System.out.println(user);
             }
         } catch (SQLException e) {

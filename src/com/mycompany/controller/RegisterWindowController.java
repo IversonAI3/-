@@ -31,14 +31,6 @@ public class RegisterWindowController implements Initializable{
     public void backToMainWindow(ActionEvent event) throws IOException {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
-//        Parent root = FXMLLoader.load(getClass().getResource(Windows.MAIN_WINDOW.getValue()));
-//        // 根据窗体视图fxml文件创建一个场景
-//        Scene home_page_scene = new Scene(root);
-//        // 通过事件来源event source得到来源所在的窗体
-//        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        main_window.setScene(home_page_scene);
-//        main_window.setTitle("注册");
-//        main_window.show();
     }
 
     public void register(ActionEvent event) throws SQLException, IOException {
