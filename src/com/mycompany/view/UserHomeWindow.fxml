@@ -20,7 +20,7 @@
             </Label>
             <HBox prefHeight="62.0" prefWidth="598.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="申请借书卡">
+                  <Button fx:id="getCardButton" mnemonicParsing="false" onAction="#getCardButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="申请借书卡">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
                      </HBox.margin>

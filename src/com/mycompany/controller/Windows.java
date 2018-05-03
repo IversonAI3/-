@@ -9,7 +9,8 @@ public enum Windows {
     MANAGER_HOME_WINDOW("../view/ManagerHomeWindow.fxml"),
     USER_HOME_WINDOW("../view/UserHomeWindow.fxml"),
     REGISTER_WINDOW("../view/RegisterWindow.fxml"),
-    USER_INFO_WINDOW("../view/UserInfoWindow.fxml");
+    USER_INFO_WINDOW("../view/UserInfoWindow.fxml"),
+    GET_CARD_WINDOW("../view/GetCardWindow.fxml");
     private String value;
 
 
