@@ -10,7 +10,7 @@
    <content>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="650.0" style="-fx-background-color: orange;" text="欢迎回来" textAlignment="CENTER" textFill="#fffefe">
+            <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="648.0" style="-fx-background-color: orange;" text="欢迎回来" textAlignment="CENTER" textFill="#fffefe">
                <font>
                   <Font size="22.0" />
                </font>
@@ -18,50 +18,6 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <HBox prefHeight="38.0" prefWidth="650.0">
-               <children>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="29.0" prefWidth="119.0" style="-fx-background-color: orange;" text="借书卡：" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label contentDisplay="CENTER" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: orange;" text="无" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="73.0" prefWidth="90.0" style="-fx-background-color: orange;" text="余额：￥" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label contentDisplay="CENTER" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: orange;" text="0.0" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="67.0" prefWidth="90.0" style="-fx-background-color: orange;" text="限额：" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label contentDisplay="CENTER" prefHeight="60.0" prefWidth="90.0" style="-fx-background-color: orange;" text="0" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label contentDisplay="CENTER" prefHeight="29.0" prefWidth="112.0" style="-fx-background-color: orange;" text="用户类型：" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label contentDisplay="CENTER" prefHeight="51.0" prefWidth="90.0" style="-fx-background-color: orange;" text="学生" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
             <HBox prefHeight="62.0" prefWidth="598.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="申请借书卡">
@@ -72,7 +28,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="个人资料">
+                  <Button fx:id="infoButton" mnemonicParsing="false" onAction="#infoButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="个人资料">
                      <HBox.margin>
                         <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
                      </HBox.margin>
@@ -98,7 +54,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox prefHeight="70.0" prefWidth="598.0">
+            <HBox prefHeight="48.0" prefWidth="648.0">
                <children>
                   <TextField prefHeight="60.0" prefWidth="531.0" promptText="请输入书名">
                      <HBox.margin>

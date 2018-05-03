@@ -32,6 +32,7 @@ public class UserHomeWindowController implements Initializable{
 
     @FXML private Button logoutButton;
     @FXML private Button searchButton;
+    @FXML private Button infoButton;
     @FXML private Label label = new Label();
     @FXML private TableView<Book> tableView;
     @FXML private TableColumn<User, Integer> columnBookID;
@@ -65,6 +66,10 @@ public class UserHomeWindowController implements Initializable{
         loadDataFromDatabase();
     }
 
+    @FXML
+    private void infoButtonOnClick(ActionEvent event){
+        System.out.println("显示个人信息");
+    }
     /**
      * 这个方法用来在不同的窗口之间传递User信息
      * 注意：这个方法在initialize()方法之后被调用
