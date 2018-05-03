@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book findByTitle() {
-        return null;
+    public List<Book> findByTitle(String title) {
+        return bookDao.selectByTitle(conn,title);
     }
 
     @Override

@@ -13,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -33,6 +30,7 @@ public class UserHomeWindowController implements Initializable{
     @FXML private Button logoutButton;
     @FXML private Button searchButton;
     @FXML private Button infoButton;
+    @FXML private TextField searchField;
     @FXML private Label label = new Label();
     @FXML private TableView<Book> tableView;
     @FXML private TableColumn<User, Integer> columnBookID;
@@ -57,7 +55,6 @@ public class UserHomeWindowController implements Initializable{
         // 通过事件来源event source得到来源所在的窗体
         Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         main_window.setScene(home_page_scene);
-        main_window.setTitle("注册");
         main_window.show();
     }
 
@@ -66,10 +63,6 @@ public class UserHomeWindowController implements Initializable{
         loadDataFromDatabase();
     }
 
-    @FXML
-    private void infoButtonOnClick(ActionEvent event){
-        System.out.println("显示个人信息");
-    }
     /**
      * 这个方法用来在不同的窗口之间传递User信息
      * 注意：这个方法在initialize()方法之后被调用
@@ -89,9 +82,32 @@ public class UserHomeWindowController implements Initializable{
 
     private void loadDataFromDatabase(){
         tableView.getItems().clear(); // 先清空表格，再添加数据
-        List<Book> bookList =bookService.selectAllBooks();
-        data.addAll(bookList);
+        String title = searchField.getText();
+        List<Book> bookList;
+        if(title.isEmpty())
+            bookList = bookService.selectAllBooks();
+        else
+            bookList = bookService.findByTitle(title);
+        data.setAll(bookList);
         tableView.setItems(data);
+    }
 
+    private void jumpToInfoWindow(ActionEvent event, User user) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.USER_INFO_WINDOW.getValue()));
+        Parent root = loader.load();
+        UserInfoWindowController uc = loader.getController();
+        uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+        // 根据窗体视图fxml文件创建一个场景
+        Scene home_page_scene = new Scene(root);
+        // 通过事件来源event source得到来源所在的窗体
+        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        main_window.setScene(home_page_scene);
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
+        main_window.show();
+    }
+    @FXML
+    private void infoButtonOnClick(ActionEvent event) throws IOException {
+        jumpToInfoWindow(event, u);
     }
 }

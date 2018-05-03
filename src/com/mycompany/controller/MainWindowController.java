@@ -121,21 +121,16 @@ public class MainWindowController implements Initializable{
     private AbstractUser verifyAccount(UserTypes ut,String account, String pwd) throws SQLException {
         AbstractUser user;
         if(ut.getValue().equals("普通用户")){
-            user = new User();
-            user.setAccount(account);
-            user.setPassword(pwd);
-            if(userService.findByAccountAndPassword(user)==null){
+            if((user = userService.findByAccountAndPassword(account, pwd))==null){
                 System.out.println("账户或密码不正确");
-                return null;
             }
             return user;
         }else{
             user = new Admin();
             user.setAccount(account);
             user.setPassword(pwd);
-            if(adminService.findByAccountAndPassword(user)==null){
+            if((user = adminService.findByAccountAndPassword(account,pwd))==null){
                 System.out.println("账户或密码不正确");
-                return null;
             }
             return user;
         }

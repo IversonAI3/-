@@ -5,6 +5,8 @@ import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Admin;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
+import com.mycompany.model.dao.AdminDao;
+import com.mycompany.model.dao.impl.AdminDaoImpl;
 import com.mycompany.model.jdbc.JdbcUtils;
 
 import java.sql.Connection;
@@ -13,11 +15,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AdminServiceImpl implements AbstractUserService<Admin>{
-    private static Connection conn;
+    private Connection conn;
+    private AdminDao adminDao = new AdminDaoImpl();
 
-    static {
+    public AdminServiceImpl(){
         try {
-            conn = JdbcUtils.getConnection();
+            this.conn = JdbcUtils.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -29,7 +32,7 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     }
 
     @Override
-    public Admin findByAccount(Admin admin) {
+    public Admin findByAccount(String account) {
         return null;
     }
 
@@ -39,14 +42,15 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     }
 
     @Override
-    public Admin rename(Admin admin) throws SQLException {
+    public Admin rename(Admin admin, String name) throws SQLException {
         return null;
     }
 
     @Override
-    public Admin changePwd(Admin admin) throws SQLException {
+    public Admin changePwd(Admin admin, String pwd) throws SQLException {
         return null;
     }
+
 
     @Override
     public List<Book> showAllBooks() throws SQLException {
@@ -54,28 +58,9 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     }
 
     @Override
-    public Admin findByAccountAndPassword(AbstractUser user) throws SQLException {
-        StringBuilder sb = new StringBuilder();
-        String account = user.getAccount();
-        String password = user.getPassword();
-        sb.append("SELECT * FROM `admin` WHERE `account` = '")
-                .append(account)
-                .append("' AND `password` = '").append(password).append("';");
-        System.out.println(sb.toString());
-        try {
-            ResultSet resultSet = conn.createStatement().executeQuery(sb.toString());
-            if(!resultSet.next()){
-                user = null;
-            }else{
-                user = new Admin();
-                user.setAccount(resultSet.getString("account"));
-                user.setPassword(resultSet.getString("password"));
-                System.out.println(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return (Admin) user;
+    public Admin findByAccountAndPassword(String account, String pwd) throws SQLException {
+        Admin admin = adminDao.selectByAccountAndPassword(conn,account,pwd);
+        System.out.println(admin);
+        return admin;
     }
 }

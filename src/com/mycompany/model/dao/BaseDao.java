@@ -13,14 +13,14 @@ public interface BaseDao<T> {
      * @param conn 连接对象， t 要插入的对象
      * @return 返回一个int表示受影响的行数
      * */
-    int insert(Connection conn, T t) throws SQLException;
+    T insert(Connection conn, T t) throws SQLException;
 
     /**
      * 在数据库中更新一行数据
      * @param conn 连接对象， t 一个新对象，代表要插入的数据
      * @return 返回一个int表示受影响的行数
      * */
-    int update(Connection conn, T t) throws SQLException;
+    T update(Connection conn, T t) throws SQLException;
 
     /**
      * 在数据库中删除一行数据
@@ -49,6 +49,4 @@ public interface BaseDao<T> {
      * @return 返回一个int表示总共有多少行
      * */
     int selectCount(Connection conn) throws SQLException;
-
-    void test(Connection conn) throws SQLException;
 }

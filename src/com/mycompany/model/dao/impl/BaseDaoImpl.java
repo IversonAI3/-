@@ -1,5 +1,6 @@
 package com.mycompany.model.dao.impl;
 
+import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.BaseDao;
 
 import java.lang.reflect.Field;
@@ -14,7 +15,7 @@ import java.util.*;
 
 public class BaseDaoImpl<T> implements BaseDao<T>{
     @Override
-    public int insert(Connection conn, T t) throws SQLException {
+    public T insert(Connection conn, T t) throws SQLException {
         Class c = this.getClassType();
         // 先拿到所有的get方法
         List<Method> getters = this.getGetters(c);
@@ -22,21 +23,19 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
         List<String> columnNames = this.getColumnNames(conn, c);
         StringBuilder sb = new StringBuilder();
         // "INSERT INTO table(" + ") VALUES(" + );
-        sb.append("INSERT INTO ")
+        sb.append("INSERT INTO `")
                 .append(c.getSimpleName())
-                .append("(");
-        StringBuilder condition = new StringBuilder();
-        condition.append("(");
+                .append("`VALUES(");
         for(int i=0;i<columnNames.size();i++){
             sb.append(columnNames.get(i));
             if(i!=columnNames.size()-1) //如果不是最后一列
                 sb.append(",");
         }
-        return 0;
+        return null;
     }
     @Override
-    public int update(Connection conn, T t) throws SQLException {
-        return 0;
+    public T update(Connection conn, T t) throws SQLException {
+        return t;
     }
 
     @Override
@@ -176,21 +175,6 @@ public class BaseDaoImpl<T> implements BaseDao<T>{
         }
         return 0;
     }
-
-    @Override
-    public void test(Connection conn) throws SQLException {
-        Class c = this.getClassType();
-//		this.getColumnNames(conn, c).forEach(s -> System.out.println(s));
-//		System.out.println(selectCount(conn));
-//		this.getSetters(c).forEach(s-> System.out.println(s.getName()));
-//		this.getGetters(c).forEach(g-> System.out.println(g.getName().replace("get","")));
-//		this.getFieldNames(c).forEach(f-> System.out.println(f));
-//		this.getFieldTypes(c).forEach(t-> System.out.println(t.getSimpleName()));
-        System.out.println(this.findById(conn,2));
-        System.out.println(this.findById(conn,5));
-        System.out.println(this.findById(conn,9));
-    }
-
 
     /*==================辅助方法=====================*/
     /**

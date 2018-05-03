@@ -2,6 +2,9 @@ package com.mycompany.model.dao;
 
 import com.mycompany.model.bean.Book;
 
-public interface BookDao extends BaseDao<Book>{
+import java.sql.Connection;
+import java.util.List;
 
+public interface BookDao extends BaseDao<Book>{
+    List<Book> selectByTitle(Connection connection, String title);
 }
