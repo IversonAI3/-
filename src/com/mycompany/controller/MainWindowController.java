@@ -175,11 +175,11 @@ public class MainWindowController implements Initializable{
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
-        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        main_window.setScene(home_page_scene);
-        main_window.setTitle("线上图书管系统");
-        main_window.setResizable(false);
-        main_window.show();
+        Stage user_home_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        user_home_window.setScene(home_page_scene);
+        user_home_window.setTitle("线上图书管系统");
+        user_home_window.setResizable(false);
+        user_home_window.show();
     }
 
     /**

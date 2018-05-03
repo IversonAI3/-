@@ -2,7 +2,9 @@ package com.mycompany.controller;
 
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.BookService;
+import com.mycompany.controller.services.CardService;
 import com.mycompany.controller.services.impl.BookServiceImpl;
+import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
@@ -28,7 +30,8 @@ import java.util.ResourceBundle;
 public class UserHomeWindowController implements Initializable{
     private User u;
     private BookService bookService = new BookServiceImpl();
-    private AbstractUserService userService;
+    private CardService cardService = new CardServiceImpl();
+    private UserServiceImpl userService;
     private ObservableList<Book> data;
 
     @FXML private Button logoutButton;
@@ -43,6 +46,7 @@ public class UserHomeWindowController implements Initializable{
     @FXML private TableColumn<User, Integer> columnAuthor;
     @FXML private TableColumn<User, Double> columnPrice;
     @FXML private TableColumn<User, Integer> columnQuantity;
+
 
 
     @Override
@@ -133,7 +137,8 @@ public class UserHomeWindowController implements Initializable{
             return;
         }
         try {
-            u = userService.getNewCard(u);
+            u = userService.getNewCard(u, cardService.createCard());
+            System.out.println(u);
             System.out.println("获得借书卡!");
         } catch (SQLException e) {
             e.printStackTrace();

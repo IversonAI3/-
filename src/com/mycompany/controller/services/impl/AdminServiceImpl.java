@@ -64,8 +64,4 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
         return admin;
     }
 
-    @Override
-    public User getNewCard(User user) throws SQLException {
-        return null;
-    }
 }

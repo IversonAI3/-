@@ -1,5 +1,6 @@
 package com.mycompany.model.dao;
 
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 
 import java.sql.Connection;
@@ -45,5 +46,5 @@ public interface UserDao extends BaseDao<User>{
      * 更新用户的借书卡
      * 注意：新用户申请一张借书卡时必须先在借书卡表中创建借书卡
      * */
-    User updateCard(Connection conn, User u) throws SQLException;
+    User updateCard(Connection conn, User u,Card card) throws SQLException;
 }

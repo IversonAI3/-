@@ -3,6 +3,7 @@ package com.mycompany.controller.services.impl;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
 import com.mycompany.model.dao.impl.UserDaoImpl;
@@ -97,9 +98,15 @@ public class UserServiceImpl implements AbstractUserService<User> {
 //        return (User) user;
     }
 
-    @Override
-    public User getNewCard(User user) throws SQLException {
-        return userDao.updateCard(conn,user);
+    /**
+     * 用户独有的方法
+     * @param card 接受一个借书卡对象作为参数
+     * @param user 接受一个用户作为参数，将借书卡和用户绑定
+     * @return 返回一个绑定好借书卡的用户
+     * */
+    public User getNewCard(User user, Card card) throws SQLException {
+        System.out.println(card);
+        return userDao.updateCard(conn,user, card);
     }
 
     /**

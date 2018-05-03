@@ -1,5 +1,6 @@
 package com.mycompany.model.dao.impl;
 
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
 
@@ -112,13 +113,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     }
 
     @Override
-    public User updateCard(Connection conn, User u) throws SQLException {
+    public User updateCard(Connection conn, User u, Card card) throws SQLException {
         // UPDATE Person SET Address = '?', City = '?' WHERE LastName = '?'
         StringBuilder sb = new StringBuilder();
         System.out.println(u);
-        Integer cardID = getMaxCardNoById(conn,u.getUserId())+1;
-        u.setCard_id(cardID);
-        sb.append("UPDATE `user` SET `card_id`='").append(cardID)
+//        Integer cardID = getMaxCardNoById(conn,u.getUserId())+1;
+//        u.setCard_id(cardID);
+        Integer cardId = card.getCard_id();
+        sb.append("UPDATE `user` SET `card_id`='").append(cardId)
                 .append("' WHERE  `account`='").append(u.getAccount()).append("';");
         System.out.println(sb);
         conn.createStatement().executeUpdate(sb.toString());
