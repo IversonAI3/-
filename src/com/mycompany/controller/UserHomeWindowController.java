@@ -134,16 +134,16 @@ public class UserHomeWindowController implements Initializable{
         System.out.println(u);
         if(u.getCard_id()!=0){
             showAlert(Alert.AlertType.INFORMATION,"已经拥有一张借书卡！");
-            return;
+
         }
         try {
             u = userService.getNewCard(u, cardService.createCard());
-            System.out.println(u);
             System.out.println("获得借书卡!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         gc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+        System.out.println(u);
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
