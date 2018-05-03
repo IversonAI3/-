@@ -75,7 +75,6 @@ public class UserServiceImpl implements AbstractUserService<User> {
         User u = userDao.selectByAccountAndPassword(conn,account,pwd);
         System.out.println("UserServiceImpl.findByAccountAndPassword: "+u);
         return u;
-
 //        sb.append("SELECT * FROM `user` WHERE `account` = '")
 //                .append(account)
 //                .append("' AND `password` = '").append(password).append("';");
@@ -98,6 +97,10 @@ public class UserServiceImpl implements AbstractUserService<User> {
 //        return (User) user;
     }
 
+    @Override
+    public User getNewCard(User user) throws SQLException {
+        return userDao.updateCard(conn,user);
+    }
 
     /**
      * 登录：至少需要三个参数: 账号,密码,账户类型

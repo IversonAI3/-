@@ -111,5 +111,41 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return u;
     }
 
+    @Override
+    public User updateCard(Connection conn, User u) throws SQLException {
+        // UPDATE Person SET Address = '?', City = '?' WHERE LastName = '?'
+        StringBuilder sb = new StringBuilder();
+        System.out.println(u);
+        Integer cardID = getMaxCardNoById(conn,u.getUserId())+1;
+        u.setCard_id(cardID);
+        sb.append("UPDATE `user` SET `card_id`='").append(cardID)
+                .append("' WHERE  `account`='").append(u.getAccount()).append("';");
+        System.out.println(sb);
+        conn.createStatement().executeUpdate(sb.toString());
+        return u;
+    }
+
+    /**
+     * 通过user_id得到当前用户表中最大的借书卡号
+     * */
+    private Integer getMaxCardNoById(Connection conn, Integer id){
+        StringBuilder sql = new StringBuilder();
+        Class c = this.getClassType();
+        String tableName = c.getSimpleName();
+        sql.append("SELECT MAX(card_id) ")
+                .append("FROM `").append(tableName).append("`;");
+        System.out.println(sql);
+        ResultSet rs;
+        try {
+            rs = conn.createStatement().executeQuery(sql.toString());
+            if(!rs.next()){
+                return null;
+            }
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

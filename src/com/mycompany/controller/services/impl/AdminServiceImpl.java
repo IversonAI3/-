@@ -63,4 +63,9 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
         System.out.println(admin);
         return admin;
     }
+
+    @Override
+    public User getNewCard(User user) throws SQLException {
+        return null;
+    }
 }

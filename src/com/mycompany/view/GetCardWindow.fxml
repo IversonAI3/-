@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="385.0" prefWidth="298.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.view.GetCardWindow">
+<AnchorPane prefHeight="385.0" prefWidth="298.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.GetCardWindowController">
    <children>
       <VBox prefHeight="435.0" prefWidth="477.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,7 +23,7 @@
                   <Image url="@../../../QRCode.jpg" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="314.0" stylesheets="@RegisterWindow.css" text="确认充值￥100.00">
+            <Button fx:id="confirmPayment" mnemonicParsing="false" onAction="#confirmPaymentOnClick" prefHeight="66.0" prefWidth="314.0" stylesheets="@RegisterWindow.css" text="确认充值￥100.00">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

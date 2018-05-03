@@ -1,7 +1,9 @@
 package com.mycompany.controller;
 
+import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.BookService;
 import com.mycompany.controller.services.impl.BookServiceImpl;
+import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
@@ -19,12 +21,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserHomeWindowController implements Initializable{
     private User u;
     private BookService bookService = new BookServiceImpl();
+    private AbstractUserService userService;
     private ObservableList<Book> data;
 
     @FXML private Button logoutButton;
@@ -45,7 +49,12 @@ public class UserHomeWindowController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         data = FXCollections.observableArrayList();
         setTableCell();
-        System.out.println("loaded");
+        try {
+            userService = new UserServiceImpl();
+            System.out.println("用户主界面加载成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -116,8 +125,20 @@ public class UserHomeWindowController implements Initializable{
     private void getCardButtonOnClick(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.GET_CARD_WINDOW.getValue()));
         Parent root = loader.load();
-        UserInfoWindowController uc = loader.getController();
-        uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+        GetCardWindowController gc = loader.getController();
+        // to do 添加借书卡，并且更新数据库
+        System.out.println(u);
+        if(u.getCard_id()!=0){
+            showAlert(Alert.AlertType.INFORMATION,"已经拥有一张借书卡！");
+            return;
+        }
+        try {
+            u = userService.getNewCard(u);
+            System.out.println("获得借书卡!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        gc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
@@ -126,5 +147,19 @@ public class UserHomeWindowController implements Initializable{
         main_window.setTitle("线上图书管系统");
         main_window.setResizable(false);
         main_window.show();
+    }
+
+    /**
+     * 弹窗提示
+     * @param alertType 警告类型
+     * @param message 提示消息
+     * */
+    private void showAlert(Alert.AlertType alertType, String message){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.setResizable(false);
+        alert.getDialogPane().setPrefSize(300,100);
+        alert.showAndWait();
     }
 }

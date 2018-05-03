@@ -25,4 +25,5 @@ public interface AbstractUserService<T extends AbstractUser> {
     /* 用户的查询所有书的行为 */
     List<Book> showAllBooks() throws SQLException;
     T findByAccountAndPassword(String account, String pwd) throws SQLException;
+    User getNewCard(User user) throws SQLException;
 }
