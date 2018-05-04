@@ -1,11 +1,7 @@
 package com.mycompany.controller;
 
-import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.BookService;
-import com.mycompany.controller.services.CardService;
 import com.mycompany.controller.services.impl.BookServiceImpl;
-import com.mycompany.controller.services.impl.CardServiceImpl;
-import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
@@ -19,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,17 +27,18 @@ import java.util.ResourceBundle;
 public class UserHomeWindowController implements Initializable{
     private User u;
     private BookService bookService = new BookServiceImpl();
-    private CardService cardService = new CardServiceImpl();
-    private UserServiceImpl userService;
-    private ObservableList<Book> data;
-
+    private ObservableList<Book> bookData;
+    private ObservableList<Book> borrowedBookData;
     @FXML private Button logoutButton;
     @FXML private Button searchButton;
     @FXML private Button infoButton;
     @FXML private Button getCardButton;
+    @FXML private Button borrowButton;
+
     @FXML private TextField searchField;
     @FXML private Label label = new Label();
     @FXML private TableView<Book> tableView;
+    @FXML private TableView<Book> borrowTableView;
     @FXML private TableColumn<User, Integer> columnBookID;
     @FXML private TableColumn<User, Integer> columnTitle;
     @FXML private TableColumn<User, Integer> columnAuthor;
@@ -51,14 +49,10 @@ public class UserHomeWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        data = FXCollections.observableArrayList();
+        System.out.println(u);
+        bookData = FXCollections.observableArrayList();
+        borrowedBookData = FXCollections.observableArrayList();
         setTableCell();
-        try {
-            userService = new UserServiceImpl();
-            System.out.println("用户主界面加载成功");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -74,7 +68,7 @@ public class UserHomeWindowController implements Initializable{
 
     @FXML
     private void searchButtonOnClick(ActionEvent event){
-        loadDataFromDatabase();
+        loadSearchResult();
     }
 
     /**
@@ -94,7 +88,10 @@ public class UserHomeWindowController implements Initializable{
         columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     }
 
-    private void loadDataFromDatabase(){
+    /**
+     * 用搜索结果填充表格
+     * */
+    private void loadSearchResult(){
         tableView.getItems().clear(); // 先清空表格，再添加数据
         String title = searchField.getText();
         List<Book> bookList;
@@ -102,8 +99,23 @@ public class UserHomeWindowController implements Initializable{
             bookList = bookService.selectAllBooks();
         else
             bookList = bookService.findByTitle(title);
-        data.setAll(bookList);
-        tableView.setItems(data);
+        bookData.setAll(bookList);
+        tableView.setItems(bookData);
+    }
+
+    /**
+     * 用户借的所有书的信息填充表格
+     * @param u*/
+    public void loadBorrowedBooks(User u){
+        borrowTableView.getItems().clear();
+        try {
+            List<Book> bookList = bookService.selectBorrowedBooksByUser(u);
+            bookList.forEach(book -> System.out.println(book));
+            borrowedBookData.setAll(bookList);
+            borrowTableView.setItems(bookData);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void jumpToInfoWindow(ActionEvent event, User user) throws IOException {
@@ -114,12 +126,31 @@ public class UserHomeWindowController implements Initializable{
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
-        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage main_window = new Stage();
         main_window.setScene(home_page_scene);
+        main_window.initModality(Modality.APPLICATION_MODAL);
+        main_window.initOwner(infoButton.getScene().getWindow());
         main_window.setTitle("线上图书管系统");
         main_window.setResizable(false);
-        main_window.show();
+        main_window.showAndWait();
     }
+
+    private void openQRCodeWindow(ActionEvent event, User user) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.GET_CARD_WINDOW.getValue()));
+        Parent root = loader.load();
+        GetCardWindowController gc = loader.getController();
+        gc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+        Scene home_page_scene = new Scene(root);
+        Stage main_window = new Stage();
+        main_window.setScene(home_page_scene);
+        main_window.initModality(Modality.APPLICATION_MODAL);
+        main_window.initOwner(infoButton.getScene().getWindow());
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
+        main_window.showAndWait();
+    }
+
     @FXML
     private void infoButtonOnClick(ActionEvent event) throws IOException {
         jumpToInfoWindow(event, u);
@@ -127,31 +158,11 @@ public class UserHomeWindowController implements Initializable{
 
     @FXML
     private void getCardButtonOnClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.GET_CARD_WINDOW.getValue()));
-        Parent root = loader.load();
-        GetCardWindowController gc = loader.getController();
-        // to do 添加借书卡，并且更新数据库
-        System.out.println(u);
         if(u.getCard_id()!=0){
             showAlert(Alert.AlertType.INFORMATION,"已经拥有一张借书卡！");
-
+            return;
         }
-        try {
-            u = userService.getNewCard(u, cardService.createCard());
-            System.out.println("获得借书卡!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        gc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
-        System.out.println(u);
-        // 根据窗体视图fxml文件创建一个场景
-        Scene home_page_scene = new Scene(root);
-        // 通过事件来源event source得到来源所在的窗体
-        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        main_window.setScene(home_page_scene);
-        main_window.setTitle("线上图书管系统");
-        main_window.setResizable(false);
-        main_window.show();
+        openQRCodeWindow(event, u);
     }
 
     /**
@@ -167,4 +178,12 @@ public class UserHomeWindowController implements Initializable{
         alert.getDialogPane().setPrefSize(300,100);
         alert.showAndWait();
     }
+
+    @FXML
+    private void borrowButtonOnClick(ActionEvent event) {
+        Book book = tableView.getSelectionModel().getSelectedItem();
+        System.out.println(book);
+    }
+
+
 }

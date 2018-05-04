@@ -172,6 +172,7 @@ public class MainWindowController implements Initializable{
         Parent root = loader.load();
         UserHomeWindowController uc = loader.getController();
         uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+        uc.loadBorrowedBooks(u);
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体

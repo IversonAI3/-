@@ -23,7 +23,6 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         return selectByAccount(conn,u.getAccount());
     }
 
-
     @Override
     public User selectByAccount(Connection conn, String acccount) {
         StringBuilder sql = new StringBuilder();
@@ -117,13 +116,15 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         // UPDATE Person SET Address = '?', City = '?' WHERE LastName = '?'
         StringBuilder sb = new StringBuilder();
         System.out.println(u);
-//        Integer cardID = getMaxCardNoById(conn,u.getUserId())+1;
-//        u.setCard_id(cardID);
-        Integer cardId = card.getCard_id();
-        sb.append("UPDATE `user` SET `card_id`='").append(cardId)
-                .append("' WHERE  `account`='").append(u.getAccount()).append("';");
-        System.out.println(sb);
-        conn.createStatement().executeUpdate(sb.toString());
+        if(u.getCard_id()==0){
+            System.out.println(u+"-> updateCard()");
+            Integer cardId = card.getCard_id();
+            sb.append("UPDATE `user` SET `card_id`='").append(cardId)
+                    .append("' WHERE  `account`='").append(u.getAccount()).append("';");
+            conn.createStatement().executeUpdate(sb.toString());
+            u.setCard_id(cardId);
+            System.out.println(u+"-> 更新后");
+        }
         return u;
     }
 

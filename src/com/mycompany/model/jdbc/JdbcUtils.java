@@ -13,13 +13,23 @@ import java.sql.SQLException;
 public class JdbcUtils {
 
     private static ComboPooledDataSource pool = new ComboPooledDataSource();
-
+    private static Connection connection;
     /**
      * 缺少一个关闭数据库连接，释放资源的方法。
      * 只能依靠c3p0自动关闭和释放。
      * */
+    static {
+        if (connection==null) {
+            try {
+                connection = pool.getConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public static Connection getConnection() throws SQLException {
-        return pool.getConnection();
+        System.out.println("获得连接Connection: "+connection.toString());
+        return connection;
     }
 }

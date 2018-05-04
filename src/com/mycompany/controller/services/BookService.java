@@ -1,7 +1,9 @@
 package com.mycompany.controller.services;
 
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface BookService {
@@ -12,4 +14,8 @@ public interface BookService {
      * */
     List<Book> findByTitle(String title);
     List<Book> selectAllBooks();
+    /**
+     * 查找某一个用户借的所有书
+     * */
+    List<Book> selectBorrowedBooksByUser(User u) throws SQLException;
 }

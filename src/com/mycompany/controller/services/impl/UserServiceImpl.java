@@ -105,8 +105,7 @@ public class UserServiceImpl implements AbstractUserService<User> {
      * @return 返回一个绑定好借书卡的用户
      * */
     public User getNewCard(User user, Card card) throws SQLException {
-        System.out.println(card);
-        return userDao.updateCard(conn,user, card);
+        return userDao.updateCard(conn,user,card);
     }
 
     /**

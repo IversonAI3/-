@@ -6,9 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserHomeWindowController">
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserHomeWindowController">
    <content>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox prefHeight="676.0" prefWidth="648.0">
          <children>
             <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="648.0" style="-fx-background-color: orange;" text="欢迎回来" textAlignment="CENTER" textFill="#fffefe">
                <font>
@@ -68,7 +68,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="tableView" prefHeight="437.0" prefWidth="598.0">
+            <TableView fx:id="tableView" prefHeight="234.0" prefWidth="648.0">
               <columns>
                 <TableColumn fx:id="columnBookID" prefWidth="109.0" text="编号" />
                 <TableColumn fx:id="columnTitle" prefWidth="210.0" text="书名" />
@@ -77,7 +77,21 @@
                   <TableColumn fx:id="columnQuantity" prefWidth="92.0" text="数量" />
               </columns>
             </TableView>
-            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="663.0" stylesheets="@RegisterWindow.css" text="借阅">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="648.0" style="-fx-background-color: orange;" text="您的借书信息" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <TableView fx:id="borrowTableView" prefHeight="234.0" prefWidth="648.0">
+               <columns>
+                  <TableColumn fx:id="columnBookID1" prefWidth="109.0" text="编号" />
+                  <TableColumn fx:id="columnTitle1" prefWidth="210.0" text="书名" />
+                  <TableColumn fx:id="columnAuthor1" prefWidth="142.0" text="作者" />
+                  <TableColumn fx:id="columnPrice1" prefWidth="94.0" text="价格" />
+                  <TableColumn fx:id="columnQuantity1" prefWidth="92.0" text="数量" />
+               </columns>
+            </TableView>
+            <Button fx:id="borrowButton" mnemonicParsing="false" onAction="#borrowButtonOnClick" prefHeight="44.0" prefWidth="663.0" stylesheets="@RegisterWindow.css" text="借阅">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
