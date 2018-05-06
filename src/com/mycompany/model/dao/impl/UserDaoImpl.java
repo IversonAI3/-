@@ -5,15 +5,15 @@ import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
-
     @Override
-    public User insertUser(Connection conn, User u) throws SQLException {
+    public User insert(Connection conn, User u) throws SQLException {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO `user` VALUES(DEFAULT, '")
                 .append(u.getAccount()).append("', DEFAULT, '")
@@ -115,15 +115,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
     public User updateCard(Connection conn, User u, Card card) throws SQLException {
         // UPDATE Person SET Address = '?', City = '?' WHERE LastName = '?'
         StringBuilder sb = new StringBuilder();
-        System.out.println(u);
         if(u.getCard_id()==0){
-            System.out.println(u+"-> updateCard()");
             Integer cardId = card.getCard_id();
             sb.append("UPDATE `user` SET `card_id`='").append(cardId)
                     .append("' WHERE  `account`='").append(u.getAccount()).append("';");
             conn.createStatement().executeUpdate(sb.toString());
             u.setCard_id(cardId);
-            System.out.println(u+"-> 更新后");
         }
         return u;
     }
@@ -151,4 +148,18 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         }
     }
 
+    @Override
+    public User update(Connection conn, User user) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public User delete(Connection conn, User user) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public User find(Connection conn, User user) throws SQLException {
+        return null;
+    }
 }

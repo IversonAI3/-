@@ -63,6 +63,9 @@ public class AdminDaoImpl extends BaseDaoImpl<Admin> implements AdminDao{
         }
     }
 
+    /**
+     * Admin管理员的增删改不允许用过程序操作
+     * */
     @Override
     public Admin insert(Connection conn, Admin admin) throws SQLException {
         return null;
@@ -70,6 +73,16 @@ public class AdminDaoImpl extends BaseDaoImpl<Admin> implements AdminDao{
 
     @Override
     public Admin update(Connection conn, Admin admin) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Admin delete(Connection conn, Admin admin) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Admin find(Connection conn, Admin admin) throws SQLException {
         return null;
     }
 }

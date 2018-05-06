@@ -1,5 +1,7 @@
 package com.mycompany.model.bean;
 
+import java.util.Objects;
+
 public class Book {
     private Integer book_id;
     private String title;
@@ -66,5 +68,21 @@ public class Book {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // 只有当title和author都完全相同时，两本书才是完全相同的
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(title, book.title) &&
+                Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        // 用title和author来得到hash code，意味着title和author的组合必须是unique唯一的
+        return Objects.hash(title, author);
     }
 }

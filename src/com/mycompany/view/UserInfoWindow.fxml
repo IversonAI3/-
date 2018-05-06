@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,11 +9,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="369.0" prefWidth="409.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserInfoWindowController">
+<AnchorPane prefHeight="414.0" prefWidth="174.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserInfoWindowController">
    <children>
-      <VBox layoutX="49.0" layoutY="-19.0" prefHeight="396.0" prefWidth="409.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="49.0" layoutY="-19.0" prefHeight="397.0" prefWidth="477.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="67.0" prefWidth="409.0" style="-fx-background-color: orange;" text="个人信息" textFill="WHITE">
+            <Label alignment="CENTER" minWidth="409.0" prefHeight="29.0" prefWidth="409.0" style="-fx-background-color: orange;" text="个人信息" textFill="WHITE" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="22.0" />
                </font>
@@ -111,12 +112,12 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonOnClick" prefHeight="108.0" prefWidth="418.0" stylesheets="@RegisterWindow.css" text="确认">
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonOnClick" prefHeight="14.0" prefWidth="399.0" stylesheets="@RegisterWindow.css" text="返回">
                <font>
                   <Font size="20.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
                </VBox.margin>
             </Button>
          </children>

@@ -12,7 +12,13 @@ public interface UserDao extends BaseDao<User>{
      * 通过账号来查找一个用户，账号是唯一的
      * @return 返回查找到的User对象
      * */
-    User insertUser(Connection conn, User user) throws SQLException;
+    User insert(Connection conn, User user) throws SQLException;
+    /**
+     * 通过账号来查找用户
+     * @param acccount 用户账号
+     * @param conn 数据库连接对象
+     * @return 用找到的用户的数据创建一个用户对象并返回这个对象
+     * */
     User selectByAccount(Connection conn, String acccount) throws SQLException;
     /**
      * 通过账号和密码来查找一个用户，可以用来验证账号密码
@@ -41,7 +47,6 @@ public interface UserDao extends BaseDao<User>{
      * @return 返回修改好的用户对象
      * */
     User updatePassword(Connection conn, User u, String password) throws SQLException;
-
     /**
      * 更新用户的借书卡
      * 注意：新用户申请一张借书卡时必须先在借书卡表中创建借书卡

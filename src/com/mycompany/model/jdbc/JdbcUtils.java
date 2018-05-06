@@ -6,29 +6,33 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * 这是一个JDBC工具类
+ * JdbcUtils是一个JDBC静态工具类
  * 使用c3p0来获得一个ComboPooledDataSource资源池
  * 可以从资源池中获得数据源DataSource，也可以直接获得一个数据库连接对象Connection
+ * 注意: 缺少一个关闭数据库连接释放资源的方法。只能依靠c3p0自动关闭和释放。
  * */
 public class JdbcUtils {
 
     private static ComboPooledDataSource pool = new ComboPooledDataSource();
     private static Connection connection;
-    /**
-     * 缺少一个关闭数据库连接，释放资源的方法。
-     * 只能依靠c3p0自动关闭和释放。
-     * */
+
     static {
-        if (connection==null) {
-            try {
-                connection = pool.getConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try{
+            connection = pool.getConnection();
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    /**
+     * 禁止实例化一个工具类
+     * */
+    private JdbcUtils(){}
+    /**
+     * 通过c3p0直接获得一个Connection对象
+     * @return Connection对象
+     * */
+    public static Connection getConnection(){
         System.out.println("获得连接Connection: "+connection.toString());
         return connection;
     }

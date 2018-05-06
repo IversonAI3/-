@@ -1,6 +1,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.controller.services.AbstractUserService;
+import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
  * */
 public class UserInfoWindowController implements Initializable{
     User user;
-    private AbstractUserService userService;
+    private AbstractUserService userService = new UserServiceImpl();
     @FXML private Label userIdLabel;
     @FXML private Label userTypeLabel;
     @FXML private Label userAccountLabel;
@@ -40,22 +41,17 @@ public class UserInfoWindowController implements Initializable{
     @FXML private TextField pwdField;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            userService = new UserServiceImpl();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
     private void saveNameOnClick(ActionEvent event){
         String name = nameField.getText();
         if(name.isEmpty())
-            showAlert(Alert.AlertType.WARNING, "姓名不能为空");
+            WindowsUtil.showAlert(Alert.AlertType.WARNING, "姓名不能为空");
         else{
             try {
                 userService.rename(user,name);
-                showAlert(Alert.AlertType.INFORMATION, "姓名成功修改成："+nameField.getText());
+                WindowsUtil.showAlert(Alert.AlertType.INFORMATION, "姓名成功修改成："+nameField.getText());
                 userNameLabel.setText("姓名："+name);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -64,19 +60,7 @@ public class UserInfoWindowController implements Initializable{
     }
 
     @FXML
-    private void confirmButtonOnClick(ActionEvent event) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
-//        Parent root = loader.load();
-//        UserHomeWindowController uc = loader.getController();
-//        uc.setUser(user); // 设置用户登录窗口中的User对象，以此来传递数据
-//        // 根据窗体视图fxml文件创建一个场景
-//        Scene home_page_scene = new Scene(root);
-//        // 通过事件来源event source得到来源所在的窗体
-//        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        main_window.setScene(home_page_scene);
-//        main_window.setTitle("线上图书管系统");
-//        main_window.setResizable(false);
-//        main_window.show();
+    private void confirmButtonOnClick(ActionEvent event){
         Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         main_window.close();
     }
@@ -85,11 +69,11 @@ public class UserInfoWindowController implements Initializable{
     private void savePwdOnClick(ActionEvent event){
         String password = pwdField.getText();
         if(password.isEmpty())
-            showAlert(Alert.AlertType.WARNING, "密码不能为空");
+            WindowsUtil.showAlert(Alert.AlertType.WARNING, "密码不能为空");
         else{
             try {
                 userService.changePwd(user,password);
-                showAlert(Alert.AlertType.INFORMATION, "密码成功修改成："+pwdField.getText());
+                WindowsUtil.showAlert(Alert.AlertType.INFORMATION, "密码成功修改成："+pwdField.getText());
                 userPasswordLabel.setText("用户密码："+password);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -103,22 +87,8 @@ public class UserInfoWindowController implements Initializable{
         userIdLabel.setText(userIdLabel.getText()+(u.getUserId()));
         userTypeLabel.setText(userTypeLabel.getText()+(u.getUserId()==1?"学生":"教师"));
         userAccountLabel.setText(userAccountLabel.getText()+u.getAccount());
-        userNameLabel.setText(userNameLabel.getText()+u.getName());
+        userNameLabel.setText(userNameLabel.getText()+(u.getName()==null?"":u.getName()));
         userPasswordLabel.setText(userPasswordLabel.getText()+u.getPassword());
-        userCardLabel.setText(userCardLabel.getText()+u.getCard_id());
+        userCardLabel.setText(userCardLabel.getText()+(u.getCard_id()==0?"无":u.getCard_id()));
     }
-    /**
-     * 弹窗提示
-     * @param alertType 警告类型
-     * @param message 提示消息
-     * */
-    private void showAlert(Alert.AlertType alertType, String message){
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.setResizable(false);
-        alert.getDialogPane().setPrefSize(300,100);
-        alert.showAndWait();
-    }
-
 }

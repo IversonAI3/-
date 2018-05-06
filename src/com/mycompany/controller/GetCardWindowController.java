@@ -23,15 +23,10 @@ import java.util.ResourceBundle;
 public class GetCardWindowController implements Initializable{
     User u;
     private CardService cardService = new CardServiceImpl();
-    private UserServiceImpl userService;
+    private UserServiceImpl userService = new UserServiceImpl();
     @FXML private Button confirmPayment;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            userService = new UserServiceImpl();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML

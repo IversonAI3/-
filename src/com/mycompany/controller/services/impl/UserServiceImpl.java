@@ -1,29 +1,34 @@
 package com.mycompany.controller.services.impl;
 
 import com.mycompany.controller.services.AbstractUserService;
-import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.Card;
+import com.mycompany.model.bean.Record;
 import com.mycompany.model.bean.User;
-import com.mycompany.model.dao.UserDao;
+import com.mycompany.model.dao.*;
+import com.mycompany.model.dao.impl.BookDaoImpl;
+import com.mycompany.model.dao.impl.CardDaoImpl;
+import com.mycompany.model.dao.impl.RecordDaoImpl;
 import com.mycompany.model.dao.impl.UserDaoImpl;
 import com.mycompany.model.jdbc.JdbcUtils;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements AbstractUserService<User> {
     private Connection conn;
     private UserDao userDao = new UserDaoImpl(); // 用户数据访问对象
+    private RecordDao recordDao = new RecordDaoImpl();
+    private BookDao bookDao = new BookDaoImpl();
+    private CardDao cardDao = new CardDaoImpl();
 
     public void setUserDao(UserDao userDao){
         this.userDao = userDao;
     }
 
     // 实例化UserServiceImpl的时候获取一个数据库连接对象
-    public UserServiceImpl() throws SQLException{
+    public UserServiceImpl() {
         this.conn = JdbcUtils.getConnection();
     }
 
@@ -36,7 +41,7 @@ public class UserServiceImpl implements AbstractUserService<User> {
             return null;
         }
         System.out.println("用户不存在，可以注册, 调用UserServiceImple insert()方法");
-        return userDao.insertUser(conn,user);
+        return userDao.insert(conn,user);
     }
 
     @Override
@@ -109,15 +114,36 @@ public class UserServiceImpl implements AbstractUserService<User> {
     }
 
     /**
-     * 登录：至少需要三个参数: 账号,密码,账户类型
+     * 用户借书，包括两个操作，1.创建借书记录Record对象 2.
+     * 如果书的数量少于或等于0，或者如果借书卡的额度少于或等于0 => 借书失败
+     * @return 如果借书成功返回true，如果失败返回false
      * */
-//    private User createRecord(User u) throws SQLException {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("INSERT INTO `user` VALUEs(DEFAULT, '")
-//                .append(u.getAccount()).append("', DEFAULT, '")
-//                .append(u.getPassword()).append("', NULL, 1);");
-//        System.out.println(sb);
-//        conn.createStatement().executeUpdate(sb.toString());
-//        return u;
-//    }
+    public boolean borrowBook(User user, Card card, Book book) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        Integer quantity = book.getQuantity(); // 书的数量
+        Short quota = card.getQuota(); // 借书卡的额度
+        Short amount = card.getAmount(); // 已借的书的数量
+        if(quantity <= 0 || quota <= 0 || amount>5 )
+            return false;
+        book.setQuantity(quantity-1);
+        bookDao.update(conn, book);
+        card.setQuota((short) (quota-1));
+        card.setAmount((short) (amount+1));
+        cardDao.update(conn,card);
+        Record record = new Record();
+        record.setBook_id(book.getBook_id());
+        record.setCard_id(card.getCard_id());
+        record.setBorrow_time(TimestampUtils.getBorrowTime().toString());
+        if(user.getType_id()==1) // 1代表学生 2代表教师
+            record.setReturn_time(TimestampUtils.getReturnTime(21).toString());
+        else
+            record.setReturn_time(TimestampUtils.getReturnTime(14).toString());
+        System.out.println(record);
+        recordDao.insert(conn, record);
+        return true;
+    }
+
+    public List<Record> getAllRecords(Card card) throws SQLException{
+        return recordDao.selectByCardId(conn, card);
+    }
 }

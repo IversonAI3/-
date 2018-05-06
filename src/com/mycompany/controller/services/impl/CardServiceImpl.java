@@ -12,14 +12,10 @@ import java.sql.SQLException;
 
 public class CardServiceImpl implements CardService{
     private CardDao cardDao = new CardDaoImpl();
-    private Connection connection;
+    private Connection connection ;
 
     public CardServiceImpl() {
-        try {
-            connection = JdbcUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connection = JdbcUtils.getConnection();
     }
 
     @Override
@@ -28,6 +24,16 @@ public class CardServiceImpl implements CardService{
             Card card = cardDao.insertCard(connection);
             System.out.println(card);
             return card;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Card getCardById(int card_id) {
+        try {
+            return cardDao.selectCardByCardId(connection,card_id);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

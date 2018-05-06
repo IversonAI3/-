@@ -12,12 +12,12 @@
    <children>
       <VBox layoutX="101.0" layoutY="42.0" prefHeight="322.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="475.0" text="请输入用户名和密码" textFill="#360f0f">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="89.0" prefWidth="475.0" style="-fx-background-color: orange;" text="输入用户名和密码完成注册" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="25.0" top="25.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
             <TextField fx:id="account" prefHeight="83.0" prefWidth="475.0" promptText="用户名">

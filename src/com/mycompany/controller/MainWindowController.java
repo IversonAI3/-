@@ -1,9 +1,13 @@
 package com.mycompany.controller;
 
+import com.mycompany.controller.services.CardService;
+import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.AdminServiceImpl;
+import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.Admin;
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,105 +49,70 @@ public class MainWindowController implements Initializable{
             = FXCollections.observableArrayList(UserTypes.USER.getValue(), UserTypes.ADMIN.getValue());
 
     /**
-     * 需要初始化一个UserServiceImpl来执行用户的操作
+     * 需要初始化UserServiceImpl和AdminServiceImpl来执行用户登录的操作
      * */
-    private static UserServiceImpl userService;
-    private static AdminServiceImpl adminService;
-    static {
-        System.out.println("程序开始加载...");
-        try {
-            userService = new UserServiceImpl();
-            adminService = new AdminServiceImpl();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private static UserServiceImpl userService = new UserServiceImpl();
+    private static AdminServiceImpl adminService = new AdminServiceImpl();
+    private static CardService cardService = new CardServiceImpl();
 
     /**
      * 在程序开始之后做一些初始化工作
      * */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userTypeComboBox.setItems(list);
+        userTypeComboBox.setItems(list); // 设置下拉列表的选项
     }
-    /**
-     * 主窗体中的组件的监听器方法，当监听到事件时调用这些方法
-     * */
+    // ====================主窗体中的组件的监听器方法，当监听到事件时调用这些方法====================
     /**
      * 这是当用户点击登录按钮时监听器调用的方法
-     * 执行两个操作：1.检查是用户还是管理员。 3.检查账户是否存在并验证密码
+     * 执行两个操作：1.检查是用户还是管理员。 2.检查账户是否存在并验证密码
      * */
     @FXML
     private void loginButtonClicked(ActionEvent event) throws IOException, SQLException {
         // 调用UserServiceImple的登录方法
-        System.out.println("登录");
         String account = accountText.getText();
         String password = pwdText.getText();
         String userType = userTypeComboBox.getSelectionModel().getSelectedItem();
         if(userType==null){
-            showAlert(Alert.AlertType.WARNING,"请选择用户类型");
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请选择用户类型");
             return;
         }else if(account.isEmpty() || password.isEmpty()) { // 如果没有输入密码或者账号
-            showAlert(Alert.AlertType.WARNING, "请输入账号密码");
+            WindowsUtil.showAlert(Alert.AlertType.WARNING, "请输入账号密码");
             return;
         }
-        AbstractUser user;
-        if(userType.equals(UserTypes.USER.getValue())){
-            if((user = verifyAccount(UserTypes.USER,account,password))!=null)
-                jumpToUserHomePage(event, (User) user);
-            else
-                showAlert(Alert.AlertType.WARNING,"账号或密码错误");
-        }else{
-            if((user = verifyAccount(UserTypes.ADMIN,account,password))!=null)
-                jumpToManagerHomePage(event);
-            else
-                showAlert(Alert.AlertType.WARNING,"账号或密码错误");
-        }
-        /*
-        * userService = new UserServiceImpl();
-       String account_input = account.getText();
-       String pwd_input = password.getText();
-       if(account_input.isEmpty() || pwd_input.isEmpty()){
-           showAlert(Alert.AlertType.ERROR, "请输入账户和密码");
-           return;
-       }
-       User u = new User();
-       u.setAccount(account_input);
-       u.setPassword(pwd_input);
-
-       if(userService.register(u)!=null){
-           showAlert(Alert.AlertType.INFORMATION, "注册成功");
-       }else {
-           showAlert(Alert.AlertType.WARNING, "该用户名已经存在");
-       }*/
+        verifyAccount(event, account, password);
     }
 
-    private AbstractUser verifyAccount(UserTypes ut,String account, String pwd) throws SQLException {
+    /**
+     * 验证账号和密码,如果成功，直接跳转到对应的用户主界面或者管理员主界面
+     * */
+    private void verifyAccount(ActionEvent event,String account, String pwd) throws SQLException, IOException {
         AbstractUser user;
-        if(ut.getValue().equals("普通用户")){
-            if((user = userService.findByAccountAndPassword(account, pwd))==null){
-                System.out.println("账户或密码不正确");
-            }
-            return user;
-        }else{
-            user = new Admin();
-            user.setAccount(account);
-            user.setPassword(pwd);
-            if((user = adminService.findByAccountAndPassword(account,pwd))==null){
-                System.out.println("账户或密码不正确");
-            }
-            return user;
+        if(isUser()){ // 如果是普通用户
+            if((user = userService.findByAccountAndPassword(account, pwd))==null) // 如果账号密码与数据库中不匹配
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"账号或密码错误");
+            else
+                jumpToUserHomePage(event, user, Windows.USER_HOME_WINDOW);
+        }else{ // 如果是管理员用户
+            if((user = adminService.findByAccountAndPassword(account,pwd))==null)
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"账号或密码错误");
+            else
+                jumpToUserHomePage(event,user,Windows.MANAGER_HOME_WINDOW);
+
         }
     }
-
 
     /**
      * 这是当用户点击注册按钮时监听器调用的方法
      * */
     @FXML
     private void registerButtonClicked(ActionEvent event) throws IOException {
-//        jumpToRegisterPage(event);
-        handleRegisterButton(event);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     /**
@@ -155,24 +124,25 @@ public class MainWindowController implements Initializable{
         return userTypeComboBox.getSelectionModel().getSelectedItem();
     }
 
-    private void handleRegisterButton(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.showAndWait();
-    }
-
     /**
      * 跳到用户主界面
      * */
-    private void jumpToUserHomePage(ActionEvent event, User u) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
+    private void jumpToUserHomePage(ActionEvent event, AbstractUser u, Windows window) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(window.getValue()));
         Parent root = loader.load();
-        UserHomeWindowController uc = loader.getController();
-        uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
-        uc.loadBorrowedBooks(u);
+        if(window.equals(Windows.USER_HOME_WINDOW)){ // 如果是跳转到普通用户主界面
+            UserHomeWindowController uc = loader.getController();
+            uc.setUser(u); // 设置用户登录窗口中的User对象，将这个对象数据传递给个登录后的窗口
+            int card_id = ((User) u).getCard_id();
+            if(card_id!=0){ // 如果用户的借书卡id值不为0（也就是不为null）
+                Card card = cardService.getCardById(card_id);
+                System.out.println(card);
+                uc.setCard(card); // 将借书卡也一同传入下一个窗口
+            }
+            uc.loadBorrowedBooks(u);
+        }else { // 如果跳转到管理员主界面
+            ManagerHomeWindowController mc = loader.getController();
+        }
         // 根据窗体视图fxml文件创建一个场景
         Scene home_page_scene = new Scene(root);
         // 通过事件来源event source得到来源所在的窗体
@@ -184,35 +154,7 @@ public class MainWindowController implements Initializable{
     }
 
     /**
-     * 跳到管理员主界面
-     * */
-    private void jumpToManagerHomePage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(Windows.MANAGER_HOME_WINDOW.getValue()));
-        // 根据窗体视图fxml文件创建一个场景
-        Scene home_page_scene = new Scene(root);
-        // 通过事件来源event source得到来源所在的窗体
-        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        main_window.setScene(home_page_scene);
-        main_window.setTitle("欢迎管理员");
-        main_window.show();
-    }
-
-    /**
-     * 跳到注册界面
-     * */
-    private void jumpToRegisterPage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(Windows.REGISTER_WINDOW.getValue()));
-        // 根据窗体视图fxml文件创建一个场景
-        Scene home_page_scene = new Scene(root);
-        // 通过事件来源event source得到来源所在的窗体
-        Stage main_window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        main_window.setScene(home_page_scene);
-        main_window.setTitle("注册");
-        main_window.show();
-    }
-
-    /**
-     * 一些辅助方法
+     * 检查用户登录时是否选择普通用户
      * */
     private boolean isUser(){
         if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("普通用户"))
@@ -221,25 +163,7 @@ public class MainWindowController implements Initializable{
             return false;
     }
 
-    private boolean isAdmin(){
-        if(userTypeComboBox.getSelectionModel().getSelectedItem().equals("管理员用户"))
-            return true;
-        else
-            return false;
-    }
 
-    /**
-     * 弹窗提示
-     * @param alertType 警告类型
-     * @param message 提示消息
-     * */
-    private void showAlert(Alert.AlertType alertType, String message){
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.setResizable(false);
-        alert.getDialogPane().setPrefSize(300,100);
-        alert.showAndWait();
-    }
+
 
 }

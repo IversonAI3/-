@@ -27,14 +27,14 @@ public interface BaseDao<T> {
      * @param conn 连接对象， id 要删除的数据的主键
      * @return 返回一个int表示受影响的行数
      * */
-    int deleteById(Connection conn, int id) throws SQLException;
+    T delete(Connection conn, T t) throws SQLException;
 
     /**
      * 在数据库中根据主键查询一行数据
      * @param conn 连接对象， id 主键
      * @return 返回查询到的数据
      * */
-    T findById(Connection conn, int id) throws SQLException;
+    T find(Connection conn, T t) throws SQLException;
 
     /**
      * 在数据库中查询某个表中所有的数据

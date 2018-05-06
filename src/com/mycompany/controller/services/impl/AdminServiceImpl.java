@@ -19,11 +19,7 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     private AdminDao adminDao = new AdminDaoImpl();
 
     public AdminServiceImpl(){
-        try {
-            this.conn = JdbcUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.conn = JdbcUtils.getConnection();
     }
 
     @Override

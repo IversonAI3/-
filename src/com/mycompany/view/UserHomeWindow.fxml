@@ -6,97 +6,131 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserHomeWindowController">
-   <content>
-      <VBox prefHeight="676.0" prefWidth="648.0">
+
+<AnchorPane prefHeight="661.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserHomeWindowController">
+   <children>
+      <VBox prefHeight="661.0" prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="648.0" style="-fx-background-color: orange;" text="欢迎回来" textAlignment="CENTER" textFill="#fffefe">
-               <font>
-                  <Font size="22.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="62.0" prefWidth="598.0">
+            <AnchorPane prefHeight="378.0" prefWidth="663.0">
                <children>
-                  <Button fx:id="getCardButton" mnemonicParsing="false" onAction="#getCardButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="申请借书卡">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="infoButton" mnemonicParsing="false" onAction="#infoButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="个人资料">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="充值">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button id="logoutButton" fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="注销">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
+                  <VBox prefHeight="368.0" prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="667.0" style="-fx-background-color: orange;" text="欢迎回来" textAlignment="CENTER" textFill="#fffefe">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <HBox layoutY="29.0" prefHeight="0.0" prefWidth="648.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button fx:id="getCardButton" mnemonicParsing="false" onAction="#getCardButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="申请借书卡">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="infoButton" mnemonicParsing="false" onAction="#infoButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="个人资料">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="罚款记录">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                              <Button id="logoutButton" fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="退出">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox layoutY="90.0" prefHeight="74.0" prefWidth="663.0">
+                           <children>
+                              <TextField fx:id="searchField" prefHeight="60.0" prefWidth="531.0" promptText="请输入书名">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonOnClick" prefHeight="38.0" prefWidth="125.0" stylesheets="@RegisterWindow.css" text="搜索">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tableView" prefHeight="234.0" prefWidth="648.0">
+                          <columns>
+                            <TableColumn fx:id="columnBookID" prefWidth="109.0" text="编号" />
+                            <TableColumn fx:id="columnTitle" prefWidth="210.0" text="书名" />
+                              <TableColumn fx:id="columnAuthor" prefWidth="142.0" text="作者" />
+                              <TableColumn fx:id="columnPrice" prefWidth="94.0" text="价格" />
+                              <TableColumn fx:id="columnQuantity" prefWidth="107.0" text="数量" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="borrowButton" mnemonicParsing="false" onAction="#borrowButtonOnClick" prefHeight="56.0" prefWidth="653.0" stylesheets="@RegisterWindow.css" text="借书">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
-            </HBox>
-            <HBox prefHeight="48.0" prefWidth="648.0">
+            </AnchorPane>
+            <AnchorPane prefHeight="293.0" prefWidth="663.0">
                <children>
-                  <TextField fx:id="searchField" prefHeight="60.0" prefWidth="531.0" promptText="请输入书名">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonOnClick" prefHeight="60.0" prefWidth="110.0" stylesheets="@RegisterWindow.css" text="搜索">
-                     <HBox.margin>
-                        <Insets bottom="8.0" left="2.5" right="5.0" top="6.0" />
-                     </HBox.margin>
-                  </Button>
+                  <VBox prefHeight="294.0" prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="714.0" style="-fx-background-color: orange;" text="您的借阅信息" textFill="WHITE">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="borrowTableView" prefHeight="219.0" prefWidth="663.0" AnchorPane.bottomAnchor="-67.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="b_columnBookID" prefWidth="99.0" text="编号" />
+                              <TableColumn fx:id="b_columnTitle" prefWidth="103.0" text="书名" />
+                              <TableColumn fx:id="b_columnAuthor" prefWidth="259.0" text="作者" />
+                              <TableColumn fx:id="b_columnPrice" prefWidth="94.0" text="价格" />
+                              <TableColumn fx:id="b_columnQuantity" prefWidth="107.0" text="数量" />
+                           </columns>
+                        </TableView>
+                        <HBox>
+                           <children>
+                              <Button fx:id="returnBookButton" mnemonicParsing="false" onAction="#returnBookButtonOnClick" prefHeight="36.0" prefWidth="361.0" stylesheets="@RegisterWindow.css" text="还书">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="showRecordButton" mnemonicParsing="false" onAction="#showRecordButtonOnClick" prefHeight="36.0" prefWidth="361.0" stylesheets="@RegisterWindow.css" text="查看记录">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
-            </HBox>
-            <TableView fx:id="tableView" prefHeight="234.0" prefWidth="648.0">
-              <columns>
-                <TableColumn fx:id="columnBookID" prefWidth="109.0" text="编号" />
-                <TableColumn fx:id="columnTitle" prefWidth="210.0" text="书名" />
-                  <TableColumn fx:id="columnAuthor" prefWidth="142.0" text="作者" />
-                  <TableColumn fx:id="columnPrice" prefWidth="94.0" text="价格" />
-                  <TableColumn fx:id="columnQuantity" prefWidth="92.0" text="数量" />
-              </columns>
-            </TableView>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="648.0" style="-fx-background-color: orange;" text="您的借书信息" textFill="WHITE">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TableView fx:id="borrowTableView" prefHeight="234.0" prefWidth="648.0">
-               <columns>
-                  <TableColumn fx:id="columnBookID1" prefWidth="109.0" text="编号" />
-                  <TableColumn fx:id="columnTitle1" prefWidth="210.0" text="书名" />
-                  <TableColumn fx:id="columnAuthor1" prefWidth="142.0" text="作者" />
-                  <TableColumn fx:id="columnPrice1" prefWidth="94.0" text="价格" />
-                  <TableColumn fx:id="columnQuantity1" prefWidth="92.0" text="数量" />
-               </columns>
-            </TableView>
-            <Button fx:id="borrowButton" mnemonicParsing="false" onAction="#borrowButtonOnClick" prefHeight="44.0" prefWidth="663.0" stylesheets="@RegisterWindow.css" text="借阅">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
+            </AnchorPane>
          </children>
       </VBox>
-   </content>
-</ScrollPane>
+   </children>
+</AnchorPane>

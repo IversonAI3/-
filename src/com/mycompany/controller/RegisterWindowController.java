@@ -26,7 +26,7 @@ public class RegisterWindowController implements Initializable{
     @FXML private Button registerButton;
     @FXML private Button backButton;
 
-    private AbstractUserService userService;
+    private AbstractUserService userService = new UserServiceImpl();
 
     public void backToMainWindow(ActionEvent event) throws IOException {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -55,11 +55,6 @@ public class RegisterWindowController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            userService = new UserServiceImpl();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

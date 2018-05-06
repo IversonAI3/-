@@ -13,36 +13,28 @@ import java.util.List;
 
 public class BookServiceImpl implements BookService{
     BookDao bookDao = new BookDaoImpl();
-    Connection conn;
-
-    {
-        try {
-            conn = JdbcUtils.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    Connection conn = JdbcUtils.getConnection();
 
     @Override
-    public List<Book> findByTitle(String title) {
+    public List<Book> findByTitle(String title) throws SQLException {
         return bookDao.selectByTitle(conn,title);
     }
 
     @Override
-    public List<Book> selectAllBooks() {
-        try {
-
-            List<Book> books = bookDao.selectAll(conn);
-            return books;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<Book> selectAllBooks() throws SQLException{
+        List<Book> books = bookDao.selectAll(conn);
+        return books;
     }
 
     @Override
     public List<Book> selectBorrowedBooksByUser(User u) throws SQLException {
-        List<Book> books = bookDao.selectByUserId(conn,u.getCard_id());
+        List<Book> books = bookDao.selectByUserId(conn,u.getUserId());
         return books;
+    }
+
+    @Override
+    public Integer getQuantityByBookId(Integer book_id) throws SQLException{
+        Integer quanaity = bookDao.selectQuantityById(conn, book_id);
+        return quanaity;
     }
 }

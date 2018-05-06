@@ -12,10 +12,16 @@ public interface BookService {
      * @param title 书名
      * @return 查询到的书的集合
      * */
-    List<Book> findByTitle(String title);
-    List<Book> selectAllBooks();
+    List<Book> findByTitle(String title) throws SQLException;
+    List<Book> selectAllBooks() throws SQLException;
     /**
      * 查找某一个用户借的所有书
      * */
     List<Book> selectBorrowedBooksByUser(User u) throws SQLException;
+    /**
+     * 通过一个book_id来查询书的数量
+     * @param book_id
+     * @return 返回书的数量，如果book_id对应的书不存在，则返回null
+     * */
+    Integer getQuantityByBookId(Integer book_id) throws SQLException;
 }
