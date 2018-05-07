@@ -28,4 +28,5 @@ public interface BookDao extends BaseDao<Book>{
      */
     Integer selectQuantityById(Connection connection, Integer book_id) throws SQLException;
     Book selectAddedBook(Connection connection) throws SQLException;
+    Book findByBookId(Connection conn, Integer id) throws SQLException;
 }

@@ -110,15 +110,7 @@
                         </TableView>
                         <HBox>
                            <children>
-                              <Button fx:id="returnBookButton" mnemonicParsing="false" onAction="#returnBookButtonOnClick" prefHeight="36.0" prefWidth="361.0" stylesheets="@RegisterWindow.css" text="还书">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="showRecordButton" mnemonicParsing="false" onAction="#showRecordButtonOnClick" prefHeight="36.0" prefWidth="361.0" stylesheets="@RegisterWindow.css" text="查看记录">
+                              <Button fx:id="showRecordButton" mnemonicParsing="false" onAction="#showRecordButtonOnClick" prefHeight="31.0" prefWidth="667.0" stylesheets="@RegisterWindow.css" text="查看详细记录">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
                                  </HBox.margin>

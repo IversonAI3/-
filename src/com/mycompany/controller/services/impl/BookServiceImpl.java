@@ -47,4 +47,10 @@ public class BookServiceImpl implements BookService{
     public Book updateBook(Book book) throws SQLException {
         return bookDao.update(conn,book);
     }
+
+    @Override
+    public Book selectByBookId(Integer id) throws SQLException {
+        Book book = bookDao.findByBookId(conn,id);
+        return book;
+    }
 }

@@ -5,6 +5,7 @@ import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -123,6 +124,25 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
             u.setCard_id(cardId);
         }
         return u;
+    }
+
+    @Override
+    public User findUserByCardId(Connection conn, Integer card_id) throws SQLException {
+        PreparedStatement ps = conn
+                .prepareStatement("SELECT * FROM `user` WHERE `card_id`=?");
+        ps.setInt(1,card_id);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            User user = new User();
+            user.setUser_id(rs.getInt(1));
+            user.setAccount(rs.getString(2));
+            user.setName(rs.getString(3));
+            user.setPassword(rs.getString(4));
+            user.setCard_id(rs.getInt(5));
+            user.setType_id(rs.getInt(6));
+            return user;
+        }
+        return null;
     }
 
     /**

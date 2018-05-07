@@ -36,4 +36,5 @@ public interface BookService {
      * @return 更新成功返回book对象，否则返回null
      * */
     Book updateBook(Book book) throws SQLException;
+    Book selectByBookId(Integer id) throws SQLException;
 }

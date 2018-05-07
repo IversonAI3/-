@@ -46,7 +46,6 @@ public class UserHomeWindowController implements Initializable{
     @FXML private Button getCardButton;
     @FXML private Button borrowButton;
     @FXML private Button showRecordButton;
-    @FXML private Button returnBookButton;
 
     @FXML private TextField searchField;
     @FXML private Label label = new Label();
@@ -253,21 +252,26 @@ public class UserHomeWindowController implements Initializable{
         main_window.initOwner(showRecordButton.getScene().getWindow());
         main_window.setTitle("线上图书管系统");
         main_window.setResizable(false);
-        main_window.showAndWait();
+        main_window.setOnCloseRequest(event1 -> {
+            System.out.println("关闭窗口");
+        });
+        main_window.show();
     }
 
-    public void returnBookButtonOnClick(ActionEvent event) {
-        Book book = borrowTableView.getSelectionModel().getSelectedItem();
-        if(book==null) {
-            WindowsUtil.showAlert(Alert.AlertType.WARNING, "请选择一本书");
-            return;
+    public void refreshBorrowedTable(Book book){
+        borrowedBookData.remove(book);
+        borrowTableView.refresh();
+        System.out.println("表单刷新");
+    }
+
+    public void refreshBookTable(Book book){
+        bookData.clear();
+        try {
+            bookData.setAll(bookService.selectAllBooks());
+            System.out.println("书单刷新");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        card = cardService.getCardById(u.getCard_id());
-
-            tableView.refresh();
-            borrowedBookData.add(book);
-            borrowTableView.refresh();
-
-        System.out.println(book);
+        tableView.refresh();
     }
 }

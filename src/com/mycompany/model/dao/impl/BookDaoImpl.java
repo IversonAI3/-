@@ -144,4 +144,22 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
     public Book find(Connection conn, Book book) throws SQLException {
         return null;
     }
+
+    @Override
+    public Book findByBookId(Connection conn, Integer id) throws SQLException {
+        PreparedStatement ps
+                = conn.prepareStatement("SELECT * FROM `book` WHERE `book_id`=?");
+        ps.setInt(1,id);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            Book b = new Book();
+            b.setAuthor(rs.getString("author"));
+            b.setBook_id(rs.getInt("book_id"));
+            b.setTitle(rs.getString("title"));
+            b.setPrice(rs.getDouble("price"));
+            b.setQuantity(rs.getInt("quantity"));
+            return b;
+        }
+        return null;
+    }
 }

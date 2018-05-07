@@ -52,4 +52,5 @@ public interface UserDao extends BaseDao<User>{
      * 注意：新用户申请一张借书卡时必须先在借书卡表中创建借书卡
      * */
     User updateCard(Connection conn, User u,Card card) throws SQLException;
+    User findUserByCardId(Connection conn, Integer card_id) throws SQLException;
 }

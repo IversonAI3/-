@@ -156,7 +156,15 @@ public class UserServiceImpl implements AbstractUserService<User> {
      * 还书：删除这条借书记录
      */
     public Record returnBook(Record record) throws SQLException{
-//        return recordDao.delete(conn, record);
-        return null;
+        Book book = bookDao.findByBookId(conn,record.getBook_id());
+        Card card = cardDao.selectCardByCardId(conn,record.getCard_id());
+        if(book==null || card==null)
+            return null;
+        book.setQuantity(book.getQuantity()+1); // 如果还书成功，书的数量+1
+        card.setQuota((short) (card.getQuota()+1)); // 借书卡的限额+1
+        card.setAmount((short) (card.getAmount()-1)); // 已借书数量-1
+        if(bookDao.update(conn, book)==null || cardDao.update(conn,card)==null)
+            return null;
+        return recordDao.delete(conn, record);
     }
 }

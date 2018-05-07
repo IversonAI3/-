@@ -83,7 +83,8 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao{
         PreparedStatement ps = conn
                 .prepareStatement("DELETE FROM `record` WHERE `record_id`=?");
         ps.setInt(1,record.getRecord_id());
-        int i = ps.executeUpdate();
+        System.out.println();
+        int i = ps.executeUpdate("DELETE FROM `record` WHERE `record_id`="+record.getRecord_id());
         if(i==0){
             System.out.println("删除失败");
             return null;
