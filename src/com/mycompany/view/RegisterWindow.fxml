@@ -46,7 +46,7 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToMainWindow" prefHeight="68.0" prefWidth="246.0" stylesheets="@RegisterWindow.css" text="返回">
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#backToMainWindow" prefHeight="68.0" prefWidth="246.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                      <HBox.margin>
                         <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
                      </HBox.margin>

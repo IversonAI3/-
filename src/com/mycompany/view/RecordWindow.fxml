@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="336.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
    <children>
       <VBox layoutY="6.0" prefHeight="336.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,7 +26,7 @@
                   <TableColumn fx:id="return_time" prefWidth="177.0" text="还书截止时间" />
               </columns>
             </TableView>
-            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="47.0" prefWidth="613.0" stylesheets="@RegisterWindow.css" text="返回">
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="47.0" prefWidth="613.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <font>
                   <Font size="17.0" />
                </font>

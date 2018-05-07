@@ -77,17 +77,45 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         return null;
     }
 
+    @Override
+    public Book selectAddedBook(Connection connection) throws SQLException {
+        String str = "SELECT b.* FROM `book` b WHERE b.book_id = (SELECT MAX(book_id) FROM `book`);";
+        ResultSet rs = connection.createStatement().executeQuery(str);
+        if(rs.next()){
+            Book book = new Book();
+            book.setAuthor(rs.getString("author"));
+            book.setBook_id(rs.getInt("book_id"));
+            book.setTitle(rs.getString("title"));
+            book.setPrice(rs.getDouble("price"));
+            book.setQuantity(rs.getInt("quantity"));
+            return book;
+        }
+        return null;
+    }
+
 
     @Override
     public Book insert(Connection conn, Book book) throws SQLException {
+        System.out.println("调用BookDaoImpl.insert()方法");
+        String title = book.getTitle();
+        String author = book.getAuthor();
+        Double price = book.getPrice();
+        Integer quantity = book.getQuantity();
         String update = "INSERT INTO `book`(title, author, price, quantity) VALUES(?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(update);
-        ps.setString(1,book.getTitle());
-        ps.setString(2,book.getAuthor());
-        ps.setDouble(3,book.getPrice());
-        ps.setInt(4,book.getQuantity());
+        if(title==null||author==null||price==null||quantity==null)
+            return null;
+        ps.setString(1,title);
+        ps.setString(2,author);
+        ps.setDouble(3,price);
+        ps.setInt(4,quantity);
         int row = ps.executeUpdate();
-        return row==1 ? book : null;
+        if(row==1){
+            Book b = selectAddedBook(conn);
+            System.out.println("最近添加的书: "+b);
+            return b;
+        }
+        return null;
     }
 
     @Override
@@ -105,7 +133,11 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 
     @Override
     public Book delete(Connection conn, Book book) throws SQLException {
-        return null;
+        PreparedStatement ps =
+                conn.prepareStatement("DELETE FROM `book` WHERE `book_id`=?;");
+        ps.setInt(1,book.getBook_id());
+        int i = ps.executeUpdate();
+        return i==0?null:book;
     }
 
     @Override

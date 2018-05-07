@@ -28,7 +28,7 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<Book> selectBorrowedBooksByUser(User u) throws SQLException {
-        List<Book> books = bookDao.selectByUserId(conn,u.getUserId());
+        List<Book> books = bookDao.selectByUserId(conn,u.getUser_id());
         return books;
     }
 
@@ -36,5 +36,10 @@ public class BookServiceImpl implements BookService{
     public Integer getQuantityByBookId(Integer book_id) throws SQLException{
         Integer quanaity = bookDao.selectQuantityById(conn, book_id);
         return quanaity;
+    }
+
+    @Override
+    public Book addNewBook(Book book) throws SQLException {
+        return bookDao.insert(conn,book);
     }
 }

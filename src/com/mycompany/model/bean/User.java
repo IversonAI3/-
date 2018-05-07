@@ -1,22 +1,22 @@
 package com.mycompany.model.bean;
 
 public class User extends AbstractUser{
-    private Integer userId;
+    private Integer user_id;
     private Integer card_id;
     private Integer type_id;
 
     public User() {
     }
 
-    public User(String account, String name, String password, Integer userId, Integer card_id, Integer type_id) {
+    public User(String account, String name, String password, Integer user_id, Integer card_id, Integer type_id) {
         super(account, name, password);
-        this.userId = userId;
+        this.user_id = user_id;
         this.card_id = card_id;
         this.type_id = type_id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
     public Integer getCard_id() {
@@ -27,8 +27,8 @@ public class User extends AbstractUser{
         return type_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public void setCard_id(Integer card_id) {
@@ -42,7 +42,7 @@ public class User extends AbstractUser{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("userId=").append(userId);
+        sb.append("user_id=").append(user_id);
         sb.append(", account='").append(this.getAccount()).append('\'');
         sb.append(", name='").append(this.getName()).append('\'');
         sb.append(", password='").append(this.getPassword()).append('\'');

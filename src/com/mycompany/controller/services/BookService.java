@@ -24,4 +24,5 @@ public interface BookService {
      * @return 返回书的数量，如果book_id对应的书不存在，则返回null
      * */
     Integer getQuantityByBookId(Integer book_id) throws SQLException;
+    Book addNewBook(Book book) throws SQLException;
 }

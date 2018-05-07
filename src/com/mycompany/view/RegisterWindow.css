@@ -6,3 +6,7 @@
 .button:hover{
     -fx-background-color: orange;
 }
+
+.returnButton {
+    -fx-background-color: red;
+}

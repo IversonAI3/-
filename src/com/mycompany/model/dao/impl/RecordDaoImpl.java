@@ -53,15 +53,43 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao{
     }
 
     @Override
+    public List<Record> selectByBookId(Connection connection, Integer book_id) throws SQLException {
+        String sql = "SELECT * FROM `record` WHERE `book_id`=?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, book_id);
+        ResultSet rs = ps.executeQuery();
+        Record record;
+        List<Record> recordList = new LinkedList<>();
+        while(rs.next()){
+            record = new Record();
+            record.setCard_id(rs.getInt("card_id"));
+            record.setBook_id(rs.getInt("book_id"));
+            record.setRecord_id(rs.getInt("record_id"));
+            record.setBorrow_time(rs.getTimestamp("borrow_time").toString());
+            record.setReturn_time(rs.getTimestamp("return_time").toString());
+            recordList.add(record);
+        }
+        return recordList;
+    }
+
+    @Override
     public Record update(Connection conn, Record record) throws SQLException {
         return null;
     }
 
     @Override
     public Record delete(Connection conn, Record record) throws SQLException {
-        return null;
+        // DELETE FROM `record` WHERE `record_id`=15;
+        PreparedStatement ps = conn
+                .prepareStatement("DELETE FROM `record` WHERE `record_id`=?");
+        ps.setInt(1,record.getRecord_id());
+        int i = ps.executeUpdate();
+        if(i==0){
+            System.out.println("删除失败");
+            return null;
+        }
+        return record;
     }
-
 
     @Override
     public Record find(Connection conn, Record record) throws SQLException {

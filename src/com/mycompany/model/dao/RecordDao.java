@@ -1,5 +1,6 @@
 package com.mycompany.model.dao;
 
+import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.Record;
 
@@ -10,4 +11,5 @@ import java.util.List;
 public interface RecordDao extends BaseDao<Record>{
     Record insert(Connection conn, Record record) throws SQLException;
     List<Record> selectByCardId(Connection connection, Card card) throws SQLException;
+    List<Record> selectByBookId(Connection connection, Integer book_id) throws SQLException;
 }

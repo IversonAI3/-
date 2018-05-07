@@ -6,7 +6,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="661.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.UserHomeWindowController">
    <children>
       <VBox prefHeight="661.0" prefWidth="663.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -49,7 +48,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Button>
-                              <Button id="logoutButton" fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="退出">
+                              <Button id="logoutButton" fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutButtonOnClick" prefHeight="68.0" prefWidth="167.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="退出">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
                                  </HBox.margin>

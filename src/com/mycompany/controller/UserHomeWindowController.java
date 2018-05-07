@@ -234,11 +234,6 @@ public class UserHomeWindowController implements Initializable{
             tableView.refresh();
             borrowedBookData.add(book);
             borrowTableView.refresh();
-            System.out.println("开始借书");
-            System.out.println(u);
-            System.out.println(card);
-            System.out.println(book);
-            System.out.println(b);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -262,5 +257,17 @@ public class UserHomeWindowController implements Initializable{
     }
 
     public void returnBookButtonOnClick(ActionEvent event) {
+        Book book = borrowTableView.getSelectionModel().getSelectedItem();
+        if(book==null) {
+            WindowsUtil.showAlert(Alert.AlertType.WARNING, "请选择一本书");
+            return;
+        }
+        card = cardService.getCardById(u.getCard_id());
+
+            tableView.refresh();
+            borrowedBookData.add(book);
+            borrowTableView.refresh();
+
+        System.out.println(book);
     }
 }

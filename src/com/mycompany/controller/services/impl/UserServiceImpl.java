@@ -143,7 +143,20 @@ public class UserServiceImpl implements AbstractUserService<User> {
         return true;
     }
 
+    /**
+     * 获得用户使用的借书卡的所有借阅记录
+     * @param card 借书卡对象
+     * @return 包含所有记录的集合
+     * */
     public List<Record> getAllRecords(Card card) throws SQLException{
         return recordDao.selectByCardId(conn, card);
+    }
+
+    /**
+     * 还书：删除这条借书记录
+     */
+    public Record returnBook(Record record) throws SQLException{
+//        return recordDao.delete(conn, record);
+        return null;
     }
 }

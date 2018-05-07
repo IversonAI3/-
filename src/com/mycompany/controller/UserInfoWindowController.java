@@ -6,18 +6,14 @@ import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -84,8 +80,8 @@ public class UserInfoWindowController implements Initializable{
     protected void setUser(User u){
         this.user = u;
         System.out.println(this.user);
-        userIdLabel.setText(userIdLabel.getText()+(u.getUserId()));
-        userTypeLabel.setText(userTypeLabel.getText()+(u.getUserId()==1?"学生":"教师"));
+        userIdLabel.setText(userIdLabel.getText()+(u.getUser_id()));
+        userTypeLabel.setText(userTypeLabel.getText()+(u.getUser_id()==1?"学生":"教师"));
         userAccountLabel.setText(userAccountLabel.getText()+u.getAccount());
         userNameLabel.setText(userNameLabel.getText()+(u.getName()==null?"":u.getName()));
         userPasswordLabel.setText(userPasswordLabel.getText()+u.getPassword());

@@ -112,7 +112,7 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </HBox>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonOnClick" prefHeight="14.0" prefWidth="399.0" stylesheets="@RegisterWindow.css" text="返回">
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonOnClick" prefHeight="14.0" prefWidth="399.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <font>
                   <Font size="20.0" />
                </font>

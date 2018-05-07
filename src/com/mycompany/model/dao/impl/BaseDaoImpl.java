@@ -13,35 +13,40 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
     public List<T> selectAll(Connection conn) throws SQLException {
         Class c = this.getClassType();
         String table = c.getSimpleName(); // 获得表名
-        List<String> fieldNames = this.getFieldNames(c); // 获得属性名
-        List<Class> fieldTypes = this.getFieldTypes(c); // 获得属性类型
+//        List<String> fieldNames = this.getFieldNames(c); // 获得属性名
+        String[] columnNames = this.getColumnNames(conn,c);
         ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM "+table+";");
         List<Method> setters = this.getSetters(c); // 获得所有set方法
         List<T> objList = new LinkedList<>(); // 这里用LinkedList插入效率更高
         while(rs.next()){ // 只要有一行数据就创建一个对象
             try {
                 T obj = (T) c.newInstance();
-                for(int i=0;i<fieldNames.size();i++){
-                    String fieldName = fieldNames.get(i).toLowerCase(); // 提取出一个属性的名字
-                    String fieldType = fieldTypes.get(i).getSimpleName(); // 提取出一个属性的类型
-                    String value = rs.getString(i+1); // i从0开始，提出第i+1列的数据
+                for(int i=0;i<columnNames.length;i++){
+                    String fieldName = columnNames[i].toLowerCase(); // 提取出一个属性的名字
+                    String value = rs.getString(fieldName); // i从0开始，提出第i+1列的数据
                     setters.forEach(s -> {
-                        // 对每一个set方法，先匹配它对应的属性
-                        if(s.getName().replace("set","").toLowerCase()
-                                .equals(fieldName)){
-                            try {
-                                switch (fieldType){ // 则判断属性的类型, switch比if效率快很多
+                    // 对每一个set方法，先匹配它对应的属性
+                        String type = s.getParameterTypes()[0].getSimpleName();
+                    if(s.getName().replace("set","").toLowerCase()
+                            .equals(fieldName)){
+                        try {
+                            if(value==null)
+                                s.invoke(obj,value);
+                            else{
+                                switch (type){ // 则判断属性的类型, switch比if效率快很多
                                     case "String": s.invoke(obj,value); break;
-                                    case "Integer": s.invoke(obj, Integer.valueOf(value)); break;
+                                    case "Integer":
+                                        s.invoke(obj, Integer.valueOf(value)); break;
                                     case "Double": s.invoke(obj, Double.valueOf(value));break;
                                     case "Short": s.invoke(obj, Short.valueOf(value));break;
                                 }
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
                             }
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
                         }
+                    }
                     });
                 }
                 objList.add(obj);
@@ -117,7 +122,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
      * */
     protected List<Method> getSetters(Class c){
         // getDeclaredMethods返回的是一个Methods[]数组包含所有此类中声明的方法，包括public,protected,private（不包含继承的方法）
-        Method[] methods = c.getDeclaredMethods();
+        Method[] methods = c.getMethods();
         // 用一个List来保存所有set方法
         List<Method> setters = new ArrayList<>(methods.length);
         for(Method m : methods) {
@@ -134,7 +139,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
      * @return 一个包含所有get方法的集合
      * */
     protected List<Method> getGetters(Class c){
-        Method[] methods = c.getDeclaredMethods();
+        Method[] methods = c.getMethods();
         List<Method> getters = new ArrayList<>(methods.length);
         for(Method m : methods) {
             if(m.getName().startsWith("get")) { // 如果这个方法以set开头

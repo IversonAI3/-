@@ -162,8 +162,4 @@ public class MainWindowController implements Initializable{
         else
             return false;
     }
-
-
-
-
 }

@@ -5,7 +5,6 @@ import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.UserDao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -39,7 +38,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
                 return null;
             }
             User user = new User();
-            user.setUserId(rs.getInt(1));
+            user.setUser_id(rs.getInt(1));
             user.setAccount(rs.getString(2));
             user.setName(rs.getString(3));
             user.setPassword(rs.getString(4));
@@ -69,7 +68,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
                 return null;
             }
             User user = new User();
-            user.setUserId(rs.getInt(1));
+            user.setUser_id(rs.getInt(1));
             user.setAccount(rs.getString(2));
             user.setName(rs.getString(3));
             user.setPassword(rs.getString(4));

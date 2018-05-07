@@ -21,12 +21,12 @@
                <children>
                   <HBox prefHeight="34.0" prefWidth="600.0">
                      <children>
-                        <TextField prefHeight="29.0" prefWidth="474.0" promptText="请输入书名">
+                        <TextField fx:id="searchBookField" prefHeight="29.0" prefWidth="474.0" promptText="请输入书名">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="158.0" stylesheets="@RegisterWindow.css" text="搜索书">
+                        <Button fx:id="searchBookButton" mnemonicParsing="false" onAction="#searchBookOnClick" prefHeight="29.0" prefWidth="141.0" stylesheets="@RegisterWindow.css" text="搜索书">
                            <HBox.margin>
                               <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -36,23 +36,23 @@
                         </Button>
                      </children>
                   </HBox>
-                  <TableView prefHeight="257.0" prefWidth="600.0">
+                  <TableView fx:id="bookTableView" prefHeight="257.0" prefWidth="600.0">
                     <columns>
-                      <TableColumn prefWidth="123.0" text="编号" />
-                      <TableColumn prefWidth="129.0" text="书名" />
-                        <TableColumn prefWidth="133.0" text="作者" />
-                        <TableColumn prefWidth="114.0" text="价格" />
-                        <TableColumn prefWidth="128.0" text="数量" />
+                      <TableColumn fx:id="columnBookID" prefWidth="123.0" text="编号" />
+                      <TableColumn fx:id="columnTitle" onEditCommit="#changeTitleCellEvent" prefWidth="129.0" text="书名" />
+                        <TableColumn fx:id="columnAuthor" onEditCommit="#changeAuthorCellEvent" prefWidth="133.0" text="作者" />
+                        <TableColumn fx:id="columnPrice" onEditCommit="#changePriceCellEvent" prefWidth="114.0" text="价格" />
+                        <TableColumn fx:id="columnQuantity" onEditCommit="#changeQuantityCellEvent" prefWidth="128.0" text="数量" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="34.0" prefWidth="600.0">
                      <children>
-                        <TextField prefHeight="29.0" prefWidth="474.0" promptText="输入用户ID或者用户账号">
+                        <TextField fx:id="searchUserField" prefHeight="29.0" prefWidth="474.0" promptText="输入用户ID或者用户账号">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="158.0" stylesheets="@RegisterWindow.css" text="搜索用户">
+                        <Button fx:id="searchUserButton" mnemonicParsing="false" onAction="#searchUserOnClick" prefHeight="79.0" prefWidth="158.0" stylesheets="@RegisterWindow.css" text="搜索用户">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -62,43 +62,63 @@
                         </Button>
                      </children>
                   </HBox>
-                  <TableView prefHeight="239.0" prefWidth="526.0">
+                  <TableView fx:id="userTableView" prefHeight="239.0" prefWidth="526.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="用户ID" />
-                      <TableColumn prefWidth="75.0" text="账号" />
-                        <TableColumn prefWidth="127.0" text="姓名" />
-                        <TableColumn prefWidth="124.0" text="密码" />
-                        <TableColumn prefWidth="93.0" text="借书卡" />
-                        <TableColumn prefWidth="103.0" text="用户类型" />
+                      <TableColumn fx:id="columnUserId" prefWidth="75.0" text="用户ID" />
+                      <TableColumn fx:id="columnAccount" prefWidth="75.0" text="账号" />
+                        <TableColumn fx:id="columnName" prefWidth="115.0" text="姓名" />
+                        <TableColumn fx:id="columnPwd" prefWidth="136.0" text="密码" />
+                        <TableColumn fx:id="columnCardId" prefWidth="93.0" text="借书卡" />
+                        <TableColumn fx:id="columnUserType" prefWidth="103.0" text="用户类型" />
                     </columns>
                   </TableView>
                </children>
             </VBox>
             <VBox prefHeight="535.0" prefWidth="183.0">
                <children>
-                  <TextField prefHeight="44.0" prefWidth="181.0" promptText="*书名">
+                  <TextField fx:id="book_title" prefHeight="44.0" prefWidth="181.0" promptText="*书名">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" top="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField prefHeight="44.0" prefWidth="181.0" promptText="作者">
+                  <TextField fx:id="book_author" prefHeight="44.0" prefWidth="181.0" promptText="作者">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" top="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField prefHeight="44.0" prefWidth="181.0" promptText="价格">
+                  <TextField fx:id="book_price" prefHeight="44.0" prefWidth="181.0" promptText="价格">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" top="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField prefHeight="44.0" prefWidth="181.0" promptText="数量">
+                  <TextField fx:id="book_quantity" prefHeight="44.0" prefWidth="181.0" promptText="数量">
                      <VBox.margin>
                         <Insets left="5.0" right="5.0" top="15.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" text="添加图书">
+                  <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBookButtonOnClick" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="添加图书">
                      <VBox.margin>
-                        <Insets left="5.0" right="5.0" top="15.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="deleteBookButton" mnemonicParsing="false" onAction="#deleteBookButtonOnClick" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="删除图书">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="showBorrowRecord" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="借阅记录">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="showPenaltyButton" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="罚款记录">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="47.0" prefWidth="181.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
                </children>
