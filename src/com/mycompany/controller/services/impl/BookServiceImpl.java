@@ -42,4 +42,9 @@ public class BookServiceImpl implements BookService{
     public Book addNewBook(Book book) throws SQLException {
         return bookDao.insert(conn,book);
     }
+
+    @Override
+    public Book updateBook(Book book) throws SQLException {
+        return bookDao.update(conn,book);
+    }
 }

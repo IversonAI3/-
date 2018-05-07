@@ -19,7 +19,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,8 +61,8 @@ public class ManagerHomeWindowController implements Initializable{
     @FXML private TableColumn<Book, Integer> columnBookID;
     @FXML private TableColumn<Book, String> columnTitle;
     @FXML private TableColumn<Book, String> columnAuthor;
-    @FXML private TableColumn<Book, String> columnPrice;
-    @FXML private TableColumn<Book, String> columnQuantity;
+    @FXML private TableColumn<Book, Double> columnPrice;
+    @FXML private TableColumn<Book, Integer> columnQuantity;
 
     @FXML private TableColumn<User, Integer> columnUserId;
     @FXML private TableColumn<User, String> columnAccount;
@@ -76,8 +79,8 @@ public class ManagerHomeWindowController implements Initializable{
         bookTableView.setEditable(true);
         columnTitle.setCellFactory(TextFieldTableCell.forTableColumn());
         columnAuthor.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnPrice.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnQuantity.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPrice.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        columnQuantity.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     }
 
     @FXML
@@ -170,6 +173,11 @@ public class ManagerHomeWindowController implements Initializable{
     private void changeTitleCellEvent(TableColumn.CellEditEvent cellEditEvent){
         Book book = bookTableView.getSelectionModel().getSelectedItem();
         book.setTitle((String) cellEditEvent.getNewValue());
+        try {
+            bookService.updateBook(book);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -177,6 +185,11 @@ public class ManagerHomeWindowController implements Initializable{
         Book book = bookTableView.getSelectionModel().getSelectedItem();
         book.setAuthor((String) cellEditEvent.getNewValue());
         System.out.println(book);
+        try {
+            bookService.updateBook(book);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -185,8 +198,11 @@ public class ManagerHomeWindowController implements Initializable{
         try {
             book.setPrice((Double) cellEditEvent.getNewValue());
             System.out.println(book);
+            bookService.updateBook(book);
         }catch (NumberFormatException e){
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -200,9 +216,12 @@ public class ManagerHomeWindowController implements Initializable{
                 return;
             }
             book.setQuantity(qty);
+            bookService.updateBook(book);
             System.out.println(book);
         }catch (NumberFormatException e){
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

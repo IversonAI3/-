@@ -16,7 +16,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO `user` VALUES(DEFAULT, '")
                 .append(u.getAccount()).append("', DEFAULT, '")
-                .append(u.getPassword()).append("', NULL, 1);");
+                .append(u.getPassword()).append("', NULL, ")
+                .append(u.getType_id()).append(");");
         System.out.println(sb);
         conn.createStatement().executeUpdate(sb.toString());
         return selectByAccount(conn,u.getAccount());

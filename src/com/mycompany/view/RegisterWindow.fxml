@@ -20,6 +20,11 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
+            <CheckBox fx:id="teacherCheckBox" mnemonicParsing="false" prefHeight="31.0" prefWidth="415.0" text="是否是教师">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
+            </CheckBox>
             <TextField fx:id="account" prefHeight="83.0" prefWidth="475.0" promptText="用户名">
                <VBox.margin>
                   <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
