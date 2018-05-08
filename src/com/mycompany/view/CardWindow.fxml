@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="167.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.CardWindowController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="561.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="41.0" prefWidth="561.0" style="-fx-background-color: orange;" text="借书卡信息" textFill="WHITE">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <TableView fx:id="cardTableView" prefHeight="102.0" prefWidth="561.0">
+              <columns>
+                <TableColumn fx:id="column_card_id" prefWidth="150.0" text="卡号" />
+                <TableColumn fx:id="column_balance" minWidth="0.0" prefWidth="117.0" text="余额" />
+                  <TableColumn fx:id="column_amount" minWidth="0.0" prefWidth="154.0" text="已借书数量" />
+                  <TableColumn fx:id="column_quota" minWidth="0.0" prefWidth="170.0" text="剩余借书额度" />
+              </columns>
+            </TableView>
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="35.0" prefWidth="561.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -191,7 +191,18 @@ public class UserHomeWindowController implements Initializable{
     @FXML
     private void getCardButtonOnClick(ActionEvent event) throws IOException {
         if(u.getCard_id()!=0){
-            WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"已经拥有一张借书卡！");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.CARD_WINDOW.getValue()));
+            Parent root = loader.load();
+            CardWindowController cc = loader.getController();
+            cc.setCard(cardService.getCardById(u.getCard_id())); // 设置借书卡窗口中的Card对象，以此来传递数据
+            Scene home_page_scene = new Scene(root);
+            Stage main_window = new Stage();
+            main_window.setScene(home_page_scene);
+            main_window.initModality(Modality.APPLICATION_MODAL);
+            main_window.initOwner(infoButton.getScene().getWindow());
+            main_window.setTitle("线上图书管系统");
+            main_window.setResizable(false);
+            main_window.showAndWait();
             return;
         }
         openQRCodeWindow();
@@ -258,20 +269,9 @@ public class UserHomeWindowController implements Initializable{
         main_window.show();
     }
 
-    public void refreshBorrowedTable(Book book){
-        borrowedBookData.remove(book);
-        borrowTableView.refresh();
-        System.out.println("表单刷新");
+    @FXML
+    private void refreshButtonOnClick(ActionEvent event){
+        loadBorrowedBooks(u);
     }
 
-    public void refreshBookTable(Book book){
-        bookData.clear();
-        try {
-            bookData.setAll(bookService.selectAllBooks());
-            System.out.println("书单刷新");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        tableView.refresh();
-    }
 }

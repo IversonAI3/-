@@ -3,7 +3,9 @@ package com.mycompany.controller;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +37,9 @@ public class UserInfoWindowController implements Initializable{
     @FXML private Button savePwd;
     @FXML private TextField nameField;
     @FXML private TextField pwdField;
+
+    private ObservableList<Card> cardObservableList;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

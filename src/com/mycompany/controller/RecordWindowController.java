@@ -80,15 +80,7 @@ public class RecordWindowController implements Initializable{
             userService.returnBook(record);
             recordData.remove(record);
             recordTableView.refresh();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.USER_HOME_WINDOW.getValue()));
-            Parent root = loader.load();
-            UserHomeWindowController uc = loader.getController();
-            Book b = bookService.selectByBookId(record.getBook_id());
-            uc.refreshBorrowedTable(b);
-            uc.refreshBookTable(b);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

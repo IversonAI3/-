@@ -11,8 +11,8 @@ public enum Windows {
     REGISTER_WINDOW("../view/RegisterWindow.fxml"),
     USER_INFO_WINDOW("../view/UserInfoWindow.fxml"),
     GET_CARD_WINDOW("../view/GetCardWindow.fxml"),
-    RECORD_WINDOW("../view/RecordWindow.fxml");
-
+    RECORD_WINDOW("../view/RecordWindow.fxml"),
+    CARD_WINDOW("../view/CardWindow.fxml");
     private String value;
 
     Windows(String s) {
