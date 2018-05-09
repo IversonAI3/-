@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- beans表示当前应用程序中，所有的实体对象 -->
+<beans>
+    <!-- User -->
+    <bean name="User" class="com.mycompany.model.bean.User"/>
+    <bean name="UserService" class="com.mycompany.controller.services.CardService">
+
+    </bean>
+
+
+
+
+
+    <bean name="Admin" class="com.mycompany.model.bean.Admin"/>
+    <bean name="AdminService" class="com.">
+        <property name="" value="UserDao"/>
+
+    </bean>
+
+
+</beans>
+
+
+
