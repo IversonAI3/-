@@ -11,56 +11,37 @@ public class AdminDaoImpl extends BaseDaoImpl<Admin> implements AdminDao{
     @Override
     public Admin selectByAccount(Connection conn, String account) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        Class c = this.getClassType();
-        String tableName = c.getSimpleName();
         sql.append("SELECT * ")
-                .append("FROM `").append(tableName)
-                .append("` WHERE `account`='").append(account).append("';");
-        System.out.println(sql);
-        ResultSet rs;
-        try {
-            rs = conn.createStatement().executeQuery(sql.toString());
-            if(!rs.next()){
-                return null;
-            }
-            Admin admin = new Admin();
-            admin.setAdmin_id(rs.getInt("admin_id"));
-            admin.setAccount(rs.getString("account"));
-            admin.setPassword(rs.getString("password"));
-            admin.setName(rs.getString("name"));
-            return admin;
-        } catch (SQLException e) {
-            e.printStackTrace();
+                .append("FROM `admin` WHERE `account`='").append(account).append("';");
+        ResultSet rs = conn.createStatement().executeQuery(sql.toString());
+        if(!rs.next()){
             return null;
         }
+        Admin admin = new Admin();
+        admin.setAdmin_id(rs.getInt("admin_id"));
+        admin.setAccount(rs.getString("account"));
+        admin.setPassword(rs.getString("password"));
+        admin.setName(rs.getString("name"));
+        admin.setRegitime(rs.getTimestamp("regitime").toString());
+        return admin;
     }
 
     @Override
-    public Admin selectByAccountAndPassword(Connection conn, String account, String password) {
+    public Admin selectByAccountAndPassword(Connection conn, String account, String password) throws SQLException{
         StringBuilder sql = new StringBuilder();
-        Class c = this.getClassType();
-        String tableName = c.getSimpleName();
-        sql.append("SELECT * ")
-                .append("FROM `").append(tableName)
-                .append("` WHERE `account`='").append(account)
-                .append("' AND `password`='").append(password).append("';");
-        System.out.println(sql);
-        ResultSet rs;
-        try {
-            rs = conn.createStatement().executeQuery(sql.toString());
-            if(!rs.next()){
-                return null;
-            }
-            Admin admin = new Admin();
-            admin.setAdmin_id(rs.getInt("admin_id"));
-            admin.setAccount(rs.getString("account"));
-            admin.setPassword(rs.getString("password"));
-            admin.setName(rs.getString("name"));
-            return admin;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        sql.append("SELECT * FROM `admin` WHERE `account`='")
+                .append(account).append("' AND `password`='").append(password).append("';");
+        ResultSet rs = conn.createStatement().executeQuery(sql.toString());
+        if(!rs.next()){
             return null;
         }
+        Admin admin = new Admin();
+        admin.setAdmin_id(rs.getInt("admin_id"));
+        admin.setAccount(rs.getString("account"));
+        admin.setPassword(rs.getString("password"));
+        admin.setName(rs.getString("name"));
+        admin.setRegitime(rs.getTimestamp("regitime").toString());
+        return admin;
     }
 
     /**

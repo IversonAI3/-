@@ -14,18 +14,17 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
     @Override
     public User insert(Connection conn, User u) throws SQLException {
-        StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO `user` VALUES(DEFAULT, '")
-                .append(u.getAccount()).append("', DEFAULT, '")
-                .append(u.getPassword()).append("', NULL, ")
-                .append(u.getType_id()).append(");");
-        System.out.println(sb);
-        conn.createStatement().executeUpdate(sb.toString());
-        return selectByAccount(conn,u.getAccount());
+        PreparedStatement ps = conn
+                .prepareStatement("INSERT INTO `user`(account,password,regitime) VALUES(?,?,?)");
+        ps.setString(1,u.getAccount());
+        ps.setString(2,u.getPassword());
+        ps.setString(3,"DEFAULT");
+        int i = ps.executeUpdate();
+        return i==1?u:null;
     }
 
     @Override
-    public User selectByAccount(Connection conn, String acccount) {
+    public User selectByAc count(Connection conn, String acccount) {
         StringBuilder sql = new StringBuilder();
         Class c = this.getClassType();
         String tableName = c.getSimpleName();

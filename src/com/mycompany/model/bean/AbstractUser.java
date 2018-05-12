@@ -1,21 +1,23 @@
 package com.mycompany.model.bean;
 
 /**
- * 所有用户的抽象父类
- * 定义了用户共同的属性：账号，姓名和密码
+ * 普通用户和管理员用户的抽象父类
+ * 定义了用户共同的属性：账号，姓名，密码和注册时间
  * */
 public abstract class AbstractUser {
     private String account;
     private String name;
     private String password;
+    private String regitime;
 
-    public AbstractUser(String account, String name, String password) {
+    public AbstractUser() {
+    }
+
+    public AbstractUser(String account, String name, String password, String regitime) {
         this.account = account;
         this.name = name;
         this.password = password;
-    }
-
-    public AbstractUser() {
+        this.regitime = regitime;
     }
 
     public String getAccount() {
@@ -42,13 +44,11 @@ public abstract class AbstractUser {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("AbstractUser{");
-        sb.append("account='").append(account).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public String getRegitime() {
+        return regitime;
+    }
+
+    public void setRegitime(String regitime) {
+        this.regitime = regitime;
     }
 }

@@ -27,6 +27,9 @@ public interface BookDao extends BaseDao<Book>{
      * @return 返回书的数量，如果book_id对应的书不存在，则返回null
      */
     Integer selectQuantityById(Connection connection, Integer book_id) throws SQLException;
+    /**
+     * 返回最新添加的一本书
+     * */
     Book selectAddedBook(Connection connection) throws SQLException;
     Book findByBookId(Connection conn, Integer id) throws SQLException;
 }

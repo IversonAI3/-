@@ -8,8 +8,8 @@ public class User extends AbstractUser{
     public User() {
     }
 
-    public User(String account, String name, String password, Integer user_id, Integer card_id, Integer type_id) {
-        super(account, name, password);
+    public User(String account, String name, String password, String regitime, Integer user_id, Integer card_id, Integer type_id) {
+        super(account, name, password, regitime);
         this.user_id = user_id;
         this.card_id = card_id;
         this.type_id = type_id;
@@ -46,6 +46,7 @@ public class User extends AbstractUser{
         sb.append(", account='").append(this.getAccount()).append('\'');
         sb.append(", name='").append(this.getName()).append('\'');
         sb.append(", password='").append(this.getPassword()).append('\'');
+        sb.append(", regitime='").append(this.getRegitime()).append("\'");
         sb.append(", card_id=").append(card_id);
         sb.append(", type_id=").append(type_id);
         sb.append('}');

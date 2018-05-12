@@ -8,7 +8,7 @@ import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.*;
 import com.mycompany.model.dao.impl.BookDaoImpl;
 import com.mycompany.model.dao.impl.CardDaoImpl;
-import com.mycompany.model.dao.impl.RecordDaoImpl;
+import com.mycompany.model.dao.impl.BorrowRecordDaoImpl;
 import com.mycompany.model.dao.impl.UserDaoImpl;
 import com.mycompany.model.jdbc.JdbcUtils;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements AbstractUserService<User> {
     private Connection conn;
     private UserDao userDao = new UserDaoImpl(); // 用户数据访问对象
-    private RecordDao recordDao = new RecordDaoImpl();
+    private BorrowRecordDao recordDao = new BorrowRecordDaoImpl();
     private BookDao bookDao = new BookDaoImpl();
     private CardDao cardDao = new CardDaoImpl();
 

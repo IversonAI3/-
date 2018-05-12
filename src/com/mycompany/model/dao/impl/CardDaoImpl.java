@@ -12,27 +12,20 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao{
     @Override
     public Card insertCard(Connection connection) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO `Card` VALUES(DEFAULT, DEFAULT, DEFAULT, DEFAULT);");
-        connection.createStatement().executeUpdate(sb.toString());
-        return selectMostRecentCard(connection);
+        sb.append("INSERT INTO `Card` VALUES(DEFAULT, DEFAULT, DEFAULT);");
+        int i = connection.createStatement().executeUpdate(sb.toString());
+        return i==1?selectMostRecentCard(connection):null;
     }
 
     @Override
     public Card selectMostRecentCard(Connection connection) throws SQLException {
-        StringBuilder sb = new StringBuilder();
-        String sql = "SELECT card_id, balance, amount, quota\n" +
-                "FROM `card` \n" +
-                "WHERE card_id = (SELECT MAX(card_id) FROM `card`);";
-        System.out.println(sql);
+        String sql = "SELECT * FROM `card` WHERE card_id = (SELECT MAX(card_id) FROM `card`);";
         ResultSet rs =  connection.createStatement().executeQuery(sql);
-        System.out.println("结束");
-        Card card = new Card();
-        rs.next();
-        card.setCard_id(rs.getInt("card_id"));
-        card.setAmount(rs.getShort("amount"));
-        card.setBalance(rs.getDouble("balance"));
-        card.setQuota(rs.getShort("quota"));
-        System.out.println(card);
+        Card card = null;
+        if(rs.next()){
+            card = new Card();
+            initializeCard(rs,card);
+        }
         return card;
     }
 
@@ -44,10 +37,7 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao{
         Card card = null;
         if(rs.next()){
             card = new Card();
-            card.setCard_id(rs.getInt("card_id"));
-            card.setBalance(rs.getDouble("balance"));
-            card.setQuota(rs.getShort("quota"));
-            card.setAmount(rs.getShort("amount"));
+            initializeCard(rs,card);
         }
         return card;
     }
@@ -55,19 +45,18 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao{
     @Override
     public Card insert(Connection conn, Card card) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO `Card` VALUES(DEFAULT, DEFAULT, DEFAULT, DEFAULT);");
-        conn.createStatement().executeUpdate(sb.toString());
-        return selectMostRecentCard(conn);
+        sb.append("INSERT INTO `Card` VALUES(DEFAULT, DEFAULT, DEFAULT);");
+        int i = conn.createStatement().executeUpdate(sb.toString());
+        return i==1?selectMostRecentCard(conn):null;
     }
 
     @Override
     public Card update(Connection conn, Card card) throws SQLException {
-        String update = "UPDATE `card` SET `balance`=?, `amount`=?, `quota`=? WHERE `card_id`=?;";
+        String update = "UPDATE `card` SET `balance`=?, `quota`=? WHERE `card_id`=?;";
         PreparedStatement ps = conn.prepareStatement(update);
         ps.setDouble(1, card.getBalance());
-        ps.setShort(2,card.getAmount());
-        ps.setShort(3,card.getQuota());
-        ps.setInt(4,card.getCard_id());
+        ps.setShort(2, card.getQuota());
+        ps.setInt(3,card.getCard_id());
         int num =ps.executeUpdate();
         return num==1?card:null;
     }
@@ -80,5 +69,11 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao{
     @Override
     public Card find(Connection conn, Card card) throws SQLException {
         return null;
+    }
+
+    private void initializeCard(ResultSet rs, Card card) throws SQLException {
+        card.setCard_id(rs.getInt("card_id"));
+        card.setBalance(rs.getDouble("balance"));
+        card.setQuota(rs.getShort("quota"));
     }
 }

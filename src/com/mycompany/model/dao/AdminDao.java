@@ -17,5 +17,5 @@ public interface AdminDao extends BaseDao<Admin>{
      * 通过账号和密码来查找一个用户，可以用来验证账号密码
      * @return 返回查找到的User对象
      * */
-    Admin selectByAccountAndPassword(Connection conn, String account, String password);
+    Admin selectByAccountAndPassword(Connection conn, String account, String password) throws SQLException;
 }

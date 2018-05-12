@@ -5,12 +5,11 @@ import com.mycompany.model.bean.*;
 import com.mycompany.model.dao.*;
 import com.mycompany.model.dao.impl.AdminDaoImpl;
 import com.mycompany.model.dao.impl.BookDaoImpl;
-import com.mycompany.model.dao.impl.RecordDaoImpl;
+import com.mycompany.model.dao.impl.BorrowRecordDaoImpl;
 import com.mycompany.model.dao.impl.UserDaoImpl;
 import com.mycompany.model.jdbc.JdbcUtils;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     private AdminDao adminDao = new AdminDaoImpl();
     private UserDao userDao = new UserDaoImpl();
     private BookDao bookDao = new BookDaoImpl();
-    private RecordDao recordDao = new RecordDaoImpl();
+    private BorrowRecordDao recordDao = new BorrowRecordDaoImpl();
 
     public AdminServiceImpl(){
         this.conn = JdbcUtils.getConnection();

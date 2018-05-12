@@ -18,7 +18,6 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         // WHERE City LIKE '%lond%'
         sb.append("SELECT * FROM `book` WHERE `title` LIKE ")
                 .append("'%").append(title).append("%';");
-        System.out.println(sb);
         List<Book> bookList;
         Book book;
         ResultSet rs = connection.createStatement().executeQuery(sb.toString());
@@ -55,12 +54,7 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         bookList = new LinkedList<>();// ArrayList插入效率比较低
         while (rs.next()) {
             book = new Book();
-            book.setAuthor(rs.getString("author"));
-            book.setBook_id(rs.getInt("book_id"));
-            book.setTitle(rs.getString("title"));
-            book.setPrice(rs.getDouble("price"));
-            book.setQuantity(rs.getInt("quantity"));
-            bookList.add(book);
+            initializeBook(rs,book);
         }
         return bookList;
     }
@@ -79,15 +73,12 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 
     @Override
     public Book selectAddedBook(Connection connection) throws SQLException {
-        String str = "SELECT b.* FROM `book` b WHERE b.book_id = (SELECT MAX(book_id) FROM `book`);";
+        // SELECT * FROM book b WHERE b.create_time = (SELECT MAX(create_time) FROM book);
+        String str = "SELECT b.* FROM `book` b WHERE b.create_time = (SELECT MAX(create_time) FROM `book`);";
         ResultSet rs = connection.createStatement().executeQuery(str);
         if(rs.next()){
             Book book = new Book();
-            book.setAuthor(rs.getString("author"));
-            book.setBook_id(rs.getInt("book_id"));
-            book.setTitle(rs.getString("title"));
-            book.setPrice(rs.getDouble("price"));
-            book.setQuantity(rs.getInt("quantity"));
+            initializeBook(rs,book);
             return book;
         }
         return null;
@@ -96,7 +87,6 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
 
     @Override
     public Book insert(Connection conn, Book book) throws SQLException {
-        System.out.println("调用BookDaoImpl.insert()方法");
         String title = book.getTitle();
         String author = book.getAuthor();
         Double price = book.getPrice();
@@ -110,12 +100,7 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         ps.setDouble(3,price);
         ps.setInt(4,quantity);
         int row = ps.executeUpdate();
-        if(row==1){
-            Book b = selectAddedBook(conn);
-            System.out.println("最近添加的书: "+b);
-            return b;
-        }
-        return null;
+        return row==1 ? selectAddedBook(conn):null;
     }
 
     @Override
@@ -153,13 +138,20 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         ResultSet rs = ps.executeQuery();
         if(rs.next()){
             Book b = new Book();
-            b.setAuthor(rs.getString("author"));
-            b.setBook_id(rs.getInt("book_id"));
-            b.setTitle(rs.getString("title"));
-            b.setPrice(rs.getDouble("price"));
-            b.setQuantity(rs.getInt("quantity"));
+            initializeBook(rs,b);
             return b;
         }
         return null;
+    }
+
+    /**
+     * 用ResultSet结果集返回的一行结果来初始化Book对象
+     * */
+    private void initializeBook(ResultSet rs,Book book) throws SQLException {
+        book.setAuthor(rs.getString("author"));
+        book.setBook_id(rs.getInt("book_id"));
+        book.setTitle(rs.getString("title"));
+        book.setPrice(rs.getDouble("price"));
+        book.setQuantity(rs.getInt("quantity"));
     }
 }

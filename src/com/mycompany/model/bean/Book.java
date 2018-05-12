@@ -7,6 +7,8 @@ public class Book {
     private String title;
     private String author;
     private Double price;
+    private String create_time;
+    private String modify_time;
     private Integer quantity;
 
     public Book(Integer book_id, String title, String author, Double price, Integer quantity) {
@@ -18,6 +20,22 @@ public class Book {
     }
 
     public Book() {}
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getModify_time() {
+        return modify_time;
+    }
+
+    public void setModify_time(String modify_time) {
+        this.modify_time = modify_time;
+    }
 
     public Integer getBook_id() {
         return book_id;
