@@ -8,47 +8,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="336.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
+
+<AnchorPane prefHeight="643.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
    <children>
-      <VBox layoutY="6.0" prefHeight="336.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="600.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="647.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
                <font>
-                  <Font size="19.0" />
+                  <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <TableView fx:id="recordTableView" prefHeight="271.0" prefWidth="600.0">
+            <TableView fx:id="borrowRecordTableView" prefHeight="309.0" prefWidth="594.0">
               <columns>
-                <TableColumn fx:id="record_id" prefWidth="75.0" text="记录ID" />
-                <TableColumn fx:id="card_id" prefWidth="90.0" text="卡号" />
-                  <TableColumn fx:id="book_id" prefWidth="107.0" text="书号" />
-                  <TableColumn fx:id="borrow_time" prefWidth="150.0" text="借书时间" />
-                  <TableColumn fx:id="return_time" prefWidth="177.0" text="还书截止时间" />
+                <TableColumn fx:id="b_book_id" prefWidth="117.0" text="图书编号" />
+                <TableColumn fx:id="b_card_id" prefWidth="188.0" text="卡号" />
+                  <TableColumn fx:id="b_borrow_time" prefWidth="107.0" text="借书时间" />
+                  <TableColumn fx:id="b_return_time" prefWidth="181.0" text="截止时间" />
               </columns>
             </TableView>
-            <HBox>
-               <children>
-                  <Button fx:id="returnBookButton" mnemonicParsing="false" onAction="#returnBookButtonOnClick" prefHeight="35.0" prefWidth="334.0" stylesheets="@RegisterWindow.css" text="还书">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="35.0" prefWidth="334.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="647.0" style="-fx-background-color: orange;" text="还书记录" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+            <TableView fx:id="returnRecordTableView" prefHeight="313.0" prefWidth="594.0">
+              <columns>
+                <TableColumn fx:id="r_return_id" prefWidth="75.0" text="记录编号" />
+                <TableColumn fx:id="r_book_id" prefWidth="75.0" text="图书编号" />
+                  <TableColumn fx:id="r_card_id" prefWidth="160.0" text="卡号" />
+                  <TableColumn fx:id="r_borrow_time" prefWidth="151.0" text="借书时间" />
+                  <TableColumn fx:id="r_return_time" prefWidth="132.0" text="还书时间" />
+              </columns>
+            </TableView>
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="71.0" prefWidth="604.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>

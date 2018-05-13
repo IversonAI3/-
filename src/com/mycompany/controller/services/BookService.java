@@ -1,6 +1,7 @@
 package com.mycompany.controller.services;
 
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.BorrowDetail;
 import com.mycompany.model.bean.User;
 
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public interface BookService {
     /**
      * 查找某一个用户借的所有书
      * */
-    List<Book> selectBorrowedBooksByUser(User u) throws SQLException;
+    List<BorrowDetail> selectBorrowedBooksByUser(User u) throws SQLException;
     /**
      * 通过一个book_id来查询书的数量
      * @param book_id

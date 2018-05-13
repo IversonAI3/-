@@ -3,10 +3,7 @@ package com.mycompany.controller.services.impl;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.model.bean.*;
 import com.mycompany.model.dao.*;
-import com.mycompany.model.dao.impl.AdminDaoImpl;
-import com.mycompany.model.dao.impl.BookDaoImpl;
-import com.mycompany.model.dao.impl.BorrowRecordDaoImpl;
-import com.mycompany.model.dao.impl.UserDaoImpl;
+import com.mycompany.model.dao.impl.*;
 import com.mycompany.model.jdbc.JdbcUtils;
 
 import java.sql.Connection;
@@ -18,7 +15,8 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     private AdminDao adminDao = new AdminDaoImpl();
     private UserDao userDao = new UserDaoImpl();
     private BookDao bookDao = new BookDaoImpl();
-    private BorrowRecordDao recordDao = new BorrowRecordDaoImpl();
+    private BorrowRecordDao borrowRecordDao = new BorrowRecordDaoImpl();
+    private ReturnRecordDao returnRecordDao = new ReturnRecordDaoImpl();
 
     public AdminServiceImpl(){
         this.conn = JdbcUtils.getConnection();
@@ -36,7 +34,7 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
 
     @Override
     public Admin login(Admin admin)throws SQLException {
-        return null;
+        return findByAccountAndPassword(admin.getAccount(),admin.getPassword());
     }
 
     @Override
@@ -49,14 +47,13 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
         return null;
     }
 
-
     @Override
     public List<Book> showAllBooks() throws SQLException {
         return bookDao.selectAll(conn);
     }
 
     @Override
-    public Admin findByAccountAndPassword(String account, String pwd) {
+    public Admin findByAccountAndPassword(String account, String pwd) throws SQLException {
         return adminDao.selectByAccountAndPassword(conn,account,pwd);
     }
 
@@ -64,12 +61,22 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
         return userDao.selectAll(conn);
     }
 
-    public List<Record> showAllRecordsByBook(Book book) throws SQLException{
-        return recordDao.selectByBookId(conn,book.getBook_id());
+    public List<BorrowRecord> showAllBorrowRecords() throws SQLException{
+        return borrowRecordDao.selectAll(conn);
+    }
+
+    public List<ReturnRecord> showAllReturnRecords() throws SQLException{
+        return returnRecordDao.selectAll(conn);
     }
 
     public boolean deleteBookById(Book book) throws SQLException {
         Book b = bookDao.delete(conn,book);
         return b==null?false:true;
     }
+
+    public List<BorrowRecord> showAllRecordsByBook(Book book) throws SQLException {
+        List<BorrowRecord> borrowRecords = borrowRecordDao.selectByBookId(conn,book.getBook_id());
+        return borrowRecords;
+    }
+
 }

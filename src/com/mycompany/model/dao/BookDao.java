@@ -1,6 +1,7 @@
 package com.mycompany.model.dao;
 
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.BorrowDetail;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public interface BookDao extends BaseDao<Book>{
      * @param user_id 用户id
      * @return 该用户借的所有书的集合
      */
-    List<Book> selectByUserId(Connection connection, Integer user_id) throws SQLException;
+    List<BorrowDetail> selectByUserId(Connection connection, Integer user_id) throws SQLException;
     /**
      * 通过书的ID查询它数量
      * @param book_id

@@ -21,7 +21,7 @@ public interface AbstractUserService<T extends AbstractUser> {
      * @param account 要查询的用户的账号
      * @return 返回查询到的用户对象，如果没有查到返回null
      * */
-    T findByAccount(String account);
+    T findByAccount(String account) throws SQLException;
     /**
      * 用户的登录行为
      * @param t 接受一个用户对象作为参数

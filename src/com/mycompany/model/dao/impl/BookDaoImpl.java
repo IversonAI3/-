@@ -1,13 +1,10 @@
 package com.mycompany.model.dao.impl;
 
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.BorrowDetail;
 import com.mycompany.model.dao.BookDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,27 +33,23 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
     }
 
     @Override
-    public List<Book> selectByUserId(Connection connection, Integer user_id) throws SQLException{
-        // SELECT b.*
-        //            FROM `book` b
-        //            INNER JOIN `record` r ON b.book_id = r.book_id
-        //            INNER JOIN `user` u ON u.card_id = r.card_id
-        StringBuilder sb = new StringBuilder();
-        // WHERE City LIKE '%lond%'
-        sb.append("SELECT b.* FROM `book` b ")
-                .append("INNER JOIN `record` r ON b.book_id = r.book_id ")
-                .append("INNER JOIN `user` u ON u.card_id = r.card_id ")
-                .append("WHERE u.user_id=").append(user_id).append(";");
-        System.out.println(sb);
-        List<Book> bookList;
-        Book book;
-        ResultSet rs = connection.createStatement().executeQuery(sb.toString());
-        bookList = new LinkedList<>();// ArrayList插入效率比较低
+    public List<BorrowDetail> selectByUserId(Connection connection, Integer user_id) throws SQLException{
+        List<BorrowDetail> detailList = new LinkedList<>();
+        BorrowDetail borrowDetail;
+        CallableStatement cstmt = connection.prepareCall("{call borrowRecords(?)}");
+        cstmt.setInt(1,user_id);
+        ResultSet rs = cstmt.executeQuery();
         while (rs.next()) {
-            book = new Book();
-            initializeBook(rs,book);
+            borrowDetail = new BorrowDetail();
+            borrowDetail.setBook_id(rs.getInt("book_id"));
+            borrowDetail.setTitle(rs.getString("title"));
+            borrowDetail.setAuthor(rs.getString("author"));
+            borrowDetail.setPrice(rs.getDouble("price"));
+            borrowDetail.setBorrow_time(rs.getTimestamp("borrow_time").toString());
+            borrowDetail.setReturn_time(rs.getTimestamp("return_time").toString());
+            detailList.add(borrowDetail);
         }
-        return bookList;
+        return detailList;
     }
 
     @Override
@@ -153,5 +146,7 @@ public class BookDaoImpl extends BaseDaoImpl<Book> implements BookDao{
         book.setTitle(rs.getString("title"));
         book.setPrice(rs.getDouble("price"));
         book.setQuantity(rs.getInt("quantity"));
+        book.setCreate_time(rs.getTimestamp("create_time").toString());
+        book.setModify_time(rs.getTimestamp("modify_time").toString());
     }
 }

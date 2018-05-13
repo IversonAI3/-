@@ -101,21 +101,22 @@
                         </Label>
                         <TableView fx:id="borrowTableView" prefHeight="219.0" prefWidth="663.0" AnchorPane.bottomAnchor="-67.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
-                              <TableColumn fx:id="b_columnBookID" prefWidth="99.0" text="编号" />
-                              <TableColumn fx:id="b_columnTitle" prefWidth="103.0" text="书名" />
-                              <TableColumn fx:id="b_columnAuthor" prefWidth="259.0" text="作者" />
-                              <TableColumn fx:id="b_columnPrice" prefWidth="94.0" text="价格" />
-                              <TableColumn fx:id="b_columnQuantity" prefWidth="107.0" text="数量" />
+                              <TableColumn fx:id="b_columnBookID" prefWidth="82.0" text="编号" />
+                              <TableColumn fx:id="b_columnTitle" prefWidth="146.0" text="书名" />
+                              <TableColumn fx:id="b_columnAuthor" prefWidth="82.0" text="作者" />
+                              <TableColumn fx:id="b_columnPrice" prefWidth="74.0" text="价格" />
+                              <TableColumn fx:id="b_columnBorrowTime" prefWidth="139.0" text="借书时间" />
+                              <TableColumn fx:id="b_columnReturnTime" prefWidth="139.0" text="截止时间" />
                            </columns>
                         </TableView>
                         <HBox>
                            <children>
-                              <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshButtonOnClick" prefHeight="31.0" prefWidth="667.0" stylesheets="@RegisterWindow.css" text="刷新借阅信息">
+                              <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="31.0" prefWidth="401.0" stylesheets="@RegisterWindow.css" text="还书">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="2.5" top="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="showRecordButton" mnemonicParsing="false" onAction="#showRecordButtonOnClick" prefHeight="31.0" prefWidth="667.0" stylesheets="@RegisterWindow.css" text="查看详细记录">
+                              <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshButtonOnClick" prefHeight="31.0" prefWidth="401.0" stylesheets="@RegisterWindow.css" text="刷新借阅信息">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="2.5" right="5.0" top="5.0" />
                                  </HBox.margin>

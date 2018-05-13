@@ -66,8 +66,8 @@
                     <columns>
                       <TableColumn fx:id="columnUserId" prefWidth="75.0" text="用户ID" />
                       <TableColumn fx:id="columnAccount" prefWidth="75.0" text="账号" />
-                        <TableColumn fx:id="columnName" prefWidth="115.0" text="姓名" />
-                        <TableColumn fx:id="columnPwd" prefWidth="136.0" text="密码" />
+                        <TableColumn fx:id="columnName" onEditCommit="#changeNameCellEvent" prefWidth="115.0" text="姓名" />
+                        <TableColumn fx:id="columnPwd" onEditCommit="#changePwdCellEvent" prefWidth="136.0" text="密码" />
                         <TableColumn fx:id="columnCardId" prefWidth="93.0" text="借书卡" />
                         <TableColumn fx:id="columnUserType" prefWidth="103.0" text="用户类型" />
                     </columns>
@@ -78,7 +78,7 @@
                <children>
                   <TextField fx:id="book_title" prefHeight="44.0" prefWidth="181.0" promptText="*书名">
                      <VBox.margin>
-                        <Insets left="5.0" right="5.0" top="15.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </TextField>
                   <TextField fx:id="book_author" prefHeight="44.0" prefWidth="181.0" promptText="作者">
@@ -106,12 +106,12 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="showBorrowRecord" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="借阅记录">
+                  <Button fx:id="showAllRecord" mnemonicParsing="false" onAction="#showAllRecordOnClick" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="借书和还书记录">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="showPenaltyButton" mnemonicParsing="false" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="罚款记录">
+                  <Button fx:id="showPenaltyButton" mnemonicParsing="false" onAction="#showPenaltyButtonOnClick" prefHeight="47.0" prefWidth="181.0" stylesheets="@RegisterWindow.css" text="罚款记录">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>

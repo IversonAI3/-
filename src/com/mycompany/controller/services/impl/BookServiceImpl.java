@@ -2,6 +2,7 @@ package com.mycompany.controller.services.impl;
 
 import com.mycompany.controller.services.BookService;
 import com.mycompany.model.bean.Book;
+import com.mycompany.model.bean.BorrowDetail;
 import com.mycompany.model.bean.User;
 import com.mycompany.model.dao.BookDao;
 import com.mycompany.model.dao.impl.BookDaoImpl;
@@ -27,8 +28,8 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public List<Book> selectBorrowedBooksByUser(User u) throws SQLException {
-        List<Book> books = bookDao.selectByUserId(conn,u.getUser_id());
+    public List<BorrowDetail> selectBorrowedBooksByUser(User u) throws SQLException {
+        List<BorrowDetail> books = bookDao.selectByUserId(conn,u.getUser_id());
         return books;
     }
 

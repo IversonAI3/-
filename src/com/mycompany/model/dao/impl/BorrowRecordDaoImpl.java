@@ -4,10 +4,7 @@ import com.mycompany.model.bean.BorrowRecord;
 import com.mycompany.model.bean.Card;
 import com.mycompany.model.dao.BorrowRecordDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,8 +53,7 @@ public class BorrowRecordDaoImpl extends BaseDaoImpl<BorrowRecord> implements Bo
 
     @Override
     public BorrowRecord selectByBookIdCardIdBorrowTime(Connection connection, Integer book_id, Integer card_id, String borrow_time) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(
-                "SELECT * FROM `borrowrecord` WHERE book_id=? AND card_id=? AND borrow_time=?");
+        CallableStatement ps = connection.prepareCall("{call checkBorrow(?,?,?)}");
         ps.setInt(1,book_id);
         ps.setInt(2,card_id);
         ps.setString(3,borrow_time);
@@ -87,8 +83,8 @@ public class BorrowRecordDaoImpl extends BaseDaoImpl<BorrowRecord> implements Bo
     private BorrowRecord initializeRecord(ResultSet rs, BorrowRecord record) throws SQLException {
         record.setCard_id(rs.getInt("card_id"));
         record.setBook_id(rs.getInt("book_id"));
-        record.setBorrow_time(String.valueOf(rs.getTimestamp("borrow_time")));
-        record.setReturn_time(String.valueOf(rs.getTimestamp("return_time")));
+        record.setBorrow_time(rs.getTimestamp("borrow_time").toString());
+        record.setReturn_time(rs.getTimestamp("return_time").toString());
         return record;
     }
 }

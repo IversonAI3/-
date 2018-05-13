@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -55,7 +56,7 @@ public class ManagerHomeWindowController implements Initializable{
 
     @FXML private Button addBookButton;
     @FXML private Button deleteBookButton;
-    @FXML private Button showBorrowRecord;
+    @FXML private Button showAllRecord;
     @FXML private Button showPenaltyButton;
 
     @FXML private TableColumn<Book, Integer> columnBookID;
@@ -77,10 +78,13 @@ public class ManagerHomeWindowController implements Initializable{
         userData = FXCollections.observableArrayList();
         setTableCell();
         bookTableView.setEditable(true);
+        userTableView.setEditable(true);
         columnTitle.setCellFactory(TextFieldTableCell.forTableColumn());
         columnAuthor.setCellFactory(TextFieldTableCell.forTableColumn());
         columnPrice.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         columnQuantity.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnName.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPwd.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
     @FXML
@@ -184,7 +188,6 @@ public class ManagerHomeWindowController implements Initializable{
     private void changeAuthorCellEvent(TableColumn.CellEditEvent cellEditEvent){
         Book book = bookTableView.getSelectionModel().getSelectedItem();
         book.setAuthor((String) cellEditEvent.getNewValue());
-        System.out.println(book);
         try {
             bookService.updateBook(book);
         } catch (SQLException e) {
@@ -223,6 +226,58 @@ public class ManagerHomeWindowController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void changeNameCellEvent(TableColumn.CellEditEvent cellEditEvent){
+        User user = userTableView.getSelectionModel().getSelectedItem();
+        String newName = (String) cellEditEvent.getNewValue();
+        user.setName(newName);
+        try {
+            userService.rename(user, newName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void changePwdCellEvent(TableColumn.CellEditEvent cellEditEvent){
+        User user = userTableView.getSelectionModel().getSelectedItem();
+        String newPwd = (String) cellEditEvent.getNewValue();
+        user.setPassword(newPwd);
+        try {
+            userService.changePwd(user,newPwd);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void showAllRecordOnClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.RECORD_WINDOW.getValue()));
+        Parent root = loader.load();
+        Scene home_page_scene = new Scene(root);
+        Stage main_window = new Stage();
+        main_window.setScene(home_page_scene);
+        main_window.initModality(Modality.APPLICATION_MODAL);
+        main_window.initOwner(showPenaltyButton.getScene().getWindow());
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
+        main_window.showAndWait();
+    }
+
+    @FXML
+    private void showPenaltyButtonOnClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.PENALTY_WINDOW.getValue()));
+        Parent root = loader.load();
+        Scene home_page_scene = new Scene(root);
+        Stage main_window = new Stage();
+        main_window.setScene(home_page_scene);
+        main_window.initModality(Modality.APPLICATION_MODAL);
+        main_window.initOwner(showPenaltyButton.getScene().getWindow());
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
+        main_window.showAndWait();
     }
 
     private void loadBookData(){

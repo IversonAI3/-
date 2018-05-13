@@ -8,6 +8,7 @@ import com.mycompany.controller.services.impl.BookServiceImpl;
 import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.*;
+import com.sun.prism.impl.Disposer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,34 +34,36 @@ import java.util.ResourceBundle;
 public class UserHomeWindowController implements Initializable{
     private User u;
     private Card card;
-    private Record record;
+    private BorrowRecord borrowRecord;
     private BookService bookService = new BookServiceImpl();
     private UserServiceImpl userService = new UserServiceImpl();
     private CardService cardService = new CardServiceImpl();
 
     private ObservableList<Book> bookData;
-    private ObservableList<Book> borrowedBookData;
+    private ObservableList<BorrowDetail> borrowedBookData;
     @FXML private Button logoutButton;
     @FXML private Button searchButton;
     @FXML private Button infoButton;
     @FXML private Button getCardButton;
     @FXML private Button borrowButton;
-    @FXML private Button showRecordButton;
+    @FXML private Button returnButton;
 
     @FXML private TextField searchField;
     @FXML private Label label = new Label();
     @FXML private TableView<Book> tableView;
-    @FXML private TableView<Book> borrowTableView;
+    @FXML private TableView<BorrowDetail> borrowTableView;
     @FXML private TableColumn<Book, Integer> columnBookID;
     @FXML private TableColumn<Book, Integer> columnTitle;
     @FXML private TableColumn<Book, Integer> columnAuthor;
     @FXML private TableColumn<Book, Double> columnPrice;
     @FXML private TableColumn<Book, Integer> columnQuantity;
-    @FXML private TableColumn<Book, Integer> b_columnBookID;
-    @FXML private TableColumn<Book, Integer> b_columnTitle;
-    @FXML private TableColumn<Book, Integer> b_columnAuthor;
-    @FXML private TableColumn<Book, Double> b_columnPrice;
-    @FXML private TableColumn<Book, Integer> b_columnQuantity;
+    @FXML private TableColumn<BorrowDetail, Integer> b_columnBookID;
+    @FXML private TableColumn<BorrowDetail, Integer> b_columnTitle;
+    @FXML private TableColumn<BorrowDetail, Integer> b_columnAuthor;
+    @FXML private TableColumn<BorrowDetail, Double> b_columnPrice;
+    @FXML private TableColumn<BorrowDetail, String> b_columnBorrowTime;
+    @FXML private TableColumn<BorrowDetail, String> b_columnReturnTime;
+
 
 
     @Override
@@ -109,7 +112,8 @@ public class UserHomeWindowController implements Initializable{
         b_columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         b_columnAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         b_columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        b_columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        b_columnBorrowTime.setCellValueFactory(new PropertyValueFactory<>("borrow_time"));
+        b_columnReturnTime.setCellValueFactory(new PropertyValueFactory<>("return_time"));
     }
 
     /**
@@ -138,7 +142,7 @@ public class UserHomeWindowController implements Initializable{
      * */
     public void loadBorrowedBooks(AbstractUser u) {
         borrowTableView.getItems().clear();
-        List<Book> bookList;
+        List<BorrowDetail> bookList;
         try {
             bookList = bookService.selectBorrowedBooksByUser((User) u);
             borrowedBookData.setAll(bookList);
@@ -189,8 +193,10 @@ public class UserHomeWindowController implements Initializable{
      * 当用户点击申请借书卡按钮，先判断该用户是否已经拥有借书卡，如果没有的话跳转到二维码支付页面
      * */
     @FXML
-    private void getCardButtonOnClick(ActionEvent event) throws IOException {
-        if(u.getCard_id()!=0){
+    private void getCardButtonOnClick(ActionEvent event) throws IOException, SQLException {
+        System.out.println(u.getCard_id());
+        System.out.println(userService.checkCardByUserId(u));
+        if(u.getCard_id()!=0 && userService.checkCardByUserId(u)!=null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.CARD_WINDOW.getValue()));
             Parent root = loader.load();
             CardWindowController cc = loader.getController();
@@ -211,10 +217,11 @@ public class UserHomeWindowController implements Initializable{
     /**
      * 当点下借阅按钮的时候会做3件事：
      * 1. 检查用户是否选择了一本书
-     * 2. 检查书的数量，如果数量<=0，提示数量不足
-     * 3. 检查用户是否有借书卡，如果没有，提示申请借书卡
-     * 4. 如果数量>0，创建Record对象，提供卡号card_id，书号book_id,当前时间borrow_time，返回时间+7。
-     * 5. 书的数量-1。
+     * 2. 检查用户是否已经在1分钟内借过这本书，提示稍后再试
+     * 3. 检查书的数量，如果数量<=0，提示数量不足
+     * 4. 检查用户是否有借书卡，如果没有，提示申请借书卡
+     * 5. 如果数量>0，创建Record对象，提供卡号card_id，书号book_id,当前时间borrow_time，返回时间+7。
+     * 6. 书的数量-1。
      * */
     @FXML
     private void borrowButtonOnClick(ActionEvent event) {
@@ -235,14 +242,20 @@ public class UserHomeWindowController implements Initializable{
                 WindowsUtil.showAlert(Alert.AlertType.WARNING,"必须申请借书卡才能借书");
                 return;
             }
+            if(userService.checkDupilicateBorrow(card,book)!=null){
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"已经借过这本书，请稍后再试");
+                return;
+            }
             card = cardService.getCardById(u.getCard_id());
-            Boolean b = userService.borrowBook(u, card, book);
-            if(b==false){
+            BorrowRecord b = userService.borrowBook(u, card, book);
+            if(b==null){
                 WindowsUtil.showAlert(Alert.AlertType.WARNING,"已经超过借书额度上限");
                 return;
             }
             tableView.refresh();
-            borrowedBookData.add(book);
+            BorrowDetail bd = new BorrowDetail(book.getBook_id(),book.getTitle()
+                    , book.getAuthor(), book.getPrice(), b.getBorrow_time(), b.getReturn_time());
+            borrowedBookData.add(bd);
             borrowTableView.refresh();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -251,22 +264,21 @@ public class UserHomeWindowController implements Initializable{
     }
 
     @FXML
-    private void showRecordButtonOnClick(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.RECORD_WINDOW.getValue()));
-        Parent root = loader.load();
-        RecordWindowController rc = loader.getController();
-        rc.loadRecordTable(card); // 设置用户登录窗口中的User对象，以此来传递数据
-        Scene home_page_scene = new Scene(root);
-        Stage main_window = new Stage();
-        main_window.setScene(home_page_scene);
-        main_window.initModality(Modality.APPLICATION_MODAL);
-        main_window.initOwner(showRecordButton.getScene().getWindow());
-        main_window.setTitle("线上图书管系统");
-        main_window.setResizable(false);
-        main_window.setOnCloseRequest(event1 -> {
-            System.out.println("关闭窗口");
-        });
-        main_window.show();
+    private void returnButtonOnClick(ActionEvent event){
+        BorrowDetail borrowDetail = borrowTableView.getSelectionModel().getSelectedItem();
+        if(borrowDetail==null){
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请选择要还的书");
+            return;
+        }
+        BorrowRecord borrowRecord = new BorrowRecord(borrowDetail.getBook_id(),
+                card.getCard_id(), borrowDetail.getBorrow_time(), borrowDetail.getReturn_time());
+        try {
+            userService.returnBook(borrowRecord);
+            borrowedBookData.remove(borrowDetail);
+            borrowTableView.refresh();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

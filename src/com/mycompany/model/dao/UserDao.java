@@ -15,22 +15,22 @@ public interface UserDao extends BaseDao<User>{
     User insert(Connection conn, User user) throws SQLException;
     /**
      * 通过账号来查找用户
-     * @param acccount 用户账号
+     * @param account 用户账号
      * @param conn 数据库连接对象
      * @return 用找到的用户的数据创建一个用户对象并返回这个对象
      * */
-    User selectByAccount(Connection conn, String acccount) throws SQLException;
+    User selectByAccount(Connection conn, String account) throws SQLException;
     /**
      * 通过账号和密码来查找一个用户，可以用来验证账号密码
      * @return 返回查找到的User对象
      * */
-    User selectByAccountAndPassword(Connection conn, String account, String password);
+    User selectByAccountAndPassword(Connection conn, String account, String password) throws SQLException;
     /**
      * 通过名字选择用户
      * @param conn 数据库连接
      * @param name 用户名
      * */
-    List<User> selectByName(Connection conn, String name);
+    List<User> selectByName(Connection conn, String name) throws SQLException;
     /**
      * 用户修改名字
      * @param conn 数据库连接
