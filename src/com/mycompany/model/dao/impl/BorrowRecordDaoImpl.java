@@ -66,6 +66,34 @@ public class BorrowRecordDaoImpl extends BaseDaoImpl<BorrowRecord> implements Bo
     }
 
     @Override
+    public List<BorrowRecord> selectUnReturnedRecords(Connection conn) throws SQLException {
+        CallableStatement ctmt = conn.prepareCall("{call unreturnedRecord()}");
+        ResultSet rs = ctmt.executeQuery();
+        List<BorrowRecord> borrowRecords = new LinkedList<>();
+        BorrowRecord b;
+        while(rs.next()){
+            b = new BorrowRecord();
+            initializeRecord(rs,b);
+            borrowRecords.add(b);
+        }
+        return borrowRecords;
+    }
+
+    @Override
+    public List<BorrowRecord> selectReturnedRecords(Connection conn) throws SQLException {
+        CallableStatement ctmt = conn.prepareCall("{call returnedRecord()}");
+        ResultSet rs = ctmt.executeQuery();
+        List<BorrowRecord> borrowRecords = new LinkedList<>();
+        BorrowRecord b;
+        while(rs.next()){
+            b = new BorrowRecord();
+            initializeRecord(rs,b);
+            borrowRecords.add(b);
+        }
+        return borrowRecords;
+    }
+
+    @Override
     public BorrowRecord update(Connection conn, BorrowRecord record) throws SQLException {
         return null;
     }

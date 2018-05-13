@@ -86,7 +86,7 @@ public class UserInfoWindowController implements Initializable{
         this.user = u;
         System.out.println(this.user);
         userIdLabel.setText(userIdLabel.getText()+(u.getUser_id()));
-        userTypeLabel.setText(userTypeLabel.getText()+(u.getUser_id()==1?"学生":"教师"));
+        userTypeLabel.setText(userTypeLabel.getText()+(u.getType_id()==1?"学生":"教师"));
         userAccountLabel.setText(userAccountLabel.getText()+u.getAccount());
         userNameLabel.setText(userNameLabel.getText()+(u.getName()==null?"":u.getName()));
         userPasswordLabel.setText(userPasswordLabel.getText()+u.getPassword());

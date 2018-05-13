@@ -16,4 +16,8 @@ public interface BorrowRecordDao extends BaseDao<BorrowRecord>{
      * 通过book_id, card_id和borrow_time来查询一个借书记录，只能查到一个
      * */
     BorrowRecord selectByBookIdCardIdBorrowTime(Connection connection, Integer book_id, Integer card_id, String borrow_time) throws SQLException;
+
+    List<BorrowRecord> selectUnReturnedRecords(Connection conn) throws SQLException;
+
+    List<BorrowRecord> selectReturnedRecords(Connection conn) throws SQLException;
 }

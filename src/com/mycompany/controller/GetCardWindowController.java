@@ -3,6 +3,7 @@ package com.mycompany.controller;
 import com.mycompany.controller.services.CardService;
 import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +36,12 @@ public class GetCardWindowController implements Initializable{
         Parent root = loader.load();
         UserHomeWindowController uc = loader.getController();
         try {
-            u = userService.getNewCard(u, cardService.createCard());
+            Card c = cardService.createCard();
+            if(u.getType_id()==2) { // 如果是教师
+                c.setQuota((short)10);
+            }
+            u = userService.getNewCard(u, c);
+            userService.updateCard(c);
             uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
             showAlert(Alert.AlertType.INFORMATION, "成功申请借书卡："+u.getCard_id());
         } catch (SQLException e) {

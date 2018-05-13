@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="416.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.PenaltyWindowController">
    <children>
       <VBox prefHeight="416.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -18,10 +17,14 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <TableView prefHeight="359.0" prefWidth="580.0">
+            <TableView fx:id="penaltyTableView" prefHeight="359.0" prefWidth="580.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="penalty_id" prefWidth="75.0" text="记录编号" />
+                  <TableColumn fx:id="return_id" prefWidth="91.0" text="还书编号" />
+                <TableColumn fx:id="book_id" prefWidth="102.0" text="图书编号" />
+                  <TableColumn fx:id="card_id" prefWidth="91.0" text="卡号" />
+                  <TableColumn fx:id="borrow_time" prefWidth="97.0" text="借书时间" />
+                  <TableColumn fx:id="fine" prefWidth="123.0" text="罚款金额" />
               </columns>
             </TableView>
             <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="10.0" prefWidth="570.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">

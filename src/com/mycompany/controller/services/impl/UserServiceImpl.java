@@ -16,9 +16,30 @@ public class UserServiceImpl implements AbstractUserService<User> {
     private BookDao bookDao = new BookDaoImpl();
     private CardDao cardDao = new CardDaoImpl();
     private ReturnRecordDao returnRecordDao = new ReturnRecordDaoImpl();
+    private PenaltyDao penaltyDao = new PenaltyDaoImpl();
 
     public void setUserDao(UserDao userDao){
         this.userDao = userDao;
+    }
+
+    public void setBorrowRecordDao(BorrowRecordDao borrowRecordDao) {
+        this.borrowRecordDao = borrowRecordDao;
+    }
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
+
+    public void setCardDao(CardDao cardDao) {
+        this.cardDao = cardDao;
+    }
+
+    public void setReturnRecordDao(ReturnRecordDao returnRecordDao) {
+        this.returnRecordDao = returnRecordDao;
+    }
+
+    public void setPenaltyDao(PenaltyDao penaltyDao) {
+        this.penaltyDao = penaltyDao;
     }
 
     // 实例化UserServiceImpl的时候获取一个数据库连接对象
@@ -165,4 +186,11 @@ public class UserServiceImpl implements AbstractUserService<User> {
         return returnRecordDao.insert(conn,returnRecord);
     }
 
+    public List<Penalty> showPenalties(Integer card_id) throws SQLException{
+        return penaltyDao.findByCardId(conn,card_id);
+    }
+
+    public Card updateCard(Card card) throws SQLException{
+        return cardDao.update(conn,card);
+    }
 }

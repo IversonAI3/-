@@ -5,7 +5,10 @@ import com.mycompany.model.dao.PenaltyDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PenaltyDaoImpl extends BaseDaoImpl<Penalty> implements PenaltyDao{
     @Override
@@ -35,5 +38,24 @@ public class PenaltyDaoImpl extends BaseDaoImpl<Penalty> implements PenaltyDao{
     @Override
     public Penalty find(Connection conn, Penalty penalty) throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<Penalty> findByCardId(Connection conn, Integer card_id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM penalty WHERE card_id=?;");
+        ps.setInt(1,card_id);
+        ResultSet rs = ps.executeQuery();
+        List<Penalty> penalties = new LinkedList<>();
+        Penalty penalty;
+        while (rs.next()){
+           penalty = new Penalty();
+           penalty.setPenalty_id(rs.getInt("penalty_id"));
+           penalty.setBook_id(rs.getInt("book_id"));
+           penalty.setCard_id(rs.getInt("card_id"));
+           penalty.setBorrow_time(rs.getTimestamp("borrow_time").toString());
+           penalty.setFine(rs.getDouble("fine"));
+           penalties.add(penalty);
+        }
+        return penalties;
     }
 }

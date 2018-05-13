@@ -28,6 +28,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -47,6 +50,7 @@ public class UserHomeWindowController implements Initializable{
     @FXML private Button getCardButton;
     @FXML private Button borrowButton;
     @FXML private Button returnButton;
+    @FXML private Button showPenaltyButton;
 
     @FXML private TextField searchField;
     @FXML private Label label = new Label();
@@ -200,7 +204,9 @@ public class UserHomeWindowController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.CARD_WINDOW.getValue()));
             Parent root = loader.load();
             CardWindowController cc = loader.getController();
-            cc.setCard(cardService.getCardById(u.getCard_id())); // 设置借书卡窗口中的Card对象，以此来传递数据
+            Card c = cardService.getCardById(u.getCard_id());
+            card = c;
+            cc.setCard(c); // 设置借书卡窗口中的Card对象，以此来传递数据
             Scene home_page_scene = new Scene(root);
             Stage main_window = new Stage();
             main_window.setScene(home_page_scene);
@@ -272,6 +278,8 @@ public class UserHomeWindowController implements Initializable{
         }
         BorrowRecord borrowRecord = new BorrowRecord(borrowDetail.getBook_id(),
                 card.getCard_id(), borrowDetail.getBorrow_time(), borrowDetail.getReturn_time());
+        SimpleDateFormat date = new SimpleDateFormat(borrowDetail.getReturn_time());
+
         try {
             userService.returnBook(borrowRecord);
             borrowedBookData.remove(borrowDetail);
@@ -286,4 +294,23 @@ public class UserHomeWindowController implements Initializable{
         loadBorrowedBooks(u);
     }
 
+    @FXML
+    private void showPenaltyButtonOnClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.PENALTY_WINDOW.getValue()));
+        Parent root = loader.load();
+        PenaltyWindowController pwc = loader.getController();
+        if(card.getCard_id()==0){
+            WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"无罚款记录，请先申请借书卡");
+            return;
+        }
+        pwc.loadPenaltyByCard(card.getCard_id());
+        Scene home_page_scene = new Scene(root);
+        Stage main_window = new Stage();
+        main_window.setScene(home_page_scene);
+        main_window.initModality(Modality.APPLICATION_MODAL);
+        main_window.initOwner(showPenaltyButton.getScene().getWindow());
+        main_window.setTitle("线上图书管系统");
+        main_window.setResizable(false);
+        main_window.showAndWait();
+    }
 }

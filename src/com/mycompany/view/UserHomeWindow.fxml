@@ -40,7 +40,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="罚款记录">
+                              <Button fx:id="showPenaltyButton" mnemonicParsing="false" onAction="#showPenaltyButtonOnClick" prefHeight="68.0" prefWidth="167.0" stylesheets="@RegisterWindow.css" text="罚款记录">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="2.5" right="2.5" top="5.0" />
                                  </HBox.margin>

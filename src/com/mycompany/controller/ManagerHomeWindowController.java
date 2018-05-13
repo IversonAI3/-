@@ -256,6 +256,9 @@ public class ManagerHomeWindowController implements Initializable{
     private void showAllRecordOnClick(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.RECORD_WINDOW.getValue()));
         Parent root = loader.load();
+        RecordWindowController rwc = loader.getController();
+        rwc.loadAllBorrowRecords();
+        rwc.loadAllReturnRecords();
         Scene home_page_scene = new Scene(root);
         Stage main_window = new Stage();
         main_window.setScene(home_page_scene);
@@ -270,6 +273,8 @@ public class ManagerHomeWindowController implements Initializable{
     private void showPenaltyButtonOnClick(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.PENALTY_WINDOW.getValue()));
         Parent root = loader.load();
+        PenaltyWindowController pwc = loader.getController();
+        pwc.loadPenaltyRecords();
         Scene home_page_scene = new Scene(root);
         Stage main_window = new Stage();
         main_window.setScene(home_page_scene);

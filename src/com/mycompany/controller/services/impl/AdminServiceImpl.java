@@ -17,6 +17,31 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
     private BookDao bookDao = new BookDaoImpl();
     private BorrowRecordDao borrowRecordDao = new BorrowRecordDaoImpl();
     private ReturnRecordDao returnRecordDao = new ReturnRecordDaoImpl();
+    private PenaltyDao penaltyDao = new PenaltyDaoImpl();
+
+    public void setAdminDao(AdminDao adminDao) {
+        this.adminDao = adminDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
+
+    public void setBorrowRecordDao(BorrowRecordDao borrowRecordDao) {
+        this.borrowRecordDao = borrowRecordDao;
+    }
+
+    public void setReturnRecordDao(ReturnRecordDao returnRecordDao) {
+        this.returnRecordDao = returnRecordDao;
+    }
+
+    public void setPenaltyDao(PenaltyDao penaltyDao) {
+        this.penaltyDao = penaltyDao;
+    }
 
     public AdminServiceImpl(){
         this.conn = JdbcUtils.getConnection();
@@ -79,4 +104,18 @@ public class AdminServiceImpl implements AbstractUserService<Admin>{
         return borrowRecords;
     }
 
+    public List<BorrowRecord> showAllUnReturnedRecords() throws SQLException{
+        List<BorrowRecord> borrowRecords = borrowRecordDao.selectUnReturnedRecords(conn);
+        return borrowRecords;
+    }
+
+    public List<BorrowRecord> showAllReturnedRecords() throws SQLException{
+        List<BorrowRecord> borrowRecords = borrowRecordDao.selectReturnedRecords(conn);
+        return borrowRecords;
+    }
+
+    public List<Penalty> showAllPenalties() throws SQLException {
+        List<Penalty> penalties = penaltyDao.selectAll(conn);
+        return penalties;
+    }
 }

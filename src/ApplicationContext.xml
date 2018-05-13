@@ -3,21 +3,31 @@
 <beans>
     <!-- User -->
     <bean name="User" class="com.mycompany.model.bean.User"/>
-    <bean name="UserService" class="com.mycompany.controller.services.CardService">
-
+    <bean name="UserService" class="com.mycompany.controller.services.impl.UserServiceImpl">
+        <property name="userDao" value="UserDao"/>
+        <property name="bookDao" value="BookDao"/>
+        <property name="cardDao" value="CardDao"/>
+        <property name="borrowRecordDao" value="BorrowRecordDao"/>
+        <property name="returnRecordDao" value="ReturnRecordDao"/>
+        <property name="penaltyDao" value="PenaltyDao"/>
     </bean>
 
-
-
-
-
+    <!-- Admin -->
     <bean name="Admin" class="com.mycompany.model.bean.Admin"/>
-    <bean name="AdminService" class="com.">
-        <property name="" value="UserDao"/>
-
+    <bean name="AdminService" class="com.mycompany.controller.services.impl.AdminServiceImpl">
+        <property name="adminDao" value="AdminDao"/>
+        <property name="userDao" value="UserDao"/>
+        <property name="bookDao" value="BookDao"/>
+        <property name="borrowRecordDao" value="borrowRecordDao"/>
+        <property name="returnRecordDao" value="ReturnRecordDao"/>
+        <property name="penaltyDao" value="PenaltyDao"/>
     </bean>
 
-
+    <!-- Card -->
+    <bean name="Card" class="com.mycompany.model.bean.Card"/>
+    <bean name="CardService" class="com.mycompany.controller.services.impl.CardServiceImpl">
+        <property name="cardDao" value="AdminDao"/>
+    </bean>
 </beans>
 
 

@@ -29,14 +29,12 @@ public class CardWindowController implements Initializable{
     @FXML private TableView<Card> cardTableView;
     @FXML private TableColumn<Card, Integer> column_card_id;
     @FXML private TableColumn<Card, Double> column_balance;
-    @FXML private TableColumn<Card, Short> column_amount;
     @FXML private TableColumn<Card, Short> column_quota;
     private ObservableList<Card> cardObservableList;
 
     private void setTableCell(){
         column_card_id.setCellValueFactory(new PropertyValueFactory<>("card_id"));
         column_balance.setCellValueFactory(new PropertyValueFactory<>("balance"));
-        column_amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         column_quota.setCellValueFactory(new PropertyValueFactory<>("quota"));
     }
 

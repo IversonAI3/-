@@ -9,16 +9,26 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="643.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
+<AnchorPane prefHeight="701.0" prefWidth="594.0" stylesheets="@RegisterWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="647.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="64.0" prefWidth="594.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <TableView fx:id="borrowRecordTableView" prefHeight="309.0" prefWidth="594.0">
+            <MenuButton fx:id="menuButton" alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="594.0" text="选择显示条目">
+              <items>
+                <MenuItem fx:id="showReturned" mnemonicParsing="false" onAction="#showReturnedOnClick" text="显示所有已经归还的借书记录" />
+                <MenuItem fx:id="showUnReturned" mnemonicParsing="false" onAction="#showUnReturnedOnClick" text="显示所有尚未归还的借书记录" />
+                  <MenuItem fx:id="showAll" mnemonicParsing="false" onAction="#showAllOnClick" text="显示所有记录" />
+              </items>
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </MenuButton>
+            <TableView fx:id="borrowRecordTableView" prefHeight="285.0" prefWidth="594.0">
               <columns>
                 <TableColumn fx:id="b_book_id" prefWidth="117.0" text="图书编号" />
                 <TableColumn fx:id="b_card_id" prefWidth="188.0" text="卡号" />
@@ -40,6 +50,20 @@
                   <TableColumn fx:id="r_return_time" prefWidth="132.0" text="还书时间" />
               </columns>
             </TableView>
+            <HBox prefHeight="69.0" prefWidth="594.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="311.0" text="Button">
+                     <HBox.margin>
+                        <Insets left="5.0" right="2.5" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="311.0" text="Button">
+                     <HBox.margin>
+                        <Insets left="2.5" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="71.0" prefWidth="604.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

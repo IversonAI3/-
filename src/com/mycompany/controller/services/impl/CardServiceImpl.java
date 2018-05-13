@@ -14,6 +14,10 @@ public class CardServiceImpl implements CardService{
     private CardDao cardDao = new CardDaoImpl();
     private Connection connection ;
 
+    public void setCardDao(CardDao cardDao) {
+        this.cardDao = cardDao;
+    }
+
     public CardServiceImpl() {
         connection = JdbcUtils.getConnection();
     }
