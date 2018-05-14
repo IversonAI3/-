@@ -13,8 +13,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BookServiceImpl implements BookService{
-    BookDao bookDao = new BookDaoImpl();
+    BookDao bookDao;// = new BookDaoImpl();
     Connection conn = JdbcUtils.getConnection();
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
 
     @Override
     public List<Book> findByTitle(String title) throws SQLException {

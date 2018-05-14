@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class CardWindowController implements Initializable{
     private Card card;
-    private CardService cardService = new CardServiceImpl();
 
     @FXML private Button returnButton;
     @FXML private TableView<Card> cardTableView;

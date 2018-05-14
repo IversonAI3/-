@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.CardService;
 import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
@@ -23,9 +24,11 @@ import java.util.ResourceBundle;
 
 public class GetCardWindowController implements Initializable{
     User u;
-    private CardService cardService = new CardServiceImpl();
-    private UserServiceImpl userService = new UserServiceImpl();
+    private CardService cardService = (CardService) ApplicationContext.getBean("CardService");//= new CardServiceImpl();
+    private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
+
     @FXML private Button confirmPayment;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

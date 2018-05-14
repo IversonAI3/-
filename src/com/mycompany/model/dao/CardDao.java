@@ -15,4 +15,6 @@ public interface CardDao extends BaseDao<Card>{
      */
     Card selectMostRecentCard(Connection connection) throws SQLException;
     Card selectCardByCardId(Connection connection, int card_id) throws SQLException;
+
+    boolean updateBalance(Connection conn, Integer card_id, Double newBalance)throws SQLException;
 }

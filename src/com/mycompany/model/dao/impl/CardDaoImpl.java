@@ -43,6 +43,15 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao{
     }
 
     @Override
+    public boolean updateBalance(Connection conn, Integer card_id, Double newBalance) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("UPDATE `card` SET `balance`=? WHERE card_id=?");
+        ps.setDouble(1,newBalance);
+        ps.setInt(2,card_id);
+        int i = ps.executeUpdate();
+        return i==1?true:false;
+    }
+
+    @Override
     public Card insert(Connection conn, Card card) throws SQLException {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO `Card` VALUES(DEFAULT, DEFAULT, DEFAULT);");

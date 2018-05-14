@@ -10,4 +10,5 @@ import java.util.LinkedList;
 import java.util.List;
 
 public interface ReturnRecordDao extends BaseDao<ReturnRecord>{
+    Integer selectMaxId(Connection conn) throws SQLException;
 }

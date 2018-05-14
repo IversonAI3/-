@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.BookService;
 import com.mycompany.controller.services.CardService;
@@ -8,6 +9,7 @@ import com.mycompany.controller.services.impl.BookServiceImpl;
 import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.*;
+import com.mycompany.model.dao.TimestampUtils;
 import com.sun.prism.impl.Disposer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -38,9 +41,21 @@ public class UserHomeWindowController implements Initializable{
     private User u;
     private Card card;
     private BorrowRecord borrowRecord;
-    private BookService bookService = new BookServiceImpl();
-    private UserServiceImpl userService = new UserServiceImpl();
-    private CardService cardService = new CardServiceImpl();
+    private BookService bookService = (BookService) ApplicationContext.getBean("BookService");// = new BookServiceImpl();
+    private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");// = new UserServiceImpl();
+    private CardService cardService = (CardService) ApplicationContext.getBean("CardService");// = new CardServiceImpl();
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
+    }
+
+    public void setCardService(CardService cardService) {
+        this.cardService = cardService;
+    }
 
     private ObservableList<Book> bookData;
     private ObservableList<BorrowDetail> borrowedBookData;
@@ -244,6 +259,10 @@ public class UserHomeWindowController implements Initializable{
                 WindowsUtil.showAlert(Alert.AlertType.WARNING, "该书数量不足");
                 return;
             }
+            if(card.getBalance()<=0){
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"余额不足，无法借书");
+                return;
+            }
             if(u.getCard_id()==0){ // 如果没有借书卡 不允许借书
                 WindowsUtil.showAlert(Alert.AlertType.WARNING,"必须申请借书卡才能借书");
                 return;
@@ -276,16 +295,43 @@ public class UserHomeWindowController implements Initializable{
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请选择要还的书");
             return;
         }
+
         BorrowRecord borrowRecord = new BorrowRecord(borrowDetail.getBook_id(),
                 card.getCard_id(), borrowDetail.getBorrow_time(), borrowDetail.getReturn_time());
-        SimpleDateFormat date = new SimpleDateFormat(borrowDetail.getReturn_time());
-
+        // 计算罚款金额：书价格的5%乘以天数
+        String returnTime = borrowDetail.getReturn_time(); // 还书截止日期
+        String returnedTime = TimestampUtils.getBorrowTime().toString(); // 实际还书日期
+        System.out.println("还书截止日期:"+returnTime+" 实际还书日期:"+returnedTime);
         try {
-            userService.returnBook(borrowRecord);
+            int days = userService.calculateDaysDiff(returnTime, returnedTime);
+            System.out.println("相差天数: "+days);
+            ReturnRecord returnRecord = userService.returnBook(borrowRecord);
             borrowedBookData.remove(borrowDetail);
             borrowTableView.refresh();
+            if(days>0){
+                Double fine = days * borrowDetail.getPrice() * 0.05;
+                WindowsUtil.showAlert(Alert.AlertType.INFORMATION
+                        ,"超过还书时间"+days+"天, 缴纳罚款: "+fine+"元");
+                Penalty penalty = new Penalty();
+                penalty.setBook_id(borrowDetail.getBook_id());
+                penalty.setCard_id(card.getCard_id());
+                penalty.setBorrow_time(borrowDetail.getBorrow_time());
+                penalty.setReturn_id(userService.getRecentReturnId());
+                penalty.setFine(fine);
+                System.out.println(penalty);
+                userService.createPenalty(penalty);
+                if(fine>card.getBalance()){
+                    userService.updateCardAmount(card.getCard_id(), 0.0);
+                }else {
+                    userService.updateCardAmount(card.getCard_id(),card.getBalance()-fine);
+                }
+            }else {
+                WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"还书成功!");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"还书失败，请稍后再试");
+            return;
         }
     }
 

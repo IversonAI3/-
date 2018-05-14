@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.BookService;
 import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.AdminServiceImpl;
@@ -33,9 +34,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ManagerHomeWindowController implements Initializable{
-    private BookService bookService = new BookServiceImpl();
-    private AdminServiceImpl adminService = new AdminServiceImpl();
-    private UserServiceImpl userService = new UserServiceImpl();
+    private BookService bookService = (BookService) ApplicationContext.getBean("BookService");//= new BookServiceImpl();
+    private AdminServiceImpl adminService = (AdminServiceImpl) ApplicationContext.getBean("AdminService");//= new AdminServiceImpl();
+    private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");// = new UserServiceImpl();
 
     private ObservableList<Book> bookData;
     private ObservableList<User> userData;

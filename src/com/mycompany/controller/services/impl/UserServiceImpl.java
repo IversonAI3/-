@@ -11,13 +11,15 @@ import java.util.List;
 
 public class UserServiceImpl implements AbstractUserService<User> {
     private Connection conn;
-    private UserDao userDao = new UserDaoImpl(); // 用户数据访问对象
-    private BorrowRecordDao borrowRecordDao = new BorrowRecordDaoImpl();
-    private BookDao bookDao = new BookDaoImpl();
-    private CardDao cardDao = new CardDaoImpl();
-    private ReturnRecordDao returnRecordDao = new ReturnRecordDaoImpl();
-    private PenaltyDao penaltyDao = new PenaltyDaoImpl();
 
+    private UserDao userDao; //= new UserDaoImpl(); // 用户数据访问对象
+    private BorrowRecordDao borrowRecordDao;// = new BorrowRecordDaoImpl();
+    private BookDao bookDao;// = new BookDaoImpl();
+    private CardDao cardDao;// = new CardDaoImpl();
+    private ReturnRecordDao returnRecordDao;// = new ReturnRecordDaoImpl();
+    private PenaltyDao penaltyDao;// = new PenaltyDaoImpl();
+
+    //上下文会自动为set方法进行赋值的
     public void setUserDao(UserDao userDao){
         this.userDao = userDao;
     }
@@ -59,6 +61,7 @@ public class UserServiceImpl implements AbstractUserService<User> {
 
     @Override
     public User findByAccount(String account) throws SQLException{
+        System.out.println("findByAccount: "+userDao);
         return userDao.selectByAccount(conn,account);
     }
 
@@ -77,7 +80,6 @@ public class UserServiceImpl implements AbstractUserService<User> {
     public User changePwd(User user, String pwd) throws SQLException {
         return userDao.updatePassword(conn,user,pwd);
     }
-
 
     @Override
     public List<Book> showAllBooks() throws SQLException {
@@ -192,5 +194,43 @@ public class UserServiceImpl implements AbstractUserService<User> {
 
     public Card updateCard(Card card) throws SQLException{
         return cardDao.update(conn,card);
+    }
+
+    /**
+     * 通过还书截止日期和实际还书日期来计算超时天数
+     * @param
+     * @param
+     * @return
+     */
+    public Integer calculateDaysDiff(String returnTime, String returnedTime) throws SQLException {
+        CallableStatement cstmt = conn.prepareCall("select days(?,?)");
+        cstmt.setString(1,returnTime);
+        cstmt.setString(2,returnedTime);
+        ResultSet rs = cstmt.executeQuery();
+        if(rs.next())
+            return rs.getInt(1);
+        return null;
+    }
+
+    public Penalty createPenalty(Penalty penalty) throws SQLException {
+        return penaltyDao.insert(conn,penalty);
+    }
+
+    /**
+     * 返回最新添加的还书记录的编号
+     * @return
+     */
+    public Integer getRecentReturnId() throws SQLException{
+        return returnRecordDao.selectMaxId(conn);
+    }
+
+    /**
+     * 更新借书卡中的余额
+     * @param card_id 要更新的借书卡号
+     * @param newBalance 新的余额
+     * @return 更新成功的借书卡对象
+     */
+    public boolean updateCardAmount(Integer card_id, Double newBalance) throws SQLException{
+        return cardDao.updateBalance(conn, card_id, newBalance);
     }
 }

@@ -13,6 +13,7 @@ public class App extends Application{
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("加载成功->运行程序...");

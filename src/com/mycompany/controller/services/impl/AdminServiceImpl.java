@@ -12,12 +12,12 @@ import java.util.List;
 
 public class AdminServiceImpl implements AbstractUserService<Admin>{
     private Connection conn;
-    private AdminDao adminDao = new AdminDaoImpl();
-    private UserDao userDao = new UserDaoImpl();
-    private BookDao bookDao = new BookDaoImpl();
-    private BorrowRecordDao borrowRecordDao = new BorrowRecordDaoImpl();
-    private ReturnRecordDao returnRecordDao = new ReturnRecordDaoImpl();
-    private PenaltyDao penaltyDao = new PenaltyDaoImpl();
+    private AdminDao adminDao; // = new AdminDaoImpl();
+    private UserDao userDao; // = new UserDaoImpl();
+    private BookDao bookDao; // = new BookDaoImpl();
+    private BorrowRecordDao borrowRecordDao;// = new BorrowRecordDaoImpl();
+    private ReturnRecordDao returnRecordDao;// = new ReturnRecordDaoImpl();
+    private PenaltyDao penaltyDao;// = new PenaltyDaoImpl();
 
     public void setAdminDao(AdminDao adminDao) {
         this.adminDao = adminDao;

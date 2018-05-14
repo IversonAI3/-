@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- beans表示当前应用程序中，所有的实体对象 -->
 <beans>
-    <!-- User -->
+
+    <!-- 实体模型:bean -->
     <bean name="User" class="com.mycompany.model.bean.User"/>
+    <bean name="Admin" class="com.mycompany.model.bean.Admin"/>
+    <bean name="Book" class="com.mycompany.model.bean.Book"/>
+    <bean name="BorrowRecord" class="com.mycompany.model.bean.BorrowRecord"/>
+    <bean name="Card" class="com.mycompany.model.bean.Card"/>
+    <bean name="Penalty" class="com.mycompany.model.bean.Penalty"/>
+    <bean name="ReturnRecord" class="com.mycompany.model.bean.ReturnRecord"/>
+
+    <!-- DAO数据访问对象-->
+    <bean name="AdminDao" class="com.mycompany.model.dao.impl.AdminDaoImpl"/>
+    <bean name="BookDao" class="com.mycompany.model.dao.impl.BookDaoImpl"/>
+    <bean name="BorrowRecordDao" class="com.mycompany.model.dao.impl.BorrowRecordDaoImpl"/>
+    <bean name="PenaltyDao" class="com.mycompany.model.dao.impl.PenaltyDaoImpl"/>
+    <bean name="ReturnRecordDao" class="com.mycompany.model.dao.impl.ReturnRecordDaoImpl"/>
+    <bean name="UserDao" class="com.mycompany.model.dao.impl.UserDaoImpl"/>
+    <bean name="CardDao" class="com.mycompany.model.dao.impl.CardDaoImpl"/>
+
+    <!--
+        name对应的是set方法，我们可以缺省set，但是方法名称必须大小写对应
+        setUserDao
+        name="setUserDao" 或 name="UserDao"
+
+        value：自动去找的，必须提供实体bean声明，会自动将后面的具体类，实例化，当参数，传入这个set方法
+    -->
+
+    <!-- UserService -->
     <bean name="UserService" class="com.mycompany.controller.services.impl.UserServiceImpl">
         <property name="userDao" value="UserDao"/>
         <property name="bookDao" value="BookDao"/>
@@ -12,21 +38,24 @@
         <property name="penaltyDao" value="PenaltyDao"/>
     </bean>
 
-    <!-- Admin -->
-    <bean name="Admin" class="com.mycompany.model.bean.Admin"/>
+    <!-- AdminService -->
     <bean name="AdminService" class="com.mycompany.controller.services.impl.AdminServiceImpl">
         <property name="adminDao" value="AdminDao"/>
         <property name="userDao" value="UserDao"/>
         <property name="bookDao" value="BookDao"/>
-        <property name="borrowRecordDao" value="borrowRecordDao"/>
+        <property name="borrowRecordDao" value="BorrowRecordDao"/>
         <property name="returnRecordDao" value="ReturnRecordDao"/>
         <property name="penaltyDao" value="PenaltyDao"/>
     </bean>
 
-    <!-- Card -->
-    <bean name="Card" class="com.mycompany.model.bean.Card"/>
+    <!-- CardService -->
     <bean name="CardService" class="com.mycompany.controller.services.impl.CardServiceImpl">
-        <property name="cardDao" value="AdminDao"/>
+        <property name="cardDao" value="CardDao"/>
+    </bean>
+
+    <!-- BookService -->
+    <bean name="BookService" class="com.mycompany.controller.services.impl.BookServiceImpl">
+        <property name="bookDao" value="BookDao"/>
     </bean>
 </beans>
 

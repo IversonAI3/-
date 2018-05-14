@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.impl.AdminServiceImpl;
 import com.mycompany.model.bean.BorrowDetail;
 import com.mycompany.model.bean.BorrowRecord;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RecordWindowController implements Initializable{
-    private AdminServiceImpl adminService = new AdminServiceImpl();
+    private AdminServiceImpl adminService = (AdminServiceImpl) ApplicationContext.getBean("AdminService");//= new AdminServiceImpl();
 
     @FXML private Button returnButton;
     @FXML private MenuButton menuButton;

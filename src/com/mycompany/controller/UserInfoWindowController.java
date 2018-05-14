@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.UserServiceImpl;
@@ -25,7 +26,8 @@ import java.util.ResourceBundle;
  * */
 public class UserInfoWindowController implements Initializable{
     User user;
-    private AbstractUserService userService = new UserServiceImpl();
+    private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
+
     @FXML private Label userIdLabel;
     @FXML private Label userTypeLabel;
     @FXML private Label userAccountLabel;

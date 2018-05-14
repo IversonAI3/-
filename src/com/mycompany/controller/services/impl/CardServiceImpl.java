@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CardServiceImpl implements CardService{
-    private CardDao cardDao = new CardDaoImpl();
+    private CardDao cardDao;// = new CardDaoImpl();
     private Connection connection ;
 
     public void setCardDao(CardDao cardDao) {

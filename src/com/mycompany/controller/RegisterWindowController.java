@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.AbstractUser;
@@ -24,7 +25,7 @@ public class RegisterWindowController implements Initializable{
     @FXML private Button backButton;
     @FXML private CheckBox teacherCheckBox;
 
-    private AbstractUserService userService = new UserServiceImpl();
+    private AbstractUserService userService = (AbstractUserService) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
 
     public void backToMainWindow(ActionEvent event) throws IOException {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -33,7 +34,6 @@ public class RegisterWindowController implements Initializable{
 
     @FXML
     private void register(ActionEvent event) throws SQLException, IOException {
-       userService = new UserServiceImpl();
        String account_input = account.getText();
        String pwd_input = password.getText();
        if(account_input.isEmpty() || pwd_input.isEmpty()){

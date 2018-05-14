@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.CardService;
 import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.AdminServiceImpl;
@@ -51,9 +52,9 @@ public class MainWindowController implements Initializable{
     /**
      * 需要初始化UserServiceImpl和AdminServiceImpl来执行用户登录的操作
      * */
-    private static UserServiceImpl userService = new UserServiceImpl();
-    private static AdminServiceImpl adminService = new AdminServiceImpl();
-    private static CardService cardService = new CardServiceImpl();
+    private static UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");// = new UserServiceImpl();
+    private static AdminServiceImpl adminService = (AdminServiceImpl) ApplicationContext.getBean("AdminService");// = new AdminServiceImpl();
+    private static CardService cardService = (CardService) ApplicationContext.getBean("CardService");// = new CardServiceImpl();
 
     /**
      * 在程序开始之后做一些初始化工作

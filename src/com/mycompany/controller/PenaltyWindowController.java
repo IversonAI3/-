@@ -1,5 +1,6 @@
 package com.mycompany.controller;
 
+import appcontext.ApplicationContext;
 import com.mycompany.controller.services.impl.AdminServiceImpl;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Penalty;
@@ -23,8 +24,8 @@ import java.util.ResourceBundle;
 
 public class PenaltyWindowController implements Initializable{
 
-    private AdminServiceImpl adminService = new AdminServiceImpl();
-    private UserServiceImpl userService = new UserServiceImpl();
+    private AdminServiceImpl adminService = (AdminServiceImpl) ApplicationContext.getBean("AdminService");//= new AdminServiceImpl();
+    private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
 
     @FXML private Button returnButton;
     @FXML private TableView<Penalty> penaltyTableView;

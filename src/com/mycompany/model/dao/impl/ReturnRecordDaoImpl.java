@@ -5,6 +5,7 @@ import com.mycompany.model.dao.ReturnRecordDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ReturnRecordDaoImpl extends BaseDaoImpl<ReturnRecord> implements ReturnRecordDao{
@@ -32,6 +33,15 @@ public class ReturnRecordDaoImpl extends BaseDaoImpl<ReturnRecord> implements Re
 
     @Override
     public ReturnRecord find(Connection conn, ReturnRecord returnRecord) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer selectMaxId(Connection conn) throws SQLException {
+        String sql = "SELECT MAX(return_id) FROM returnrecord;";
+        ResultSet rs = conn.createStatement().executeQuery(sql);
+        if(rs.next())
+            return rs.getInt(1);
         return null;
     }
 }
