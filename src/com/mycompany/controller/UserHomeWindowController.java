@@ -251,6 +251,10 @@ public class UserHomeWindowController implements Initializable{
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请选择一本书");
             return;
         }
+        if(card==null){
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请先申请借书卡再借书");
+            return;
+        }
         try {
             Integer qty = bookService.getQuantityByBookId(book.getBook_id());
             if(qty==null) // 如果该book_id不存在直接退出【不太可能发生】
