@@ -38,8 +38,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserHomeWindowController implements Initializable{
-    private User u;
-    private Card card;
+    private static User u;
+    private static Card card;
     private BorrowRecord borrowRecord;
     private BookService bookService = (BookService) ApplicationContext.getBean("BookService");// = new BookServiceImpl();
     private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");// = new UserServiceImpl();
@@ -118,6 +118,7 @@ public class UserHomeWindowController implements Initializable{
     }
     protected void setCard(Card card){
         this.card = card;
+        System.out.println("借书卡设置成功: "+this.card);
     }
 
 
@@ -213,9 +214,7 @@ public class UserHomeWindowController implements Initializable{
      * */
     @FXML
     private void getCardButtonOnClick(ActionEvent event) throws IOException, SQLException {
-        System.out.println(u.getCard_id());
-        System.out.println(userService.checkCardByUserId(u));
-        if(u.getCard_id()!=0 && userService.checkCardByUserId(u)!=null){
+        if(u.getCard_id()!=0 && userService.checkCardByUserId(u)!=null){ // 如果此用户有借书卡的话
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.CARD_WINDOW.getValue()));
             Parent root = loader.load();
             CardWindowController cc = loader.getController();
@@ -251,7 +250,7 @@ public class UserHomeWindowController implements Initializable{
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请选择一本书");
             return;
         }
-        if(card==null){
+        if(u.getCard_id()==0){
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请先申请借书卡再借书");
             return;
         }
@@ -331,6 +330,7 @@ public class UserHomeWindowController implements Initializable{
                 }
             }else {
                 WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"还书成功!");
+                tableView.refresh();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -349,7 +349,7 @@ public class UserHomeWindowController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Windows.PENALTY_WINDOW.getValue()));
         Parent root = loader.load();
         PenaltyWindowController pwc = loader.getController();
-        if(card.getCard_id()==0){
+        if(card==null){
             WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"无罚款记录，请先申请借书卡");
             return;
         }

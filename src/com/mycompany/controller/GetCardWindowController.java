@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class GetCardWindowController implements Initializable{
     User u;
+    Card c;
     private CardService cardService = (CardService) ApplicationContext.getBean("CardService");//= new CardServiceImpl();
     private UserServiceImpl userService = (UserServiceImpl) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
 
@@ -39,13 +40,14 @@ public class GetCardWindowController implements Initializable{
         Parent root = loader.load();
         UserHomeWindowController uc = loader.getController();
         try {
-            Card c = cardService.createCard();
+            c = cardService.createCard();
             if(u.getType_id()==2) { // 如果是教师
                 c.setQuota((short)10);
             }
             u = userService.getNewCard(u, c);
             userService.updateCard(c);
             uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
+            uc.setCard(c);
             showAlert(Alert.AlertType.INFORMATION, "成功申请借书卡："+u.getCard_id());
         } catch (SQLException e) {
             e.printStackTrace();

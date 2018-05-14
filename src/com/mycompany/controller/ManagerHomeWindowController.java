@@ -180,6 +180,7 @@ public class ManagerHomeWindowController implements Initializable{
         book.setTitle((String) cellEditEvent.getNewValue());
         try {
             bookService.updateBook(book);
+            bookTableView.refresh();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -191,6 +192,7 @@ public class ManagerHomeWindowController implements Initializable{
         book.setAuthor((String) cellEditEvent.getNewValue());
         try {
             bookService.updateBook(book);
+            bookTableView.refresh();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -203,6 +205,7 @@ public class ManagerHomeWindowController implements Initializable{
             book.setPrice((Double) cellEditEvent.getNewValue());
             System.out.println(book);
             bookService.updateBook(book);
+            bookTableView.refresh();
         }catch (NumberFormatException e){
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
         } catch (SQLException e) {
@@ -221,6 +224,7 @@ public class ManagerHomeWindowController implements Initializable{
             }
             book.setQuantity(qty);
             bookService.updateBook(book);
+            bookTableView.refresh();
             System.out.println(book);
         }catch (NumberFormatException e){
             WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
@@ -236,6 +240,7 @@ public class ManagerHomeWindowController implements Initializable{
         user.setName(newName);
         try {
             userService.rename(user, newName);
+            userTableView.refresh();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -248,6 +253,7 @@ public class ManagerHomeWindowController implements Initializable{
         user.setPassword(newPwd);
         try {
             userService.changePwd(user,newPwd);
+            userTableView.refresh();
         } catch (SQLException e) {
             e.printStackTrace();
         }
