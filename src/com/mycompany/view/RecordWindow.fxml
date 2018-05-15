@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="701.0" prefWidth="594.0" stylesheets="@RegisterWindow.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.RecordWindowController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -36,12 +35,12 @@
                   <TableColumn fx:id="b_return_time" prefWidth="181.0" text="截止时间" />
               </columns>
             </TableView>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="647.0" style="-fx-background-color: orange;" text="还书记录" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="594.0" style="-fx-background-color: orange;" text="还书记录" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <TableView fx:id="returnRecordTableView" prefHeight="313.0" prefWidth="594.0">
+            <TableView fx:id="returnRecordTableView" prefHeight="356.0" prefWidth="594.0">
               <columns>
                 <TableColumn fx:id="r_return_id" prefWidth="75.0" text="记录编号" />
                 <TableColumn fx:id="r_book_id" prefWidth="75.0" text="图书编号" />
@@ -50,20 +49,6 @@
                   <TableColumn fx:id="r_return_time" prefWidth="132.0" text="还书时间" />
               </columns>
             </TableView>
-            <HBox prefHeight="69.0" prefWidth="594.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="311.0" text="Button">
-                     <HBox.margin>
-                        <Insets left="5.0" right="2.5" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="311.0" text="Button">
-                     <HBox.margin>
-                        <Insets left="2.5" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
             <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="71.0" prefWidth="604.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
