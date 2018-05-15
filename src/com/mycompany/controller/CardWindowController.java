@@ -1,7 +1,5 @@
 package com.mycompany.controller;
 
-import com.mycompany.controller.services.CardService;
-import com.mycompany.controller.services.impl.CardServiceImpl;
 import com.mycompany.model.bean.Card;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

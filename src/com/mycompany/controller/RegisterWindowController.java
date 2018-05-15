@@ -3,8 +3,6 @@ package com.mycompany.controller;
 import appcontext.ApplicationContext;
 import com.mycompany.controller.services.AbstractUserService;
 import com.mycompany.controller.services.WindowsUtil;
-import com.mycompany.controller.services.impl.UserServiceImpl;
-import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,17 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterWindowController implements Initializable{
-    public static Pattern accPattern = Pattern.compile("^[a-z0-9]{5,8}$");
+    private static Pattern accPattern = Pattern.compile("^[a-z0-9]{5,8}$");
     @FXML private TextField account;
     @FXML private TextField password;
     @FXML private Button registerButton;
@@ -31,13 +26,13 @@ public class RegisterWindowController implements Initializable{
 
     private AbstractUserService userService = (AbstractUserService) ApplicationContext.getBean("UserService");//= new UserServiceImpl();
 
-    public void backToMainWindow(ActionEvent event) throws IOException {
+    public void backToMainWindow(ActionEvent event) {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     @FXML
-    private void register(ActionEvent event) throws SQLException, IOException {
+    private void register(ActionEvent event) throws SQLException {
        String account_input = account.getText();
        String pwd_input = password.getText();
        if(account_input.isEmpty() || pwd_input.isEmpty()){
