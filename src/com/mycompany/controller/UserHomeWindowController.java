@@ -83,8 +83,6 @@ public class UserHomeWindowController implements Initializable{
     @FXML private TableColumn<BorrowDetail, String> b_columnBorrowTime;
     @FXML private TableColumn<BorrowDetail, String> b_columnReturnTime;
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bookData = FXCollections.observableArrayList();

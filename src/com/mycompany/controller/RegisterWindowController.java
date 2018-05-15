@@ -2,6 +2,7 @@ package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
 import com.mycompany.controller.services.AbstractUserService;
+import com.mycompany.controller.services.WindowsUtil;
 import com.mycompany.controller.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.AbstractUser;
 import com.mycompany.model.bean.User;
@@ -17,8 +18,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterWindowController implements Initializable{
+    public static Pattern accPattern = Pattern.compile("^[a-z0-9]{5,8}$");
     @FXML private TextField account;
     @FXML private TextField password;
     @FXML private Button registerButton;
@@ -38,6 +42,12 @@ public class RegisterWindowController implements Initializable{
        String pwd_input = password.getText();
        if(account_input.isEmpty() || pwd_input.isEmpty()){
            showAlert(Alert.AlertType.ERROR, "请输入账户和密码");
+           return;
+       }
+       Matcher accMatcher = accPattern.matcher(account_input);
+       Matcher pwdMatcher = accPattern.matcher(pwd_input);
+       if(!accMatcher.matches() || !pwdMatcher.matches()) {
+           WindowsUtil.showAlert(Alert.AlertType.INFORMATION,"账号密码只能包含字母a-z，数字0-9，长度必须是5-8个字符");
            return;
        }
        User u = new User();

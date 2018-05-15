@@ -32,6 +32,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executor;
+import java.util.regex.Pattern;
 
 public class ManagerHomeWindowController implements Initializable{
     private BookService bookService = (BookService) ApplicationContext.getBean("BookService");//= new BookServiceImpl();
@@ -114,6 +116,10 @@ public class ManagerHomeWindowController implements Initializable{
         try{
             Double p = Double.parseDouble(price);
             Integer qty = Integer.parseInt(quantity);
+            if(p<0.0 || qty<0){
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"输入的价格或数量无效");
+                return;
+            }
             book.setPrice(p);
             book.setQuantity(qty);
         }catch (NumberFormatException ex){
@@ -202,12 +208,18 @@ public class ManagerHomeWindowController implements Initializable{
     private void changePriceCellEvent(TableColumn.CellEditEvent cellEditEvent){
         Book book = bookTableView.getSelectionModel().getSelectedItem();
         try {
-            book.setPrice((Double) cellEditEvent.getNewValue());
+            Double price = Double.parseDouble(cellEditEvent.getNewValue().toString());
+            if(price<0.0){
+                WindowsUtil.showAlert(Alert.AlertType.WARNING,"价格不能少于0.0");
+                bookTableView.refresh();
+                return;
+            }
+            book.setPrice(price);
             System.out.println(book);
             bookService.updateBook(book);
             bookTableView.refresh();
-        }catch (NumberFormatException e){
-            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
+        } catch (NumberFormatException e){
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入一个数值");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -216,10 +228,12 @@ public class ManagerHomeWindowController implements Initializable{
     @FXML
     private void changeQuantityCellEvent(TableColumn.CellEditEvent cellEditEvent){
         Book book = bookTableView.getSelectionModel().getSelectedItem();
+        String newQty = cellEditEvent.getNewValue().toString();
         try {
-            Integer qty = (Integer) cellEditEvent.getNewValue();
+            Integer qty = Integer.parseInt(newQty);
             if(qty<0){
                 WindowsUtil.showAlert(Alert.AlertType.WARNING,"数量不能少于0");
+                bookTableView.refresh();
                 return;
             }
             book.setQuantity(qty);
@@ -227,7 +241,7 @@ public class ManagerHomeWindowController implements Initializable{
             bookTableView.refresh();
             System.out.println(book);
         }catch (NumberFormatException e){
-            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入正确的价格");
+            WindowsUtil.showAlert(Alert.AlertType.WARNING,"请输入一个数值 ");
         } catch (SQLException e) {
             e.printStackTrace();
         }
