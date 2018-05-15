@@ -1,4 +1,4 @@
-DROP DATABASE `library`;
+﻿DROP DATABASE `library`;
 CREATE DATABASE `library`;
 USE library;
 
@@ -126,9 +126,13 @@ INSERT INTO `admin` VALUES(DEFAULT, 'admin', '陶怡', 'admin', DEFAULT);
 
 -- 借阅记录 			        书号 卡号 借时间 还时间
 INSERT INTO `borrowrecord` VALUES(1, 1000000, DEFAULT, DEFAULT);
-
+INSERT INTO `borrowrecord` VALUES(1, 1000000, '2018-04-1 19:31:01', '2018-04-22 19:31:01');
+INSERT INTO `borrowrecord` VALUES(1, 1000000, '2018-04-2 19:31:01', '2018-04-23 19:31:01');
+INSERT INTO `borrowrecord` VALUES(1, 1000000, '2018-04-3 19:31:01', '2018-04-24 19:31:01');
+INSERT INTO `borrowrecord` VALUES(1, 1000000, '2018-04-4 19:31:01', '2018-04-25 19:31:01');
 
 -- 还书记录
+
 
 -- 罚款记录
 
