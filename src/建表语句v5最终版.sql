@@ -88,7 +88,7 @@ CREATE TABLE `Penalty`(
 ) AUTO_INCREMENT 1;
 
 											-- 卡号 余额 借书限额
-INSERT INTO `card`VALUES(DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO `card`VALUES(DEFAULT, DEFAULT, 3);
 
 
 -- 类型编号，类型名， 限额
@@ -98,7 +98,7 @@ INSERT INTO usertype VALUES(DEFAULT, '教师', 10, 14);
 
 -- user_id 账号 密码 姓名 注册时间 卡号 用户类型
 INSERT INTO `user` VALUES(NULL, 'user1','user1','user1', DEFAULT, NULL, 1);
-INSERT INTO `user`(account, `password`, type_id) VALUES('user', 'user',1);
+INSERT INTO `user`(account, `password`, type_id, card_id) VALUES('user', 'user',1,1000000);
 
 
 -- 											书id  书名 作者 价格 添加时间 修改时间 数量
