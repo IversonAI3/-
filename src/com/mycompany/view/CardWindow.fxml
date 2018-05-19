@@ -12,7 +12,7 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="561.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="41.0" prefWidth="561.0" style="-fx-background-color: orange;" text="借书卡信息" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="34.0" prefWidth="733.0" style="-fx-background-color: orange;" text="借书卡信息" textFill="WHITE">
                <font>
                   <Font size="23.0" />
                </font>
@@ -24,7 +24,7 @@
                   <TableColumn fx:id="column_quota" minWidth="0.0" prefWidth="293.0" text="剩余借书额度" />
               </columns>
             </TableView>
-            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="35.0" prefWidth="561.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="30.0" prefWidth="956.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

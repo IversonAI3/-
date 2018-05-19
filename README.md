@@ -25,16 +25,28 @@
 - Please make sure all required libraries are added to the project.
 - 项目所用到的库统一保存在libraries目录中
 - You can find the required libraries in the libraries directory.
-
+#### 主界面
 ![主界面](/screenshot/主界面.png?raw=true)
+#### 注册界面
 ![注册界面](/screenshot/注册界面.png?raw=true)
+#### 用户搜索图书
 ![用户搜书](/screenshot/用户搜书.png?raw=true)
+#### 用户个人资料
 ![个人资料界面](/screenshot/用户搜书.png?raw=true)
+#### 用户申请借书卡
 ![申请借书卡界面](/screenshot/申请借书卡界面.png?raw=true)
+#### 用户借书卡信息
+![用户借书卡信息](/screenshot/用户借书卡信息.png?raw=true)
+#### 用户点击借书按钮
 ![用户借书](/screenshot/用户借书.png?raw=true)
-![用户搜书](/screenshot/用户搜书.png?raw=true)
+#### 用户还书
 ![用户还书](/screenshot/用户还书.png?raw=true)
+#### 用户查看借书和还书记录
+![借书和还书记录](/screenshot/借书和还书记录.png?raw=true)
+#### 用户查看罚款记录
 ![罚款记录](/screenshot/罚款记录.png?raw=true)
+#### 管理员界面
 ![管理员界面](/screenshot/管理员界面.png?raw=true)
+#### 管理员查看罚款记录
 ![管理员查看罚款记录](/screenshot/管理员查看罚款记录.png?raw=true)
 
