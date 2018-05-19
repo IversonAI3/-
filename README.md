@@ -26,4 +26,15 @@
 - 项目所用到的库统一保存在libraries目录中
 - You can find the required libraries in the libraries directory.
 
+![主界面](/screenshot/主界面.png?raw=true)
 ![注册界面](/screenshot/注册界面.png?raw=true)
+![用户搜书](/screenshot/用户搜书.png?raw=true)
+![个人资料界面](/screenshot/用户搜书.png?raw=true)
+![申请借书卡界面](/screenshot/申请借书卡界面.png?raw=true)
+![用户借书](/screenshot/用户借书.png?raw=true)
+![用户搜书](/screenshot/用户搜书.png?raw=true)
+![用户还书](/screenshot/用户还书.png?raw=true)
+![罚款记录](/screenshot/罚款记录.png?raw=true)
+![管理员界面](/screenshot/管理员界面.png?raw=true)
+![管理员查看罚款记录](/screenshot/管理员查看罚款记录.png?raw=true)
+
