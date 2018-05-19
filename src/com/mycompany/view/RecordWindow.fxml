@@ -12,12 +12,12 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="64.0" prefWidth="594.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="29.0" prefWidth="697.0" style="-fx-background-color: orange;" text="借书记录" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <MenuButton fx:id="menuButton" alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="594.0" text="选择显示条目">
+            <MenuButton fx:id="menuButton" alignment="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="736.0" text="选择显示条目">
               <items>
                 <MenuItem fx:id="showReturned" mnemonicParsing="false" onAction="#showReturnedOnClick" text="显示所有已经归还的借书记录" />
                 <MenuItem fx:id="showUnReturned" mnemonicParsing="false" onAction="#showUnReturnedOnClick" text="显示所有尚未归还的借书记录" />
@@ -35,7 +35,7 @@
                   <TableColumn fx:id="b_return_time" prefWidth="181.0" text="截止时间" />
               </columns>
             </TableView>
-            <Label alignment="CENTER" prefHeight="36.0" prefWidth="594.0" style="-fx-background-color: orange;" text="还书记录" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="28.0" prefWidth="815.0" style="-fx-background-color: orange;" text="还书记录" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
@@ -49,7 +49,7 @@
                   <TableColumn fx:id="r_return_time" prefWidth="132.0" text="还书时间" />
               </columns>
             </TableView>
-            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="71.0" prefWidth="604.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
+            <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonOnClick" prefHeight="36.0" prefWidth="1139.0" styleClass="returnButton" stylesheets="@RegisterWindow.css" text="返回">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

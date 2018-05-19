@@ -1,4 +1,4 @@
-﻿DROP DATABASE `library`;
+DROP DATABASE `library`;
 CREATE DATABASE `library`;
 USE library;
 
@@ -139,6 +139,7 @@ INSERT INTO `borrowrecord` VALUES(1, 1000000, '2018-04-4 19:31:01', '2018-04-25 
 -- 存储过程
 -- 查询所有的(没有归还的)借书记录,也就是换书记录中不存在
 DROP PROCEDURE IF EXISTS borrowRecords;
+DELIMITER $$
 CREATE PROCEDURE borrowRecords(IN id INT)
 BEGIN
 	SELECT b.book_id, b.title, b.author, b.price, r.borrow_time, r.return_time 
@@ -148,60 +149,68 @@ BEGIN
 	WHERE u.user_id=id
 	AND NOT EXISTS 
 	(SELECT 1 FROM returnrecord WHERE (r.book_id, r.card_id, r.borrow_time) = (book_id,card_id,borrow_time));
-END;
-
+END$$
+DELIMITER ;
 
 -- 查询某个用户短时间内是否已经结果相同的书
 DROP PROCEDURE IF EXISTS checkBorrow;
+DELIMITER $$
 CREATE PROCEDURE checkBorrow(IN bid INT, IN cid INT, IN btime TIMESTAMP)
 BEGIN
 	SELECT * FROM borrowrecord
 	WHERE book_id = bid AND card_id=cid AND borrow_time = btime;
-END;
+END$$
+DELIMITER ;
 
 -- 查询一个用户是否已经拥有借书卡
 DROP PROCEDURE IF EXISTS checkCard;
+DELIMITER $$
 CREATE PROCEDURE checkCard(IN uid INT)
 BEGIN
 	SELECT card_id FROM `user`
 	WHERE user_id = uid;
-END;
+END$$
 -- CALL checkCard(1);
-
+DELIMITER ;
 
 -- 查询所有已经归还的借书记录
 DROP PROCEDURE IF EXISTS returnedRecord;
+DELIMITER $$
 CREATE PROCEDURE returnedRecord()
 BEGIN
 	SELECT * FROM borrowrecord b 
 	WHERE EXISTS 
 	(SELECT return_id FROM returnrecord r WHERE r.book_id=b.book_id AND r.card_id=b.card_id AND r.borrow_time=b.borrow_time);
-END;
+END$$
+DELIMITER ;
 
 -- call returnedrecord();
 
 -- 查询所有尚未归还的借书记录
 DROP PROCEDURE IF EXISTS unreturnedRecord;
+DELIMITER $$
 CREATE PROCEDURE unreturnedRecord()
 BEGIN
 	SELECT * FROM borrowrecord b 
 	WHERE NOT EXISTS 
 	(SELECT return_id FROM returnrecord  r WHERE r.book_id=b.book_id AND r.card_id=b.card_id AND r.borrow_time=b.borrow_time);
-END;
+END$$
 -- call unreturnedRecord();
-
+DELIMITER ;
 
 -- 函数days()
 -- 参数returnTime: 应该还书的时间
 -- 参数returnedTime: 实际还书的时间
 DROP FUNCTION IF EXISTS `days`;
+DELIMITER $$
 CREATE FUNCTION days(returnTime TIMESTAMP, returnedTime TIMESTAMP)
 RETURNS INT
 BEGIN
 	DECLARE d INT;
 	SELECT DATEDIFF(returnedTime, returnTime) INTO d;
 	RETURN d;
-END;
+END$$
+DELIMITER ;
 
 -- 测试函数days()
 -- SELECT days('2018-05-12 14:48:54','2018-05-25 14-48-53');
