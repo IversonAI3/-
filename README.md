@@ -19,12 +19,12 @@
 - MVC combined with Three-Tier-Architecture
 
 
-#### Prerequisite
+#### 准备工作 Preparation
 - 运行项目之前请先下载并执行SQL语句
-- Please download and execute the .sql file in your database.
 - 确保添加所有的库library
-- Please make sure all required libraries are added to the project.
 - 项目所用到的库统一保存在libraries目录中
+- Please download and execute the .sql file in your database.
+- Please make sure all required libraries are added to the project.
 - You can find the required libraries in the libraries directory.
 #### 主界面
 ![主界面](/screenshot/主界面.png?raw=true)
