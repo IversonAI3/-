@@ -32,7 +32,7 @@
 #### 用户搜索图书
 ![用户搜书](/screenshot/用户搜书.png?raw=true)
 #### 用户个人资料
-![个人资料界面](/screenshot/用户搜书.png?raw=true)
+![个人资料界面](/screenshot/个人资料界面.png?raw=true)
 #### 用户申请借书卡
 ![申请借书卡界面](/screenshot/申请借书卡界面.png?raw=true)
 #### 用户借书卡信息
