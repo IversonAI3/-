@@ -26,4 +26,4 @@
 - 项目所用到的库统一保存在libraries目录中
 - You can find the required libraries in the libraries directory.
 
-![alt text](/screenshot/注册界面.png?raw=true "主界面")
+![注册界面](/screenshot/注册界面.png?raw=true)
