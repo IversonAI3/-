@@ -1,11 +1,10 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.BookService;
-import com.mycompany.controller.services.WindowsUtil;
-import com.mycompany.controller.services.impl.AdminServiceImpl;
-import com.mycompany.controller.services.impl.BookServiceImpl;
-import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.services.BookService;
+import com.mycompany.model.services.WindowsUtil;
+import com.mycompany.model.services.impl.AdminServiceImpl;
+import com.mycompany.model.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Book;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;
@@ -20,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
@@ -32,8 +30,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executor;
-import java.util.regex.Pattern;
 
 public class ManagerHomeWindowController implements Initializable{
     private BookService bookService = (BookService) ApplicationContext.getBean("BookService");//= new BookServiceImpl();

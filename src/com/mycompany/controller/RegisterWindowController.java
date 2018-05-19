@@ -1,8 +1,8 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.AbstractUserService;
-import com.mycompany.controller.services.WindowsUtil;
+import com.mycompany.model.services.AbstractUserService;
+import com.mycompany.model.services.WindowsUtil;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,9 +1,9 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.CardService;
-import com.mycompany.controller.services.impl.CardServiceImpl;
-import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.services.CardService;
+import com.mycompany.model.services.WindowsUtil;
+import com.mycompany.model.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import javafx.event.ActionEvent;
@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -22,6 +21,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * 用户申请借书卡并付款的界面
+ * 模拟了一个二维码支付界面（仅显示一张二维码图片）
+ * 具体功能可交给第三方API来实现
+ * */
 public class GetCardWindowController implements Initializable{
     User u;
     Card c;
@@ -48,7 +52,7 @@ public class GetCardWindowController implements Initializable{
             userService.updateCard(c);
             uc.setUser(u); // 设置用户登录窗口中的User对象，以此来传递数据
             uc.setCard(c);
-            showAlert(Alert.AlertType.INFORMATION, "成功申请借书卡："+u.getCard_id());
+            WindowsUtil.showAlert(Alert.AlertType.INFORMATION, "成功申请借书卡："+u.getCard_id());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,14 +62,5 @@ public class GetCardWindowController implements Initializable{
 
     public void setUser(User u) {
         this.u = u;
-    }
-
-    private void showAlert(Alert.AlertType alertType, String message){
-        Alert alert = new Alert(alertType);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.setResizable(false);
-        alert.getDialogPane().setPrefSize(300,100);
-        alert.showAndWait();
     }
 }

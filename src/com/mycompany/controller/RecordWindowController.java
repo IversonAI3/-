@@ -1,13 +1,9 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.impl.AdminServiceImpl;
-import com.mycompany.model.bean.BorrowDetail;
+import com.mycompany.model.services.impl.AdminServiceImpl;
 import com.mycompany.model.bean.BorrowRecord;
 import com.mycompany.model.bean.ReturnRecord;
-import com.mycompany.model.bean.User;
-import com.mycompany.model.dao.BorrowRecordDao;
-import com.mycompany.model.dao.impl.BorrowRecordDaoImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

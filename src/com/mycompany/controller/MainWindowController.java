@@ -1,13 +1,11 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.CardService;
-import com.mycompany.controller.services.WindowsUtil;
-import com.mycompany.controller.services.impl.AdminServiceImpl;
-import com.mycompany.controller.services.impl.CardServiceImpl;
-import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.services.CardService;
+import com.mycompany.model.services.WindowsUtil;
+import com.mycompany.model.services.impl.AdminServiceImpl;
+import com.mycompany.model.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.AbstractUser;
-import com.mycompany.model.bean.Admin;
 import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import javafx.collections.FXCollections;

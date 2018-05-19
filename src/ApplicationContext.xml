@@ -29,7 +29,7 @@
     -->
 
     <!-- UserService -->
-    <bean name="UserService" class="com.mycompany.controller.services.impl.UserServiceImpl">
+    <bean name="UserService" class="com.mycompany.model.services.impl.UserServiceImpl">
         <property name="userDao" value="UserDao"/>
         <property name="bookDao" value="BookDao"/>
         <property name="cardDao" value="CardDao"/>
@@ -39,7 +39,7 @@
     </bean>
 
     <!-- AdminService -->
-    <bean name="AdminService" class="com.mycompany.controller.services.impl.AdminServiceImpl">
+    <bean name="AdminService" class="com.mycompany.model.services.impl.AdminServiceImpl">
         <property name="adminDao" value="AdminDao"/>
         <property name="userDao" value="UserDao"/>
         <property name="bookDao" value="BookDao"/>
@@ -49,12 +49,12 @@
     </bean>
 
     <!-- CardService -->
-    <bean name="CardService" class="com.mycompany.controller.services.impl.CardServiceImpl">
+    <bean name="CardService" class="com.mycompany.model.services.impl.CardServiceImpl">
         <property name="cardDao" value="CardDao"/>
     </bean>
 
     <!-- BookService -->
-    <bean name="BookService" class="com.mycompany.controller.services.impl.BookServiceImpl">
+    <bean name="BookService" class="com.mycompany.model.services.impl.BookServiceImpl">
         <property name="bookDao" value="BookDao"/>
     </bean>
 </beans>

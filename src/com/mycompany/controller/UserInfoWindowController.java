@@ -1,9 +1,8 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.AbstractUserService;
-import com.mycompany.controller.services.WindowsUtil;
-import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.services.WindowsUtil;
+import com.mycompany.model.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Card;
 import com.mycompany.model.bean.User;
 import javafx.collections.ObservableList;

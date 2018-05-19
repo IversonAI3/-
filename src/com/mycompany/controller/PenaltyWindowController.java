@@ -1,8 +1,8 @@
 package com.mycompany.controller;
 
 import appcontext.ApplicationContext;
-import com.mycompany.controller.services.impl.AdminServiceImpl;
-import com.mycompany.controller.services.impl.UserServiceImpl;
+import com.mycompany.model.services.impl.AdminServiceImpl;
+import com.mycompany.model.services.impl.UserServiceImpl;
 import com.mycompany.model.bean.Penalty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
