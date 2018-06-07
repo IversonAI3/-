@@ -4,7 +4,7 @@
 
 ---
 
-#### 图书馆系统 Library Management System
+#### 图书馆系统v1 Library Management System
 - 面向教师和学生提供的一套在线图书馆系统
 - 用户分为：图书管理员Admin，普通用户User
 - 普通用户分为：教师，学生
