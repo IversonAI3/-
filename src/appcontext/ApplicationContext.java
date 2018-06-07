@@ -10,7 +10,8 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 /**
- * 上下文实现
+ * 应用程序上下文，管理bean和依赖注入
+ * 模拟Spring的IoC/DI
  */
 public class ApplicationContext {
 
