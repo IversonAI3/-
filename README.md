@@ -1,3 +1,9 @@
+#### Java学习路上的第一个拙劣应用
+- 模拟了一个Spring中的应用上下文ApplicationContext来管理bean
+- 对MVC的理解非常拙劣，将在第二版中利用Spring和MyBatis来重构项目，加深理解。
+
+---
+
 #### 图书馆系统 Library Management System
 - 面向教师和学生提供的一套在线图书馆系统
 - 用户分为：图书管理员Admin，普通用户User
