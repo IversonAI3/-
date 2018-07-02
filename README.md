@@ -1,7 +1,5 @@
 #### Java学习路上的第一个拙劣应用
 - 模拟了一个Spring中的应用上下文ApplicationContext来管理bean
-- 对MVC的理解非常拙劣，将在第二版中利用Spring和MyBatis来重构项目，加深理解。
-
 ---
 
 #### 图书馆系统v1 Library Management System
@@ -12,8 +10,7 @@
 - 用户行为：查询/借阅/还书/申请借书卡/支付押金
 - GUI部分使用：JavaFX
 - 数据库Database使用：MySQL
-- JDBC框架使用：c3p0
-- 框架Framework：三层架构搭配MVC
+- JDBC数据库池：c3p0
 - This project offers an online library management system for school teachers and students 
 - Users are categorized as Admin User and Normal User
 - Normal User are categorized as school teachers and students
@@ -24,14 +21,6 @@
 - c3p0 framework is used for JDBC
 - MVC combined with Three-Tier-Architecture
 
-
-#### 准备工作 Preparation
-- 运行项目之前请先下载并执行SQL语句
-- 确保添加所有的库library
-- 项目所用到的库统一保存在libraries目录中
-- Please download and execute the .sql file in your database.
-- Please make sure all required libraries are added to the project.
-- You can find the required libraries in the libraries directory.
 #### 主界面
 ![主界面](/screenshot/主界面.png?raw=true)
 #### 注册界面
